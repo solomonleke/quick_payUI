@@ -1,8 +1,11 @@
+import React,{useState} from 'react';
+import { Link } from 'react-router-dom';
 import '../../header/css/bootstrap.min.css';
 import '../../header/css/pages.css';
 import '../../header/css/home.css';
 
 function Content(){
+    const [number,setNumber]=useState('');
     return(
         <div className="page-content-wrapper ">
 
@@ -34,14 +37,14 @@ function Content(){
                                                             <li className="current">                                                   <span>
                                                             <label className="m-b-0 m-t-10" for="queryString">What&#x27;s your meter number or account number?</label>
                                                         </span>
-                                                                <input id="queryString" name="queryString" value="" type="text"/>
+                                                                <input id="queryString" name="queryString" type="text" onChange={e=>setNumber(e.target.value)}/>
                                                             </li>
                                                         </ol>
 
-                                                        <button id="search"
-                                                                className=" col-md-4 submit next show  btn btn-danger m-t-20 p-l-30 p-r-30 "
-                                                                type="submit" style={{zIndex: "2"}}> Search
-                                                        </button>
+                                                        <Link to={"/details/"+number}
+                                                            className=" col-md-4 submit next show  btn btn-danger m-t-20 p-l-30 p-r-30 "
+                                                            type="submit" style={{zIndex: "2"}}> Search
+                                                        </Link>
                                                         <div className="controls">
                                                             <div className="progress"></div>
                                                             <span className="error-message fs-12 "

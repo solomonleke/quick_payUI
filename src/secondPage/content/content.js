@@ -1,9 +1,38 @@
+import React from 'react';
 import '../../header/css/bootstrap.min.css';
 import '../../header/css/pages.css';
 import '../../header/css/home.css';
 import logo from '../../header/logo_black.png';
+import { useParams } from "react-router-dom";
 
 function Content2(){
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [data, setData] = React.useState([]);
+    const {number} = useParams()
+    React.useEffect(() => {
+        const url = "https://aplecash.smartpowerbilling.com/cashcollect/customer/find?account_number="+number;
+        const options = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "text/plain",
+                Authorization:'Bearer'+' '+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RhZG1pbiIsImlhdCI6MTY0ODY0MDMzMH0.lalmlLLMNbCV99IGi6Nb7Lmoleu1WVEPsoiID2ZV3JI'
+            }
+           
+        }
+        fetch(url,options)
+        .then((response) => response.json())
+        .then((json) => setData(json))
+        .catch((error) => console.log(error));
+        
+    }, []);
+
+    React.useEffect(() => {
+        if (data.length !== 0) {
+        setIsLoading(false);
+        }
+        console.log(data);
+    }, [data]);
+
     return(
     <div className="page-content-wrapper ">
 
@@ -15,64 +44,6 @@ function Content2(){
                     <li className="breadcrumb-item"><a href="/energypay/">Home</a></li>
                     <li className="breadcrumb-item active">Payment</li>
                 </ol>
-                {/* <div class="modal fade fill-in" id="paymentModal" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog ">
-                        <div class="modal-content">
-
-                            <div class="modal-body">
-                                <iframe id="paymentFrame" style="height: 100vh;width: 100%"
-                                        frameborder=0 ALLOWTRANSPARENCY="true">
-                                    <body>
-
-                                    </body>
-                                </iframe>
-                            </div>
-                            <div class="modal-footer">
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
-
-                <div className="modal fade fill-up"  data-backdrop="static" data-keyboard="false"  id="paymentError" tabindex="-1" role="dialog"
-                     aria-hidden="true">
-                    {/* <div className="modal-dialog ">
-                        <div class="modal-content-wrapper">
-                            <div class="modal-content" style="background: white">
-                                <div class="modal-header clearfix text-left">
-                                    <h5 class="text-danger">Payment <span class="semi-bold">Failed</span></h5>
-                                 </div>
-                                <div class="modal-body">
-                                    <form role="form">
-                                        <div class="form-group-attached">
-                                            <div class="row">
-                                                <p>Sorry, we were unable to process your payment using Interswitch Webpay gateway.</p>
-                                                <p> <strong>REASON</strong>: {[{paymentResponse.error.responseMessage }]}</p>
-
-                                                <p>  However, we have another option for you. Kindly click on
-                                                    the button to continue.
-                                                </p>
-                                            </div>
-
-                                        </div>
-                                    </form>
-                                    <div class="row">
-                                        <div class="col-md-4">
-
-                                        </div>
-                                        <div class="col-md-8 m-t-10 sm-m-t-10">
-                                            <button type="button" class="btn   m-t-5" ng-click="cancelOtherOption()">Decline</button>
-
-                                            <button type="button" class="btn btn-primary m-t-5"
-                                                    ng-click="anotherOption()">Try another option </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div> */}
-                </div>
-
 
                 <div id="rootwizard" className="m-t-0 p-t-0 section">
 
@@ -85,9 +56,6 @@ function Content2(){
                     </ul>
 
                     <div className="" style={{background:"white"}}>
-                        {/* <div ng-class="{'hidden':!showError}" class="alert alert-danger text-center" role="alert">
-                            <span id="errorMeg">{[{showMessage}]}</span>
-                        </div> */}
                         <div className="tab-pane slide-left  p-l-20 p-r-20 sm-no-padding" id="tab1">
                             <div className="row row-same-height">
                                 <div className="col-md-5 b-r b-dashed b-grey ">
@@ -95,16 +63,38 @@ function Content2(){
 
 
                                         <h3>Your current bill </h3>
-                                        <div><p className="pull-right bold">9870596202</p>
-                                            <p> LEOFLINCH NIG LTD</p></div>
-                                        <p className="small hint-text">ATTAH IBEKU (9870596202)</p>
+                                        <div>{isLoading ? (
+                                            <p className="pull-right bold">Loading...</p>
+                                        ) : (
+                                            data.map((acc_no) => (
+                                            <p className="pull-right bold">
+                                                {data[0].acc_no}
+                                            </p>
+                                            ))
+                                        )}
+                                            <p> {isLoading ? ( <p>Loading...</p>) : (
+                                            data.map((name) => (<p>{data[0].name}</p>))
+                                            )}</p></div>
+
+                                        <p className="small hint-text">
+                                        {isLoading ? ( <p>Loading...</p>) : (
+                                            data.map((name) => (<p>{data[0].name} ({data[0].acc_no})</p>))
+                                            )}</p>
                                         <table className="table table-condensed">
                                             <tr>
                                                 <td className=" col-md-8">
                                                     <span className="m-l-10 font-montserrat fs-11 all-caps">Billed amount</span>
                                                 </td>
                                                 <td className=" col-md-4 text-right">
-                                                    <span>&#8358; 14,596</span>
+                                                    {isLoading ? (
+                                                        <span>Loading...</span>
+                                                    ) : (
+                                                        data.map((billedamount) => (
+                                                        <span>
+                                                            &#8358; {data[0].billedamount}
+                                                        </span>
+                                                        ))
+                                                    )}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -112,7 +102,15 @@ function Content2(){
                                                     <span className="m-l-10 font-montserrat fs-11 all-caps">VAT</span>
                                                 </td>
                                                 <td className=" col-md-4 text-right">
-                                                    <span>&#8358; 1,094.7</span>
+                                                {isLoading ? (
+                                                        <span>Loading...</span>
+                                                    ) : (
+                                                        data.map((vat) => (
+                                                        <span>
+                                                            &#8358; {data[0].vat}
+                                                        </span>
+                                                        ))
+                                                    )}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -120,13 +118,29 @@ function Content2(){
                                                     <span className="m-l-10 font-montserrat fs-11 all-caps">Arrears</span>
                                                 </td>
                                                 <td className=" col-md-4 text-right">
-                                                    <span>&#8358; 365,195.885</span>
+                                                {isLoading ? (
+                                                        <span>Loading...</span>
+                                                    ) : (
+                                                        data.map((vat) => (
+                                                        <span>
+                                                            &#8358; {data[0].credit}
+                                                        </span>
+                                                        ))
+                                                    )}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2" className=" col-md-4 text-right">
                                                     <h4 className="text-primary no-margin font-montserrat">
-                                                        &#8358;380,886.585</h4>
+                                                    {isLoading ? (
+                                                        <span>Loading...</span>
+                                                    ) : (
+                                                        data.map((vat) => (
+                                                        <span>
+                                                            &#8358; {data[0].credit + data[0].billedamount}
+                                                        </span>
+                                                        ))
+                                                    )}</h4>
                                                 </td>
                                             </tr>
                                         </table>
