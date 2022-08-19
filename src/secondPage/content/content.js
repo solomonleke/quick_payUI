@@ -3,15 +3,19 @@ import '../../header/css/bootstrap.min.css';
 import '../../header/css/pages.css';
 import '../../header/css/home.css';
 import logo from '../../header/logo_black.png';
+import options from './apiPreps';
 import { useParams } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 function Content2(){
     const [isLoading, setIsLoading] = React.useState(true);
     const [data, setData] = React.useState([]);
-    const {number} = useParams()
+    const {number} = useParams();
+    const [amount,setAmount]=useState('');
     React.useEffect(() => {
         const url = "https://aplecash.smartpowerbilling.com/cashcollect/customer/find?account_number="+number;
-        const options = {
+        const other = {
             method: 'GET',
             headers: {
                 "Content-Type": "text/plain",
@@ -19,7 +23,7 @@ function Content2(){
             }
            
         }
-        fetch(url,options)
+        fetch(url,other)
         .then((response) => response.json())
         .then((json) => setData(json))
         .catch((error) => console.log(error));
@@ -156,12 +160,13 @@ function Content2(){
                                             <p>Payments</p>
                                             <div className="form-group-attached">
                                                 <div className="row clearfix">
-                                                    <div className="col-md-8">
+                                                    <div className="col-md-6">
                                                         <div className="form-group form-group-default input-group">
                                                             <div className="form-input-group">
                                                                 <label>Amount</label>
-                                                                <input id="amount" ng-model="formService.payamount"
-                                                                       type="text" data-a-dec="." data-a-sep=","
+                                                                <input id="amount" 
+                                                                       type="text"
+                                                                       onChange={e=>setAmount(e.target.value)}
                                                                        className="autonumeric form-control" required></input>
                                                             </div>
                                                             <div className="input-group-addon">
@@ -202,11 +207,11 @@ function Content2(){
                             <ul className="pager wizard no-style">
                                 <li  className="next">
                                     <button className="btn btn-primary btn-cons btn-animated from-left fa fa-forward pull-right"
-                                            type="button">
-                                        <span>Next</span>
+                                            type="button" onClick={()=>send(amount,data.map((metering_type)=>data[0].metering_type),data.map((acc_no)=>data[0].acc_no),data.map((name)=>data[0].name))}>
+                                        <span>Pay Now</span>
                                     </button>
                                 </li>
-                                <li className="next finish hidden">
+                                {/* <li className="next finish hidden">
                                     <button  id="payBtn"
                                             className="btn btn-primary btn-cons btn-animated from-left fa fa-check pull-right"
                                             type="button">
@@ -220,16 +225,16 @@ function Content2(){
                                     </button>
                                 </li>
                                 <li className="previous">
-                                    <button ng-click="selectedTab =1" className="btn btn-default btn-cons pull-right"
+                                    <button className="btn btn-default btn-cons pull-right"
                                             type="button">
                                         <span>Previous</span>
                                     </button>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
                         <div className="wizard-footer padding-20 bg-master-light">
                             <p className="small hint-text pull-left no-margin">
-                                <a href="/energypay/">Return home</a>
+                                <Link to="/">Return home</Link>
                             </p>
                             <div className="pull-right">
                                 <img src={logo} alt="logo" width="50" height="22"></img>
@@ -242,6 +247,22 @@ function Content2(){
         </div>
     </div>
     )
+}
+
+function send(amount,bill,acc,name){
+    const url = "https://aplecash.smartpowerbilling.com/cashcollect/post/collection";
+    const other = {
+        method: 'POST',
+        body: JSON.stringify(options(acc,bill,amount,name)),
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization:'Bearer'+' '+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RhZG1pbiIsImlhdCI6MTY0ODY0MDMzMH0.lalmlLLMNbCV99IGi6Nb7Lmoleu1WVEPsoiID2ZV3JI'
+        }
+    }
+    fetch(url,other)
+    .then((response) => response.json())
+    .then((data) => console.log('Success:',data))
+    .catch((error) => console.log(error));
 }
 
 export default Content2;
