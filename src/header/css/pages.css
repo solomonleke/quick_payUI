@@ -135,6 +135,12 @@ body.menu-pin .overlay .overlay-brand {
     left: auto;
 }
 
+.authincation-content {
+    background: #fff;
+    box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
+    border-radius: 5px;
+}
+
 .header {
     position: relative;
     display: -webkit-box;
@@ -2798,6 +2804,10 @@ body.menu-pin .overlay .overlay-brand {
 
 .card .card-block.no-bottom-padding {
     padding-bottom: 0;
+}
+
+.auth-form {
+    padding: 50px 50px;
 }
 
 .card .card-block.no-top-padding {
