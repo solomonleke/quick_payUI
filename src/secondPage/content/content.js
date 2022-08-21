@@ -3,7 +3,7 @@ import '../../header/css/bootstrap.min.css';
 import '../../header/css/pages.css';
 import '../../header/css/home.css';
 import logo from '../../header/logo_black.png';
-import options from './apiPreps';
+import send from '../../thirdpage/payment';
 import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -13,13 +13,14 @@ function Content2(){
     const [data, setData] = React.useState([]);
     const {number} = useParams();
     const [amount,setAmount]=useState('');
+    const token = sessionStorage.getItem('token');
     React.useEffect(() => {
         const url = "https://aplecash.smartpowerbilling.com/cashcollect/customer/find?account_number="+number;
         const other = {
             method: 'GET',
             headers: {
                 "Content-Type": "text/plain",
-                Authorization:'Bearer'+' '+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RhZG1pbiIsImlhdCI6MTY0ODY0MDMzMH0.lalmlLLMNbCV99IGi6Nb7Lmoleu1WVEPsoiID2ZV3JI'
+                Authorization:'Bearer'+' '+`${token}`
             }
            
         }
@@ -35,6 +36,8 @@ function Content2(){
         setIsLoading(false);
         }
         console.log(data);
+        sessionStorage.setItem('name', data.map((name)=>data[0].name));
+        sessionStorage.setItem('category', data.map(()=>data[0].metering_type));
     }, [data]);
 
     return(
@@ -206,10 +209,10 @@ function Content2(){
 
                             <ul className="pager wizard no-style">
                                 <li  className="next">
-                                    <button className="btn btn-primary btn-cons btn-animated from-left fa fa-forward pull-right"
-                                            type="button" onClick={()=>send(amount,data.map((metering_type)=>data[0].metering_type),data.map((acc_no)=>data[0].acc_no),data.map((name)=>data[0].name))}>
-                                        <span>Pay Now</span>
-                                    </button>
+                                    <Link to={"/details/"+number+"/"+amount+"/pay"} className="btn btn-primary btn-cons btn-animated from-left fa fa-forward pull-right"
+                                            type="button" >
+                                        <span>Confirm</span>
+                                    </Link>
                                 </li>
                                 {/* <li className="next finish hidden">
                                     <button  id="payBtn"
@@ -249,20 +252,6 @@ function Content2(){
     )
 }
 
-function send(amount,bill,acc,name){
-    const url = "https://aplecash.smartpowerbilling.com/cashcollect/post/collection";
-    const other = {
-        method: 'POST',
-        body: JSON.stringify(options(acc,bill,amount,name)),
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization:'Bearer'+' '+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RhZG1pbiIsImlhdCI6MTY0ODY0MDMzMH0.lalmlLLMNbCV99IGi6Nb7Lmoleu1WVEPsoiID2ZV3JI'
-        }
-    }
-    fetch(url,other)
-    .then((response) => response.json())
-    .then((data) => console.log('Success:',data))
-    .catch((error) => console.log(error));
-}
+
 
 export default Content2;
