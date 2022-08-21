@@ -3,7 +3,6 @@ import '../../header/css/bootstrap.min.css';
 import '../../header/css/pages.css';
 import '../../header/css/home.css';
 import logo from '../../header/logo_black.png';
-import send from '../../thirdpage/payment';
 import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
