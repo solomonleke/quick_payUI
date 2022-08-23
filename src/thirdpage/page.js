@@ -15,7 +15,10 @@ export default function Content(){
     const navigate = useNavigate()
     const name = sessionStorage.getItem('name');
     const meter = sessionStorage.getItem('category');
+    const meter_no = sessionStorage.getItem('meter_no');
+
     sessionStorage.setItem('amount', amount);
+    
 
     return(
         <div className='page-content-wrapper'>
@@ -125,7 +128,7 @@ export default function Content(){
                                                     alert('Please use the wallet option as this option is currently not available.')
                                                 }else if(Wchecked===true){
                                                     console.log('Wallet')
-                                                    send(amount,meter,number,name)
+                                                    send(amount,meter,meter_no,name)
                                                     navigate('/checkout')
                                                 }
                                             }} >
