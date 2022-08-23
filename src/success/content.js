@@ -1,4 +1,4 @@
-
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Success(){
@@ -8,6 +8,7 @@ export default function Success(){
     const token = sessionStorage.getItem('token_id');
     const unit = sessionStorage.getItem('unit');
     const amount = sessionStorage.getItem('amount');
+    const navigate = useNavigate()
     return(
         <div className="container">
                 <div className="row row-same-height" style={{background:"white"}}>
@@ -26,7 +27,7 @@ export default function Success(){
                                 </tr>
                                 <tr>
                                     <td className=" col-md-9">
-                                        <span className="m-l-10 font-montserrat fs-11 all-caps">Category</span>
+                                        <span className="m-l-10 font-montserrat fs-11 all-caps">Metering Type</span>
                                     </td>
                                     <td className=" col-md-3 text-right">
                                         <span> {category}</span>
@@ -59,6 +60,22 @@ export default function Success(){
                                 </tr>
                     
                             </table>
+                            <div className="padding-20 sm-padding-5 sm-m-b-20 sm-m-t-20 bg-white clearfix">
+
+                            <ul className="pager wizard no-style">
+                                <li  className="next">
+                                    <button className="btn btn-primary btn-cons btn-animated from-left fa fa-forward pull-right"
+                                            type="submit" onClick={()=>{
+                                                
+                                                    navigate('/receipt')
+                                                
+                                            }} >
+                                        <span>Go to Receipt</span>
+                                    </button>
+                                </li>
+                                
+                            </ul>
+                        </div>
                         </div>
                     </div>
                 </div>

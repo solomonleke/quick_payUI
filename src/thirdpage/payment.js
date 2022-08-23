@@ -3,7 +3,9 @@ import options from "../secondPage/content/apiPreps";
 
 export default function send(amount,bill,acc,name){
     
-    const token = sessionStorage.getItem('token');
+    let token=sessionStorage.getItem('token');
+    if(!token){token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RhZG1pbiIsImlhdCI6MTY0ODY0MDMzMH0.lalmlLLMNbCV99IGi6Nb7Lmoleu1WVEPsoiID2ZV3JI'}
+    
     const url = "https://aplecash.smartpowerbilling.com/cashcollect/post/collection";
     const other = {
         method: 'POST',
@@ -21,10 +23,12 @@ export default function send(amount,bill,acc,name){
                         sessionStorage.setItem('limit_amount', data.vendorBal);
                         sessionStorage.setItem('message', data.message);
                         sessionStorage.setItem('category', data.category);
-                        sessionStorage.setItem('account', data.account);
+                        // sessionStorage.setItem('account', data.account);
                         sessionStorage.setItem('token_id', data.token);
                         sessionStorage.setItem('unit', data.unit);
-                        sessionStorage.setItem('amount', data.amount);
+                        // sessionStorage.setItem('amount', data.amount);
+                        sessionStorage.setItem('vendor', data.vendorName);
+                        sessionStorage.setItem('arrears', data.arrears);
                     })
     .catch((error) => console.log(error));
 

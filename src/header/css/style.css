@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;400;900&display=swap');
+
+:root {
+  --primary: #0000ff;
+  --secondary: #3d3d3d; 
+  --white: #fff;
+}
+body {
+    color: #525f7f;
+    margin: 0;
+    font-size: 0.875rem;
+    font-family: Open Sans,sans-serif;
+    font-weight: 400;
+    line-height: 1.43;
+    background-color: #f8f9fe;
+}
+/**{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}*/
+
+.bold{
+    font-weight: 1000;
+    color: #e69d67;
+}
+
+.light{
+    font-weight: 100;
+}
+
+.wrapper{
+    background: var(--white);
+    /*padding: 30px;*/
+     /*width: 50%;*/
+     /*width: 40%;*/
+     margin-left: 6%;
+     margin-right: 66%;
+}
+
+    
+.invoice_wrapper{
+    border: 2px solid var(--primary);
+    /*width: 650px;*/
+    /*width: 510px;*/
+    /*max-width: 100%;*/
+}
+
+.invoice_wrapper .heade .logo_invoice_wrap,
+.invoice_wrapper .heade .bill_total_wrap{
+    display: flex;
+    justify-content: space-between;
+    /*padding: 30px;*/
+    margin-top: -48px;
+}
+
+.invoice_wrapper .heade .logo_sec{
+    display: flex;
+    align-items: center;
+}
+
+.invoice_wrapper .heade .logo_sec .title_wrap{
+   /* margin-left: 5px;*/
+}
+
+.invoice_wrapper .heade .logo_sec .title_wrap .title{
+    text-transform: uppercase;
+    font-size: 18px;
+    color: var(--primary);
+}
+
+.invoice_wrapper .heade .logo_sec .title_wrap .sub_title{
+    font-size: 12px;
+}
+
+.invoice_wrapper .heade .invoice_sec,
+.invoice_wrapper .heade .bill_total_wrap .total_wrap{
+    /*text-align: right;*/
+}
+
+.invoice_wrapper .heade .invoice_sec .invoice{
+    font-size: 28px;
+    color: var(--primary);
+    margin-bottom: 0px;
+}
+
+.invoice_wrapper .heade .invoice_sec .invoice_no,
+.invoice_wrapper .heade .invoice_sec .date{
+   /*display: flex;*/
+    width: 130px;
+    margin-top: 0px;
+}
+
+.invoice_wrapper .heade .invoice_sec .invoice_no span:first-child,
+.invoice_wrapper .heade .invoice_sec .date span:first-child{
+    width: 70px;
+    text-align: left;
+}
+
+.invoice_wrapper .heade .invoice_sec .invoice_no span:last-child,
+.invoice_wrapper .heade .invoice_sec .date span:last-child{
+    width: calc(100% - 70px);
+}
+
+.invoice_wrapper .heade .bill_total_wrap .total_wrap .price,
+.invoice_wrapper .heade .bill_total_wrap .bill_sec .name{
+    color: var(--primary);
+    font-size: 20px;
+}
+
+.invoice_wrapper .body .main_table .table_header{
+    background: var(--primary);
+    /*width: 80%;*/
+}
+
+.invoice_wrapper .body .main_table .table_header .row{
+    color: var(--white);
+    font-size: 18px;
+    border-bottom: 0px; 
+}
+
+.invoice_wrapper .body .main_table .row{
+    display: flex;
+    border-bottom: 1px solid var(--secondary);
+   /* width: 80%;*/
+}
+
+.invoice_wrapper .body .main_table .row .col{
+   /* padding: 10px;*/
+  /*  padding-top: 5px;
+    padding-bottom: 5px;*/
+    padding-right: 10px;
+    padding-left: 20px;
+}
+.invoice_wrapper .body .main_table .row .col_no{width: 5%;}
+.invoice_wrapper .body .main_table .row .col_des{width: 39%;}
+.invoice_wrapper .body .main_table .row .col_price{color: #0000ff;text-align: center;}
+.invoice_wrapper .body .main_table .row .col_qty{width: 10%; text-align: center;}
+.invoice_wrapper .body .main_table .row .col_total{color: blue; width: 20%; text-align: right;}
+
+.invoice_wrapper .body .paymethod_grandtotal_wrap{
+    display: flex;
+    justify-content: space-between;
+    /*padding: 5px 0 30px;*/
+    align-items: flex-end;
+}
+
+.invoice_wrapper .body .paymethod_grandtotal_wrap .paymethod_sec{
+    /*padding-left: 30px;*/
+}
+
+.invoice_wrapper .body .paymethod_grandtotal_wrap .grandtotal_sec{
+    width: 30%;
+}
+
+.invoice_wrapper .body .paymethod_grandtotal_wrap .grandtotal_sec p{
+    display: flex;
+    width: 100%;
+    padding-bottom: 5px;
+}
+
+.invoice_wrapper .body .paymethod_grandtotal_wrap .grandtotal_sec p span{
+    padding: 0 10px;
+}
+
+.invoice_wrapper .body .paymethod_grandtotal_wrap .grandtotal_sec p span:first-child{
+    width: 60%;
+}
+
+.invoice_wrapper .body .paymethod_grandtotal_wrap .grandtotal_sec p span:last-child{
+    width: 40%;
+    text-align: right;
+}
+
+.invoice_wrapper .body .paymethod_grandtotal_wrap .grandtotal_sec p:last-child span{
+    background: var(--primary);
+    padding: 10px;
+    color: #fff;
+}
+
+.invoice_wrapper .footer{
+    padding: 30px;
+}
+
+.invoice_wrapper .footer > p{
+    color: var(--primary);
+    text-decoration: underline;
+    font-size: 18px;
+    padding-bottom: 5px;
+}
+
+.invoice_wrapper .footer .terms .tc{
+    font-size: 16px;
+}

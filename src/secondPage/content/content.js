@@ -10,9 +10,13 @@ import { useState } from 'react';
 function Content2(){
     const [isLoading, setIsLoading] = React.useState(true);
     const [data, setData] = React.useState([]);
+    const [isprepaid,setIsprepaid] = useState(true);
     const {number} = useParams();
     const [amount,setAmount]=useState('');
-    const token = sessionStorage.getItem('token');
+    let token=sessionStorage.getItem('token');
+    if(!token){token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RhZG1pbiIsImlhdCI6MTY0ODY0MDMzMH0.lalmlLLMNbCV99IGi6Nb7Lmoleu1WVEPsoiID2ZV3JI'}
+    console.log(token)
+    
     React.useEffect(() => {
         const url = "https://aplecash.smartpowerbilling.com/cashcollect/customer/find?account_number="+number;
         const other = {
@@ -37,6 +41,23 @@ function Content2(){
         console.log(data);
         sessionStorage.setItem('name', data.map((name)=>data[0].name));
         sessionStorage.setItem('category', data.map(()=>data[0].metering_type));
+        sessionStorage.setItem('tariff_name', data.map(()=>data[0].tariff_name));
+        sessionStorage.setItem('tariff', data.map(()=>data[0].tariff));
+        sessionStorage.setItem('vat', data.map(()=>data[0].vat));
+        sessionStorage.setItem('phone_no', data.map(()=>data[0].phone_no));
+        sessionStorage.setItem('address', data.map(()=>data[0].street));
+        sessionStorage.setItem('meter_no', data.map(()=>data[0].meter_no));
+        sessionStorage.setItem('old_acc_no', data.map(()=>data[0].old_acc_no));
+        sessionStorage.setItem('transformer_id', data.map(()=>data[0].transformer_id));
+        sessionStorage.setItem('feeder_id', data.map(()=>data[0].feeder_id));
+        sessionStorage.setItem('account', data.map(()=>data[0].acc_no));
+        sessionStorage.setItem('billed', data.map(()=>data[0].billedamount));
+    }, [data]);
+
+    React.useEffect(() => {
+        if (data.map(()=>data[0].metering_type) == 'postpaid') {
+            setIsprepaid(false);
+        }
     }, [data]);
 
     return(
@@ -47,7 +68,7 @@ function Content2(){
             <div className=" container-fluid   container-fixed-lg">
 
                 <ol className="breadcrumb">
-                    <li className="breadcrumb-item"><a href="/energypay/">Home</a></li>
+                    <li className="breadcrumb-item"><Link to='/' >Home</Link></li>
                     <li className="breadcrumb-item active">Payment</li>
                 </ol>
 
@@ -87,11 +108,14 @@ function Content2(){
                                             data.map((name) => (<p>{data[0].name} ({data[0].acc_no})</p>))
                                             )}</p>
                                         <table className="table table-condensed">
+                                        {isprepaid ? (<span></span>):
+                                            (
                                             <tr>
                                                 <td className=" col-md-8">
                                                     <span className="m-l-10 font-montserrat fs-11 all-caps">Billed amount</span>
                                                 </td>
                                                 <td className=" col-md-4 text-right">
+                                                
                                                     {isLoading ? (
                                                         <span>Loading...</span>
                                                     ) : (
@@ -103,6 +127,8 @@ function Content2(){
                                                     )}
                                                 </td>
                                             </tr>
+                                            )
+                                            }
                                             <tr>
                                                 <td className=" col-md-8">
                                                     <span className="m-l-10 font-montserrat fs-11 all-caps">VAT</span>
@@ -205,34 +231,20 @@ function Content2(){
                         </div>
                         
                         <div className="padding-20 sm-padding-5 sm-m-b-20 sm-m-t-20 bg-white clearfix">
-
+                        
                             <ul className="pager wizard no-style">
                                 <li  className="next">
+                                    {
+                                        (amount !=="") &&
                                     <Link to={"/details/"+number+"/"+amount+"/pay"} className="btn btn-primary btn-cons btn-animated from-left fa fa-forward pull-right"
                                             type="button" >
                                         <span>Confirm</span>
                                     </Link>
+                                }
                                 </li>
-                                {/* <li className="next finish hidden">
-                                    <button  id="payBtn"
-                                            className="btn btn-primary btn-cons btn-animated from-left fa fa-check pull-right"
-                                            type="button">
-                                        <span>Pay Now</span>
-                                    </button>
-                                </li>
-                                <li className="previous first hidden">
-                                    <button className="btn btn-default btn-cons btn-animated from-left fa fa-cog pull-right"
-                                            type="button">
-                                        <span>First</span>
-                                    </button>
-                                </li>
-                                <li className="previous">
-                                    <button className="btn btn-default btn-cons pull-right"
-                                            type="button">
-                                        <span>Previous</span>
-                                    </button>
-                                </li> */}
                             </ul>
+                                                            
+                            
                         </div>
                         <div className="wizard-footer padding-20 bg-master-light">
                             <p className="small hint-text pull-left no-margin">

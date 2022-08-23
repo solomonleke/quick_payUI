@@ -1,19 +1,22 @@
 import '../header/css/bootstrap.min.css';
 import '../header/css/pages.css';
 import '../header/css/home.css';
-import { useState } from 'react';
+import { useState} from 'react';
 import send from './payment';
 import { useParams } from "react-router-dom";
 // import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 export default function Content(){
     const [Wchecked, setWChecked] = useState(false);
-    // const [Bchecked, setBChecked] = useState(false);
+    const [Bchecked, setBChecked] = useState(false);
     const {number,amount}=useParams(); 
     const navigate = useNavigate()
     const name = sessionStorage.getItem('name');
     const meter = sessionStorage.getItem('category');
+    sessionStorage.setItem('amount', amount);
+
     return(
         <div className='page-content-wrapper'>
             <div className="tab-pane slide-left p-l-20 p-r-20   sm-no-padding" id="tab2">
@@ -60,7 +63,7 @@ export default function Content(){
                                 </tr>
                             </table>
                             <p className="small">By clicking Pay Now You will Agree to the Payment <a
-                                    target="_blank" href="/energypay/termsAndConditions">Terms &amp; Conditions</a></p>
+                                    target="_blank" href="#">Terms &amp; Conditions</a></p>
                         </div>
                     </div>
                     <div className="col-md-7">
@@ -71,7 +74,11 @@ export default function Content(){
                                 <div className="card-header " role="tab">
                                     <div className="card-title">
                                         <div className="checkbox check-primary  checkbox-circle">
-                                            <input type="checkbox" id="creditCard" checked={Wchecked} onChange={e => setWChecked(e.target.checked)}></input>
+                                            <input type="checkbox" id="creditCard" checked={Wchecked} onChange={(e) => {
+                                                if((Wchecked===false || Wchecked===true) && Bchecked===false){
+                                                    setWChecked(e.target.checked)
+                                                }else{setBChecked(false);setWChecked(e.target.checked)}
+                                                }}></input>
                                             <label for="creditCard">Wallet</label>
                                         </div>
                                     </div>
@@ -86,12 +93,16 @@ export default function Content(){
                                 </div>
                             </div>
 
-                            {/* <div className="card card-default">
+                            <div className="card card-default">
                                 <div className="card-header " role="tab">
 
                                     <h4 className="card-title">
                                         <div className="checkbox check-primary  checkbox-circle">
-                                            <input type="checkbox" id="bank" checked={Bchecked} onChange={e => setBChecked(e.target.checked)}></input>
+                                            <input type="checkbox" id="bank" checked={Bchecked} onChange={(e) => {
+                                                if((Bchecked===false || Bchecked===true) && Wchecked===false){
+                                                    setBChecked(e.target.checked)
+                                                }else{setWChecked(false);setBChecked(e.target.checked)}
+                                                }}></input>
                                             <label for="bank">Bank Transfer</label>
                                         </div>
                                     </h4>
@@ -102,14 +113,22 @@ export default function Content(){
                                         </li>
                                     </ul>
                                 </div>
-                            </div> */}
+                            </div>
                             <div className="padding-20 sm-padding-5 sm-m-b-20 sm-m-t-20 bg-white clearfix">
 
                             <ul className="pager wizard no-style">
                                 <li  className="next">
                                     <button className="btn btn-primary btn-cons btn-animated from-left fa fa-forward pull-right"
-                                            type="submit" onClick={()=>{send(amount,meter,number,name)
-                                                                            navigate('/checkout')}} >
+                                            type="submit" onClick={()=>{
+                                                if(Bchecked===true){
+                                                    console.log('Bank')
+                                                    alert('Please use the wallet option as this option is currently not available.')
+                                                }else if(Wchecked===true){
+                                                    console.log('Wallet')
+                                                    send(amount,meter,number,name)
+                                                    navigate('/checkout')
+                                                }
+                                            }} >
                                         <span>Pay Now</span>
                                     </button>
                                 </li>
