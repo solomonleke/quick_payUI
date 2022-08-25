@@ -121,7 +121,7 @@ function Content2(){
                                                     ) : (
                                                         data.map((billedamount) => (
                                                         <span>
-                                                            &#8358; {data[0].billedamount}
+                                                            &#8358; {data[0].billedamount.toFixed(2)}
                                                         </span>
                                                         ))
                                                     )}
@@ -139,7 +139,7 @@ function Content2(){
                                                     ) : (
                                                         data.map((vat) => (
                                                         <span>
-                                                            &#8358; {data[0].vat}
+                                                            &#8358; {data[0].vat.toFixed(2)}
                                                         </span>
                                                         ))
                                                     )}
@@ -155,7 +155,7 @@ function Content2(){
                                                     ) : (
                                                         data.map((vat) => (
                                                         <span>
-                                                            &#8358; {data[0].credit}
+                                                            &#8358; {data[0].credit.toFixed(2)}
                                                         </span>
                                                         ))
                                                     )}
@@ -169,7 +169,7 @@ function Content2(){
                                                     ) : (
                                                         data.map((vat) => (
                                                         <span>
-                                                            &#8358; {data[0].credit + data[0].billedamount}
+                                                            &#8358; {(data[0].credit + data[0].billedamount).toFixed(2)}
                                                         </span>
                                                         ))
                                                     )}</h4>
