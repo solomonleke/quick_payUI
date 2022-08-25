@@ -307,7 +307,7 @@ return (
                                         </div>
                                         <div className="col col_price">
                                             <p>
-                                            ₦{((vat / 100) * amount) || ""}
+                                            ₦{(0.75* amount).toFixed(2) || ""}
                                             </p>
                                         </div>
                                     </div>
