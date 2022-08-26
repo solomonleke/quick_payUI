@@ -5,7 +5,7 @@ import SecondPage from './secondPage/main';
 import Third from "./thirdpage/main";
 import LandingPage from './firstPage/firstPage';
 import Login from "./auth/main";
-import Interlude from "./auth/interlude";
+// import Interlude from "./auth/interlude";
 import Receipt from "./success/main";
 import Invoice from "./receipt/receipt";
 
@@ -14,10 +14,10 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="details/:number" element={<SecondPage />} />
-        <Route path="details/:number/:amount/pay" element={<Third />} />
+        <Route path="details/" element={<SecondPage />} />
+        <Route path="payment/" element={<Third />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/:username/:password" element={<Interlude />} />
+        {/* <Route path="/:username/:password" element={<Interlude />} /> */}
         <Route path="/checkout" element={<Receipt />} />
         <Route path="/receipt" element={<Invoice />} />
       </Routes>
