@@ -3,21 +3,56 @@ import '../header/css/pages.css';
 import '../header/css/home.css';
 import { useState} from 'react';
 import send from './payment';
-import { useParams } from "react-router-dom";
-// import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import options from '../secondPage/content/apiPreps';
+// import { Link } from 'react-router-dom';
+
 import React from 'react';
 
 export default function Content(){
     const [Wchecked, setWChecked] = useState(false);
     const [Bchecked, setBChecked] = useState(false);
-    const {number,amount}=useParams(); 
+    // const {number,amount}=useParams(); 
     const navigate = useNavigate()
     const name = sessionStorage.getItem('name');
     const meter = sessionStorage.getItem('category');
     const meter_no = sessionStorage.getItem('meter_no');
+    const number = sessionStorage.getItem('account');
+    const amount = sessionStorage.getItem('amount');
 
-    sessionStorage.setItem('amount', amount);
+
+    function send(amount,bill,acc,name){
+        if(acc===null){
+            alert('Customer has no assigned meter and payment cannot be made')
+            console.log(acc)
+            navigate('/payment')
+        }
+        console.log(acc)
+        const url = "http://164.92.155.135:7101/payment";
+        const other = {
+            method: 'POST',
+            body: JSON.stringify(options(acc,bill,amount,name)),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }
+    
+        fetch(url,other)
+        .then((response) => response.json())
+        .then((data) => {alert(data.message)
+                            console.log(data)
+                            sessionStorage.setItem('limit_amount', data.vendorBal);
+                            sessionStorage.setItem('token_id', data.token);
+                            sessionStorage.setItem('unit', data.unit);
+                            // sessionStorage.setItem('amount', data.amount);
+                            sessionStorage.setItem('vendor', data.vendorName);
+                            sessionStorage.setItem('arrears', data.arrears);
+                            navigate('/checkout')
+                        })
+        .catch((error) => console.log(error));
+    
+    }
+    
     
 
     return(
@@ -129,7 +164,7 @@ export default function Content(){
                                                 }else if(Wchecked===true){
                                                     console.log('Wallet')
                                                     send(amount,meter,meter_no,name)
-                                                    navigate('/checkout')
+                                                    
                                                 }
                                             }} >
                                         <span>Pay Now</span>

@@ -2,9 +2,12 @@ import options from "../secondPage/content/apiPreps";
 
 
 export default function send(amount,bill,acc,name){
+   
     
-    let token=sessionStorage.getItem('token');
-    if(!token){token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RhZG1pbiIsImlhdCI6MTY0ODY0MDMzMH0.lalmlLLMNbCV99IGi6Nb7Lmoleu1WVEPsoiID2ZV3JI'}
+    if(acc=='' || acc == undefined){
+        alert('Customer has no assigned meter and payment cannot be made')
+        
+    }
     
     const url = "https://aplecash.smartpowerbilling.com/cashcollect/post/collection";
     const other = {
@@ -12,7 +15,6 @@ export default function send(amount,bill,acc,name){
         body: JSON.stringify(options(acc,bill,amount,name)),
         headers: {
             'Content-Type': 'application/json',
-            Authorization:'Bearer'+' '+`${token}`
         }
     }
 

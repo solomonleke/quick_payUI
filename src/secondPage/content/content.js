@@ -8,57 +8,25 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 function Content2(){
-    const [isLoading, setIsLoading] = React.useState(true);
+    const [isLoading, setIsLoading] = React.useState(false);
     const [data, setData] = React.useState([]);
     const [isprepaid,setIsprepaid] = useState(true);
-    const {number} = useParams();
     const [amount,setAmount]=useState('');
-    let token=sessionStorage.getItem('token');
-    if(!token){token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RhZG1pbiIsImlhdCI6MTY0ODY0MDMzMH0.lalmlLLMNbCV99IGi6Nb7Lmoleu1WVEPsoiID2ZV3JI'}
-    console.log(token)
-    
-    React.useEffect(() => {
-        const url = "https://aplecash.smartpowerbilling.com/cashcollect/customer/find?account_number="+number;
-        const other = {
-            method: 'GET',
-            headers: {
-                "Content-Type": "text/plain",
-                Authorization:'Bearer'+' '+`${token}`
-            }
-           
-        }
-        fetch(url,other)
-        .then((response) => response.json())
-        .then((json) => setData(json))
-        .catch((error) => console.log(error));
-        
-    }, []);
+    const acc_no=sessionStorage.getItem('account');
+    const name=sessionStorage.getItem('name');
+    const billedamount=sessionStorage.getItem('billed');
+    const vat=sessionStorage.getItem('vat');
+    const credit=sessionStorage.getItem('credit');
+    const metering_type=sessionStorage.getItem('category');
+    const Total=sessionStorage.getItem('Total');
+
+    sessionStorage.setItem('amount', amount);
 
     React.useEffect(() => {
-        if (data.length !== 0) {
-        setIsLoading(false);
-        }
-        console.log(data);
-        sessionStorage.setItem('name', data.map((name)=>data[0].name));
-        sessionStorage.setItem('category', data.map(()=>data[0].metering_type));
-        sessionStorage.setItem('tariff_name', data.map(()=>data[0].tariff_name));
-        sessionStorage.setItem('tariff', data.map(()=>data[0].tariff));
-        sessionStorage.setItem('vat', data.map(()=>data[0].vat));
-        sessionStorage.setItem('phone_no', data.map(()=>data[0].phone_no));
-        sessionStorage.setItem('address', data.map(()=>data[0].street));
-        sessionStorage.setItem('meter_no', data.map(()=>data[0].meter_no));
-        sessionStorage.setItem('old_acc_no', data.map(()=>data[0].old_acc_no));
-        sessionStorage.setItem('transformer_id', data.map(()=>data[0].transformer_id));
-        sessionStorage.setItem('feeder_id', data.map(()=>data[0].feeder_id));
-        sessionStorage.setItem('account', data.map(()=>data[0].acc_no));
-        sessionStorage.setItem('billed', data.map(()=>data[0].billedamount));
-    }, [data]);
-
-    React.useEffect(() => {
-        if (data.map(()=>data[0].metering_type) == 'postpaid') {
+        if (metering_type == 'postpaid') {
             setIsprepaid(false);
         }
-    }, [data]);
+    }, []);
 
     return(
     <div className="page-content-wrapper ">
@@ -93,19 +61,19 @@ function Content2(){
                                         <div>{isLoading ? (
                                             <p className="pull-right bold">Loading...</p>
                                         ) : (
-                                            data.map((acc_no) => (
+                                            
                                             <p className="pull-right bold">
-                                                {data[0].acc_no}
+                                                {acc_no}
                                             </p>
-                                            ))
+                                         
                                         )}
                                             <p> {isLoading ? ( <p>Loading...</p>) : (
-                                            data.map((name) => (<p>{data[0].name}</p>))
+                                            <p>{name}</p>
                                             )}</p></div>
 
                                         <p className="small hint-text">
                                         {isLoading ? ( <p>Loading...</p>) : (
-                                            data.map((name) => (<p>{data[0].name} ({data[0].acc_no})</p>))
+                                            <p>{name} {acc_no}</p>
                                             )}</p>
                                         <table className="table table-condensed">
                                         {isprepaid ? (<span></span>):
@@ -119,11 +87,11 @@ function Content2(){
                                                     {isLoading ? (
                                                         <span>Loading...</span>
                                                     ) : (
-                                                        data.map((billedamount) => (
+                                                        
                                                         <span>
-                                                            &#8358; {data[0].billedamount.toFixed(2)}
+                                                            &#8358; {billedamount}
                                                         </span>
-                                                        ))
+                                                    
                                                     )}
                                                 </td>
                                             </tr>
@@ -137,11 +105,11 @@ function Content2(){
                                                 {isLoading ? (
                                                         <span>Loading...</span>
                                                     ) : (
-                                                        data.map((vat) => (
+                                                        
                                                         <span>
-                                                            &#8358; {data[0].vat.toFixed(2)}
+                                                            &#8358; {vat}
                                                         </span>
-                                                        ))
+                                                        
                                                     )}
                                                 </td>
                                             </tr>
@@ -153,11 +121,11 @@ function Content2(){
                                                 {isLoading ? (
                                                         <span>Loading...</span>
                                                     ) : (
-                                                        data.map((vat) => (
+                                                        
                                                         <span>
-                                                            &#8358; {data[0].credit.toFixed(2)}
+                                                            &#8358; {credit}
                                                         </span>
-                                                        ))
+                                                        
                                                     )}
                                                 </td>
                                             </tr>
@@ -167,11 +135,10 @@ function Content2(){
                                                     {isLoading ? (
                                                         <span>Loading...</span>
                                                     ) : (
-                                                        data.map((vat) => (
                                                         <span>
-                                                            &#8358; {(data[0].credit + data[0].billedamount).toFixed(2)}
+                                                            &#8358; {Total}
                                                         </span>
-                                                        ))
+                                                       
                                                     )}</h4>
                                                 </td>
                                             </tr>
@@ -236,7 +203,7 @@ function Content2(){
                                 <li  className="next">
                                     {
                                         (amount !=="") &&
-                                    <Link to={"/details/"+number+"/"+amount+"/pay"} className="btn btn-primary btn-cons btn-animated from-left fa fa-forward pull-right"
+                                    <Link to={"/payment"} className="btn btn-primary btn-cons btn-animated from-left fa fa-forward pull-right"
                                             type="button" >
                                         <span>Confirm</span>
                                     </Link>
