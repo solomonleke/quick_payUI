@@ -2,7 +2,7 @@ import options from "../secondPage/content/apiPreps";
 
 
 export default function send(amount,bill,acc,name){
-   
+   const token = sessionStorage.getItem('token');
     
     if(acc=='' || acc == undefined){
         alert('Customer has no assigned meter and payment cannot be made')
@@ -15,6 +15,7 @@ export default function send(amount,bill,acc,name){
         body: JSON.stringify(options(acc,bill,amount,name)),
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer'+' '+token
         }
     }
 
