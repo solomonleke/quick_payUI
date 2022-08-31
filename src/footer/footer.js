@@ -1,5 +1,5 @@
-import '../header/css/bootstrap.min.css';
-import '../header/css/pages.css';
+import '../assets/css/bootstrap.min.css';
+import '../assets/css/style.css';
 
 function Footer(){
     return(

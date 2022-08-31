@@ -1,4 +1,4 @@
-import '../header/css/style.css';
+import '../assets/css/pages.css';
 import "./button.css";
 import logo from "./argon-react.png"
 import html2canvas from 'html2canvas'
@@ -106,7 +106,7 @@ function Invoice(){
 return (
     <React.Fragment>
         <br /><br /><br />
-        <div className="wrapper" id="receipt-div">
+        <div className="wrapper" id="receipt-div" style={{backgroundColor: "white"}}>
             <div className="invoice_wrapper" >
                 <div className="heade">
                     <br />
