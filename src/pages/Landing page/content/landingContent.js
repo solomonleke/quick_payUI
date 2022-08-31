@@ -22,7 +22,7 @@ export default function LandingContent(){
 
           var config = {
             method: 'post',
-            url: 'http://164.92.155.135:7101/details',
+            url: 'https://quikpayapi.smartpowerbilling.com/details',
             headers: { 
               'Content-Type': 'application/json'
             },
