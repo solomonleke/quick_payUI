@@ -244,7 +244,7 @@ export default function AccountContent(){
                     </div>
                     <div class="modal-body">
                         <div class="container px-5 mx-3">
-                        <Link to="" class="row mb-4 border p-3 shadow-sm bg-light">
+                        <Link to="/paystack" class="row mb-4 border p-3 shadow-sm bg-light">
                             <div class="col-4">
                                 <img src={bank} alt="" srcset=""></img>
                             </div> 
