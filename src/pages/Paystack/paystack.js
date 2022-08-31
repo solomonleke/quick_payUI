@@ -28,11 +28,7 @@ export default function payStack(){
     
     const initializePayment = usePaystackPayment(config);
     return (
-        <div>
-            <button onClick={() => {
-                initializePayment(onSuccess, onClose)
-            }}>Paystack Hooks Implementation</button>
-        </div>
+        initializePayment(onSuccess, onClose)
     );
 
 }

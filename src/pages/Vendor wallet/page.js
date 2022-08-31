@@ -38,12 +38,12 @@ export default function Content(){
         .then((response) => response.json())
         .then((data) => {alert(data.message)
                             console.log(data)
-                            sessionStorage.setItem('limit_amount', data.vendorBal);
-                            sessionStorage.setItem('token_id', data.token);
-                            sessionStorage.setItem('unit', data.unit);
+                            sessionStorage.setItem('limit_amount', data.data.vendorBal);
+                            sessionStorage.setItem('token_id', data.data.token);
+                            sessionStorage.setItem('unit', data.data.unit);
                             // sessionStorage.setItem('amount', data.amount);
-                            sessionStorage.setItem('vendor', data.vendorName);
-                            sessionStorage.setItem('arrears', data.arrears);
+                            sessionStorage.setItem('vendor', data.data.vendorName);
+                            sessionStorage.setItem('arrears', data.data.arrears);
                             navigate('/checkout')
                         })
         .catch((error) => console.log(error));
