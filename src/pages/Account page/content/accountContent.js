@@ -8,6 +8,7 @@ import wallet from "../../../assets/img/wallet.svg"
 import vendor from "../../../assets/img/ussd.svg"
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import payStack from '../../Paystack/paystack';
 
 export default function AccountContent(){
     const [isLoading, setIsLoading] = React.useState(false);
@@ -233,7 +234,7 @@ export default function AccountContent(){
                     </div>
                     <div class="modal-body">
                         <div class="container px-5 mx-3">
-                        <button class="row mb-4 border p-3 shadow-sm bg-light">
+                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100">
                             <div class="col-4">
                                 <img src={bank} alt="" srcset=""></img>
                             </div> 
