@@ -14,6 +14,7 @@ export default function AccountContent(){
     const [data, setData] = React.useState([]);
     const [isprepaid,setIsprepaid] = useState(true);
     const [amount,setAmount]=useState('');
+    const [email,setEmail]=useState('');
     const acc_no=sessionStorage.getItem('account');
     const name=sessionStorage.getItem('name');
     const billedamount=sessionStorage.getItem('billed');
@@ -26,6 +27,7 @@ export default function AccountContent(){
     const meter_no = sessionStorage.getItem('meter_no');
 
     sessionStorage.setItem('amount', amount);
+    sessionStorage.setItem('email', email);
 
     React.useEffect(() => {
         if (metering_type == 'postpaid') {
@@ -178,7 +180,7 @@ export default function AccountContent(){
                                                 <div class="form-group-attached">
                                                     <div class="form-group form-group-default ">
                                                         <label for="email">Email Address</label>
-                                                        <input id="email"name="email" value="" type="email" class="form-control w-50" placeholder="email address"></input>
+                                                        <input id="email"name="email" value={email} type="email" class="form-control w-50" placeholder="email address" onChange={e=>setEmail(e.target.value)}></input>
                                                     </div>
                                                 </div>
                                             </form>
@@ -231,14 +233,14 @@ export default function AccountContent(){
                     </div>
                     <div class="modal-body">
                         <div class="container px-5 mx-3">
-                        <Link to="/" class="row mb-4 border p-3 shadow-sm bg-light">
+                        <button class="row mb-4 border p-3 shadow-sm bg-light">
                             <div class="col-4">
                                 <img src={bank} alt="" srcset=""></img>
                             </div> 
                             <div class="col-8">
                                 <h6>Pay with card</h6>
                             </div>  
-                        </Link>
+                        </button>
                         <Link to="/" class="row mb-4 border p-3 shadow-sm bg-light">
                             <div class="col-4">
                                 <img src={wallet} alt="" srcset=""></img>
