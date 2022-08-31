@@ -3,7 +3,7 @@ import { usePaystackPayment } from 'react-paystack';
 
 
 
-export default function payStack(){
+export default function PayStack(){
     const amount = sessionStorage.getItem('amount');
     const email = sessionStorage.getItem('email');
 
@@ -15,13 +15,13 @@ export default function payStack(){
     };
     
     // you can call this function anything
-    const onSuccess = (reference) => {
+    const onSuccess = async(reference) => {
         const url = "https://quikpayapi.smartpowerbilling.com/verify/transaction/${reference}"
         const other = {
             method: 'GET',
             headers: {
                 "Content-Type": "text/plain",
-                Authorization:'Bearer'+' '+`${token}`
+
             }
         }
         const response = await fetch(url,other)
@@ -38,7 +38,11 @@ export default function payStack(){
     
     const initializePayment = usePaystackPayment(config);
     return (
-        initializePayment(onSuccess, onClose)
+        <div>
+            <button onClick={() => {
+                initializePayment(onSuccess, onClose)
+            }}>Paystack</button>
+        </div>
     );
 
 }
