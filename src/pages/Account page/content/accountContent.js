@@ -9,6 +9,7 @@ import vendor from "../../../assets/img/ussd.svg"
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 // import payStack from '../../Paystack/paystack';
+import { usePaystackPayment } from 'react-paystack';
 
 export default function AccountContent(){
     const [isLoading, setIsLoading] = React.useState(false);
