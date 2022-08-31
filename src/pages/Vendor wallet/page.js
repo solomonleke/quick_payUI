@@ -100,7 +100,7 @@ export default function Content(){
                             <p className="small">By clicking Pay Now You will Agree to the Payment <a target="_blank" href="#">Terms &amp; Conditions</a></p>
                             <ul class="pager wizard no-style">
                                     <li class="next finish">
-                                        <button id="payBtn" class="btn  btn-cons btn-animated from-left fa fa-check pull-right" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{send(amount,meter,number,name)}}>
+                                        <button id="payBtn" class="btn  btn-cons btn-animated from-left fa fa-check pull-right" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{send(amount,meter,meter_no,name)}}>
                                             <span>Pay</span>
                                         </button>
                                     </li>
