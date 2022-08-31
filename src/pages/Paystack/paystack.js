@@ -16,7 +16,17 @@ export default function payStack(){
     
     // you can call this function anything
     const onSuccess = (reference) => {
-      // Implementation for whatever you want to do with reference and after success call.
+        const url = "https://quikpayapi.smartpowerbilling.com/verify/transaction/${reference}"
+        const other = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "text/plain",
+                Authorization:'Bearer'+' '+`${token}`
+            }
+        }
+        const response = await fetch(url,other)
+        const data = await response.json()
+        console.log(data)
       console.log(reference);
     };
     

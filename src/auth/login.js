@@ -26,7 +26,7 @@ export default function SigninContent(){
 
         var config = {
           method: 'post',
-          url: 'http://164.92.155.135:7101/login',
+          url: 'https://quikpayapi.smartpowerbilling.com/login',
           headers: { 
             'Content-Type': 'application/json'
           },

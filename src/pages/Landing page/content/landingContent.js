@@ -56,7 +56,7 @@ export default function LandingContent(){
           //   console.log(JSON.stringify(response.data));
           })
           .catch(function (error) {
-            alert(response.data.message)
+            alert(error.data.message)
             console.log(error);
           });
     }
