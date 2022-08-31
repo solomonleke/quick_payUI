@@ -1,5 +1,5 @@
 import { usePaystackPayment } from 'react-paystack';
-
+import { useState } from 'react';
 
 
 
@@ -7,6 +7,7 @@ export default function PayStack(){
     const amount = sessionStorage.getItem('amount');
     const email = sessionStorage.getItem('email');
 
+    const [state,setState] = useState(false);
     const config = {
         reference: (new Date()).getTime().toString(),
         email: email,
@@ -15,20 +16,24 @@ export default function PayStack(){
     };
     
     // you can call this function anything
-    const onSuccess = (reference) => {
-        // const url = "https://quikpayapi.smartpowerbilling.com/verify/transaction/${reference}"
-        // const other = {
-        //     method: 'GET',
-        //     headers: {
-        //         "Content-Type": "text/plain",
+    const onSuccess = async(reference) => {
+        const url = "https://quikpayapi.smartpowerbilling.com/verify/transaction/${reference}"
+        const other = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "text/plain",
 
-        //     }
-        // }
-        // const response = await fetch(url,other)
-        // const data = await response.json()
-        // console.log(data)
+            }
+        }
+        const response = await fetch(url,other)
+        const data = await response.json()
+        console.log(data)
       console.log(reference);
     };
+
+    const sendSuccess = (reference) =>{
+        onSuccess(reference)
+    }
     
     // you can call this function anything
     const onClose = () => {
@@ -40,7 +45,7 @@ export default function PayStack(){
     return (
         <div>
             <button onClick={() => {
-                initializePayment(onSuccess, onClose)
+                initializePayment(sendSuccess, onClose)
             }}>Paystack</button>
         </div>
     );
