@@ -14,8 +14,10 @@ export default function AccountContent(){
     const [isLoading, setIsLoading] = React.useState(false);
     const [data, setData] = React.useState([]);
     const [isprepaid,setIsprepaid] = useState(true);
+    const [isloggedIn,setisloggedIn] = useState(false);
     const [amount,setAmount]=useState('');
     const [email,setEmail]=useState('');
+    const token=sessionStorage.getItem('token');
     const acc_no=sessionStorage.getItem('account');
     const name=sessionStorage.getItem('name');
     const billedamount=sessionStorage.getItem('billed');
@@ -39,7 +41,7 @@ export default function AccountContent(){
         };
         
         // you can call this function anything
-        const onSuccess = (reference) => {
+        const onSuccess =  async(reference) => {
             console.log(reference);
             const url = "https://quikpayapi.smartpowerbilling.com/verify/transaction/${reference}"
             const other = {
@@ -68,6 +70,12 @@ export default function AccountContent(){
     React.useEffect(() => {
         if (metering_type == 'postpaid') {
             setIsprepaid(false);
+        }
+    }, []);
+
+    React.useEffect(() => {
+        if (token) {
+            setisloggedIn(true);
         }
     }, []);
 
@@ -283,12 +291,18 @@ export default function AccountContent(){
                             </div>
                             <div class="col-8"><h6>Pay with wallet</h6></div>
                         </Link>
-                        <Link to="/vendor" class="row mb-4 border p-3 shadow-sm bg-light">
-                            <div class="col-4">
-                                <img src={vendor} alt="" srcset=""></img>
-                            </div>
-                            <div class="col-8"><h6>Pay with vendor balance</h6></div>
-                        </Link>
+
+                        {
+                            isloggedIn?(
+                                <Link to="/vendor" class="row mb-4 border p-3 shadow-sm bg-light">
+                                    <div class="col-4">
+                                        <img src={vendor} alt="" srcset=""></img>
+                                    </div>
+                                    <div class="col-8"><h6>Pay with vendor balance</h6></div>
+                                </Link>
+                            ):("")
+                        }
+                        
                         </div>
                     </div>
                     <div class="modal-footer">
