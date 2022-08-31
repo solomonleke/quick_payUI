@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-
+import { usePaystackPayment } from 'react-paystack';
 
 export default function Success(){
     const message = sessionStorage.getItem('message');
