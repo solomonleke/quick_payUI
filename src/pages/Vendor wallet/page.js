@@ -25,7 +25,7 @@ export default function Content(){
             navigate('/payment')
         }
         console.log(acc)
-        const url = "http://164.92.155.135:7101/payment";
+        const url = "https://quikpayapi.smartpowerbilling.com/payment";
         const other = {
             method: 'POST',
             body: JSON.stringify(options(acc,bill,amount,name)),
