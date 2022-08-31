@@ -15,18 +15,18 @@ export default function PayStack(){
     };
     
     // you can call this function anything
-    const onSuccess = async(reference) => {
-        const url = "https://quikpayapi.smartpowerbilling.com/verify/transaction/${reference}"
-        const other = {
-            method: 'GET',
-            headers: {
-                "Content-Type": "text/plain",
+    const onSuccess = (reference) => {
+        // const url = "https://quikpayapi.smartpowerbilling.com/verify/transaction/${reference}"
+        // const other = {
+        //     method: 'GET',
+        //     headers: {
+        //         "Content-Type": "text/plain",
 
-            }
-        }
-        const response = await fetch(url,other)
-        const data = await response.json()
-        console.log(data)
+        //     }
+        // }
+        // const response = await fetch(url,other)
+        // const data = await response.json()
+        // console.log(data)
       console.log(reference);
     };
     
