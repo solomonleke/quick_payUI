@@ -1,17 +1,5 @@
-import './css/bootstrap.min.css';
-// import './css/component.css';
-// import './css/dataTables.bootstrap.min.css';
-// import './css/font-awesome.css';
-// import './css/home.css';
-// import './css/jquery.scrollbar.css';
-// import './css/materialize-social.css';
-// import './css/offline-language.css';
-// import './css/offline-slide.css';
-// import './css/pace-theme-flash.css';
-// import './css/pages-icons.css';
-import './css/pages.css';
-// import './css/select2.min.css';
-// import './css/switchery.min.css';
+import '../assets/css/bootstrap.min.css';
+import '../assets/css/style.css';
 import logo from './logo_black.png';
 
 function Heading(){
