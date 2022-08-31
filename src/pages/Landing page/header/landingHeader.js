@@ -4,6 +4,7 @@ import logo from "../../../assets/img/logo_black.png";
 import React,{useState} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function LandingHeader(){
     const [number,setNumber]=useState('');
@@ -72,7 +73,7 @@ export default function LandingHeader(){
                         <ul className="navbar-nav py-4">
                             <li className="nav-item "><a href="http://" className="new nav-link">Support</a></li>
                             <li className="nav-item "><a href="http://" className="new rel nav-link">Buy Electricity</a></li>
-                            <li className="nav-item "><a href="http://" className="new rel nav-link">Vendor Login</a></li>
+                            <li className="nav-item "><Link to="/login" className="new rel nav-link">Vendor Login</Link></li>
                         </ul>
                     </div>
                 </nav>
