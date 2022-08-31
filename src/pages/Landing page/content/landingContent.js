@@ -21,7 +21,8 @@ export default function LandingContent(){
           });
 
           var config = {
-            method: 'post',
+            
+            method: 'post', 
             url: 'https://quikpayapi.smartpowerbilling.com/details',
             headers: { 
               'Content-Type': 'application/json'
