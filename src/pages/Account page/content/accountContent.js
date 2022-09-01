@@ -8,6 +8,9 @@ import wallet from "../../../assets/img/wallet.svg"
 import vendor from "../../../assets/img/ussd.svg"
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { usePaystackPayment } from 'react-paystack';
+import options from '../../Vendor wallet/apiPreps';
+import { useNavigate } from 'react-router-dom';
 // import payStack from '../../Paystack/paystack';
 // import { usePaystackPayment } from 'react-paystack';
 
@@ -32,7 +35,84 @@ export default function AccountContent(){
 
     sessionStorage.setItem('amount', amount);
     sessionStorage.setItem('email', email);
+    // sessionStorage.setItem('paystack',amount*100);
+    
+    const meter = sessionStorage.getItem('category');
+    
+    const number = sessionStorage.getItem('account');
 
+    const [state,setState] = useState(false);
+
+    const navigate = useNavigate()
+
+    const config = {
+        reference: (new Date()).getTime().toString(),
+        email: email,
+        amount: amount*100,
+        publicKey: 'pk_test_2181b977ad77556cfce56d12392bdeb9f6c610f0',
+    };
+    
+    // you can call this function anything
+    const onSuccess = async(reference) => {
+        console.log(reference);
+        const url = "https://quikpayapi.smartpowerbilling.com/verify/transaction/"+reference.reference
+        const other = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "text/plain",
+
+            }
+        }
+        const response = await fetch(url,other)
+        const data = await response.json()
+        console.log(data)
+        if(data.data.data.status=="success"){
+            const url = "https://quikpayapi.smartpowerbilling.com/payment";
+            const other = {
+                method: 'POST',
+                body: JSON.stringify(options(meter_no,meter,amount,name)),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }
+        
+            fetch(url,other)
+            .then((response) => response.json())
+            .then((data) => {alert(data.message)
+                                console.log(data)
+                                sessionStorage.setItem('limit_amount', data.data.vendorBal);
+                                sessionStorage.setItem('token_id', data.data.token);
+                                sessionStorage.setItem('unit', data.data.unit);
+                                // sessionStorage.setItem('amount', data.amount);
+                                sessionStorage.setItem('vendor', data.data.vendorName);
+                                sessionStorage.setItem('arrears', data.data.arrears);
+                                navigate('/checkout')
+                            })
+            .catch((error) => console.log(error));
+            setState(true)
+        }
+        else{
+            alert('Transaction failed')
+            navigate('/details')
+        }
+    };
+
+    const sendSuccess = (reference) =>{
+        onSuccess(reference)
+    }
+    
+    // you can call this function anything
+    const onClose = () => {
+      // implementation for  whatever you want to do when the Paystack dialog closed.
+      console.log('closed')
+      if(state==true){
+        navigate("/checkout")
+      }
+    }
+    
+    const initializePayment = usePaystackPayment(config);
+
+    
 
     React.useEffect(() => {
         if (metering_type == 'postpaid') {
@@ -244,14 +324,14 @@ export default function AccountContent(){
                     </div>
                     <div class="modal-body">
                         <div class="container px-5 mx-3">
-                        <Link to="/paystack" class="row mb-4 border p-3 shadow-sm bg-light">
+                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>initializePayment(sendSuccess, onClose)}>
                             <div class="col-4">
                                 <img src={bank} alt="" srcset=""></img>
                             </div> 
                             <div class="col-8">
                                 <h6>Pay with card</h6>
                             </div>  
-                        </Link>
+                        </button>
                         <Link to="/" class="row mb-4 border p-3 shadow-sm bg-light">
                             <div class="col-4">
                                 <img src={wallet} alt="" srcset=""></img>
