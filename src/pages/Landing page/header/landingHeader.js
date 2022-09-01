@@ -72,7 +72,7 @@ export default function LandingHeader(){
                     <div className="col-4 collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav py-4">
                             <li className="nav-item "><a href="http://" className="new nav-link">Support</a></li>
-                            <li className="nav-item "><a href="http://" className="new rel nav-link">Buy Electricity</a></li>
+                            <li className="nav-item "><a href="/" className="new rel nav-link">Buy Electricity</a></li>
                             <li className="nav-item "><Link to="/login" className="new rel nav-link">Vendor Login</Link></li>
                         </ul>
                     </div>

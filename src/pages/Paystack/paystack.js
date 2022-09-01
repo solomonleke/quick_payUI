@@ -19,7 +19,7 @@ export default function PayStack(){
     const config = {
         reference: (new Date()).getTime().toString(),
         email: email,
-        amount: amount,
+        amount: amount*100,
         publicKey: 'pk_test_2181b977ad77556cfce56d12392bdeb9f6c610f0',
     };
     
