@@ -67,10 +67,15 @@ export default function AccountContent(){
         const data = await response.json()
         console.log(data)
         if(data.data.data.status=="success"){
+            let body = options(meter_no,metering_type,amount,name)
+            if(metering_type == "postpaid"){
+                body = options(acc_no,metering_type,amount,name)
+            }
+            
             const url = "https://quikpayapi.smartpowerbilling.com/payment";
             const other = {
                 method: 'POST',
-                body: JSON.stringify(options(meter_no,meter,amount,name)),
+                body: JSON.stringify(body),
                 headers: {
                     'Content-Type': 'application/json',
                 }
