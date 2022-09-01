@@ -1,7 +1,7 @@
 import { usePaystackPayment } from 'react-paystack';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import options from '../Vendor wallet/apiPreps';
 
 export default function PayStack(){
     const amount = sessionStorage.getItem('amount');
