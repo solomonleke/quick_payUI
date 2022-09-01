@@ -26,7 +26,7 @@ export default function PayStack(){
     // you can call this function anything
     const onSuccess = async(reference) => {
         console.log(reference);
-        const url = "https://quikpayapi.smartpowerbilling.com/verify/transaction/"+reference
+        const url = "https://quikpayapi.smartpowerbilling.com/verify/transaction/"+reference.reference
         const other = {
             method: 'GET',
             headers: {
