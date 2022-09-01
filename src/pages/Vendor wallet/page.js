@@ -18,17 +18,22 @@ export default function Content(){
     const amount = sessionStorage.getItem('amount');
 
 
-    function send(amount,bill,acc,name){
-        if(acc===null){
-            alert('Customer has no assigned meter and payment cannot be made')
-            console.log(acc)
-            navigate('/payment')
+    function send(amount,bill,acc_no,name,meter_no){
+        // if(acc===null){
+        //     alert('Customer has no assigned meter and payment cannot be made')
+        //     console.log(acc)
+        //     navigate('/payment')
+        // }
+        // console.log(acc)
+        let body = options(meter_no,bill,amount,name)
+        if(bill == "postpaid"){
+            body = options(acc_no,bill,amount,name)
         }
-        console.log(acc)
+        
         const url = "https://quikpayapi.smartpowerbilling.com/payment";
         const other = {
             method: 'POST',
-            body: JSON.stringify(options(acc,bill,amount,name)),
+            body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -100,7 +105,7 @@ export default function Content(){
                             <p className="small">By clicking Pay Now You will Agree to the Payment <a target="_blank" href="#">Terms &amp; Conditions</a></p>
                             <ul class="pager wizard no-style">
                                     <li class="next finish">
-                                        <button id="payBtn" class="btn  btn-cons btn-animated from-left fa fa-check pull-right" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{send(amount,meter,meter_no,name)}}>
+                                        <button id="payBtn" class="btn  btn-cons btn-animated from-left fa fa-check pull-right" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{send(amount,meter,number,name,meter_no)}}>
                                             <span>Pay</span>
                                         </button>
                                     </li>
