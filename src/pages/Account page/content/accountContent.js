@@ -261,7 +261,7 @@ export default function AccountContent(){
                                                             <div class="form-group form-group-default input-group">
                                                                 <div class="">
                                                                     <label>Amount</label>
-                                                                    <input id="amount"  type="text" class="autonumeric form-control" required="" value={amount} aria-required="true" onChange={e=>setAmount(e.target.value)}></input>
+                                                                    <input id="amount"  type="text" class="autonumeric form-control" placeholder='0.0' required="" value={amount} aria-required="true" onChange={e=>setAmount(e.target.value)}></input>
                                                                 </div>
                                                                 <div class="input-group-addon">
                                                                     NGN
