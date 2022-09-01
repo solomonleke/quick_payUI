@@ -39,7 +39,7 @@ export default function LandingHeader(){
                 sessionStorage.setItem('tariff', result.tariff.toFixed(2));
                 sessionStorage.setItem('vat', result.vat.toFixed(2));
                 sessionStorage.setItem('phone_no', result.phone_no);
-                sessionStorage.setItem('address', result.street);
+                sessionStorage.setItem('address', result.address);
                 sessionStorage.setItem('meter_no', result.meter_no);
                 sessionStorage.setItem('old_acc_no', result.old_acc_no);
                 sessionStorage.setItem('transformer_id', result.transformer_id);
