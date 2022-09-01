@@ -332,21 +332,21 @@ export default function AccountContent(){
                                 <h6>Pay with card</h6>
                             </div>  
                         </button>
-                        <Link to="/" class="row mb-4 border p-3 shadow-sm bg-light">
+                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>navigate("/")}>
                             <div class="col-4">
                                 <img src={wallet} alt="" srcset=""></img>
                             </div>
                             <div class="col-8"><h6>Pay with wallet</h6></div>
-                        </Link>
+                        </button>
 
                         {
                             isloggedIn?(
-                                <Link to="/vendor" class="row mb-4 border p-3 shadow-sm bg-light">
+                                <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>navigate("/vendor")}>
                                     <div class="col-4">
                                         <img src={vendor} alt="" srcset=""></img>
                                     </div>
                                     <div class="col-8"><h6>Pay with vendor balance</h6></div>
-                                </Link>
+                                </button>
                             ):("")
                         }
                         
