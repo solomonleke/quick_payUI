@@ -9,7 +9,17 @@ import { Link } from "react-router-dom";
 export default function LandingHeader(){
     const [number,setNumber]=useState('');
     const [isCorrect,setisCorrect]=useState('');
+    const [isLoggedIn,setisLoggedIn]=useState(false);
     const navigate = useNavigate()
+
+    React.useEffect(() => {
+        let tok = sessionStorage.getItem('token');
+        if (tok) {
+            setisLoggedIn(true);
+        }
+    }, []);
+    console.log(isLoggedIn)
+    
     function Click(){
         let token=sessionStorage.getItem('token');
         if(!token){token=''}
@@ -49,7 +59,7 @@ export default function LandingHeader(){
                 sessionStorage.setItem('credit', result.credit.toFixed(2));
                 sessionStorage.setItem('Total',(result.credit+result.billed).toFixed(2))
 
-                navigate("/details")
+                navigate("/confirm")
               }
               setisCorrect("Invalid Account/Meter number !")
           //   console.log(JSON.stringify(response.data));
@@ -58,6 +68,8 @@ export default function LandingHeader(){
             alert(error.response.data.message)
             console.log(error);
           });
+
+          
     }
     return(
         <div className="container-fluid top bg-light m-0 pb-5">
@@ -73,7 +85,7 @@ export default function LandingHeader(){
                         <ul className="navbar-nav py-4">
                             <li className="nav-item "><a href="http://" className="new nav-link">Support</a></li>
                             <li className="nav-item "><a href="/" className="new rel nav-link">Buy Electricity</a></li>
-                            <li className="nav-item "><Link to="/login" className="new rel nav-link">Vendor Login</Link></li>
+                            <li className="nav-item ">{isLoggedIn?(""):(<Link to="/login" className="new rel nav-link">Vendor Login</Link>)}</li>
                         </ul>
                     </div>
                 </nav>

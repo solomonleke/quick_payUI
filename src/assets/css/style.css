@@ -191,7 +191,12 @@ Choose Area Css
 } */
 
 
-
+.order001{
+  position: relative;
+    max-width: 380px;
+    margin: 20px auto;
+    font-size: 18px;
+}
 
 
 .bold{

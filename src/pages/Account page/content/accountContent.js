@@ -4,7 +4,7 @@ import '../../../assets/css/style.css';
 import '../../../assets/css/pages.css';
 import logo from "../../../assets/img/logo_black.png"
 import bank from "../../../assets/img/card.svg"
-import wallet from "../../../assets/img/wallet.svg"
+import Wallet from "../../../assets/img/wallet.svg"
 import vendor from "../../../assets/img/ussd.svg"
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -54,7 +54,7 @@ export default function AccountContent(){
     
     // you can call this function anything
     const onSuccess = async(reference) => {
-        console.log(reference);
+        // console.log(reference);
         const url = "https://quikpayapi.smartpowerbilling.com/verify/transaction/"+reference.reference
         const other = {
             method: 'GET',
@@ -63,43 +63,49 @@ export default function AccountContent(){
 
             }
         }
-        const response = await fetch(url,other)
-        const data = await response.json()
-        console.log(data)
-        if(data.data.data.status=="success"){
-            let body = options(meter_no,metering_type,amount,name)
-            if(metering_type == "postpaid"){
-                body = options(acc_no,metering_type,amount,name)
-            }
-            
-            const url = "https://quikpayapi.smartpowerbilling.com/payment";
-            const other = {
-                method: 'POST',
-                body: JSON.stringify(body),
-                headers: {
-                    'Content-Type': 'application/json',
+        try {
+            const response = await fetch(url,other)
+            const data = await response.json()
+            // console.log(data)
+            if(data.data.data.status=="success"){
+                let body = options(meter_no,metering_type,amount,name)
+                if(metering_type == "postpaid"){
+                    body = options(acc_no,metering_type,amount,name)
                 }
+                
+                const url = "https://quikpayapi.smartpowerbilling.com/payment";
+                const other = {
+                    method: 'POST',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+            
+                fetch(url,other)
+                .then((response) => response.json())
+                .then((data) => {alert(data.message)
+                                    console.log(data)
+                                    sessionStorage.setItem('limit_amount', data.data.vendorBal);
+                                    sessionStorage.setItem('token_id', data.data.token);
+                                    sessionStorage.setItem('unit', data.data.unit);
+                                    // sessionStorage.setItem('amount', data.amount);
+                                    sessionStorage.setItem('vendor', data.data.vendorName);
+                                    sessionStorage.setItem('arrears', data.data.arrears);
+                                    window.location.href='/checkout'
+                                })
+                .catch((error) => console.log(error));
+                setState(true)
             }
+            else{
+                alert('Transaction failed')
+                navigate('/details')
+            }
+        } catch (error) {
+            console.log(error)
+        }
         
-            fetch(url,other)
-            .then((response) => response.json())
-            .then((data) => {alert(data.message)
-                                console.log(data)
-                                sessionStorage.setItem('limit_amount', data.data.vendorBal);
-                                sessionStorage.setItem('token_id', data.data.token);
-                                sessionStorage.setItem('unit', data.data.unit);
-                                // sessionStorage.setItem('amount', data.amount);
-                                sessionStorage.setItem('vendor', data.data.vendorName);
-                                sessionStorage.setItem('arrears', data.data.arrears);
-                                navigate('/checkout')
-                            })
-            .catch((error) => console.log(error));
-            setState(true)
-        }
-        else{
-            alert('Transaction failed')
-            navigate('/details')
-        }
+        
     };
 
     const sendSuccess = (reference) =>{
@@ -117,7 +123,31 @@ export default function AccountContent(){
     
     const initializePayment = usePaystackPayment(config);
 
-    
+    const wallet = async(acc,metering_type,amount)=>{
+        const url = "http://164.92.155.135:8001/pay/from-wallet"
+        const other = {
+            method: 'POST',
+            body:JSON.stringify({
+                "caller":"acc_no",
+                "requester":acc,
+                "amount": amount,
+                "type":metering_type
+            }),
+            headers: {
+                "Content-Type": "text/plain",
+                "Authorization":"Bearer "+token
+            }
+        }
+        try {
+            const response = await fetch(url,other)
+            const data = await response.json()
+            alert(data.message)
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
 
     React.useEffect(() => {
         if (metering_type == 'postpaid') {
@@ -308,8 +338,8 @@ export default function AccountContent(){
                     </div>
                 </div>
             </div>
-        
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
@@ -337,16 +367,16 @@ export default function AccountContent(){
                                 <h6>Pay with card</h6>
                             </div>  
                         </button>
-                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>navigate("/")}>
+                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>wallet(acc_no,metering_type,amount)}>
                             <div class="col-4">
-                                <img src={wallet} alt="" srcset=""></img>
+                                <img src={Wallet} alt="" srcset=""></img>
                             </div>
                             <div class="col-8"><h6>Pay with wallet</h6></div>
                         </button>
 
                         {
                             isloggedIn?(
-                                <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>navigate("/vendor")}>
+                                <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>{window.location.href="/vendor"}} >
                                     <div class="col-4">
                                         <img src={vendor} alt="" srcset=""></img>
                                     </div>
