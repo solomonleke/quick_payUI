@@ -281,20 +281,20 @@ return (
                                                 {unit || ""} KWh @ {tariff || "52.60"}
                                             </p>
                                         </div>
-                                    </div>):(
-                                        <div className="row mx-0">
-                                        <div className="col-md-1 col_no">
-                                            <p>08</p>
-                                        </div>
-                                        <div className="col-md-5 col_des">
-                                            <p className="bold"> Transformer Name </p>
-                                        </div>
-                                        <div className="col col_price">
-                                            <p>
-                                                {transformer || ""} 
-                                            </p>
-                                        </div>
-                                    </div>
+                                    </div>):( ""
+                                    //     <div className="row mx-0">
+                                    //     <div className="col-md-1 col_no">
+                                    //         <p>08</p>
+                                    //     </div>
+                                    //     <div className="col-md-5 col_des">
+                                    //         <p className="bold"> Transformer Name </p>
+                                    //     </div>
+                                    //     <div className="col col_price">
+                                    //         <p>
+                                    //             {transformer || ""} 
+                                    //         </p>
+                                    //     </div>
+                                    // </div>
                                     )}
 
                                 {isprepaid ? (
@@ -311,20 +311,20 @@ return (
                                             </p>
                                         </div>
                                     </div>
-                                ):(
-                                    <div className="row mx-0">
-                                        <div className="col-md-1 col_no">
-                                            <p>09</p>
-                                        </div>
-                                        <div className="col-md-5 col_des">
-                                            <p className="bold"> Feeder Name </p>
-                                        </div>
-                                        <div className="col col_price">
-                                            <p>
-                                            {feeder || ""}
-                                            </p>
-                                        </div>
-                                    </div>
+                                ):( ""
+                                    // <div className="row mx-0">
+                                    //     <div className="col-md-1 col_no">
+                                    //         <p>09</p>
+                                    //     </div>
+                                    //     <div className="col-md-5 col_des">
+                                    //         <p className="bold"> Feeder Name </p>
+                                    //     </div>
+                                    //     <div className="col col_price">
+                                    //         <p>
+                                    //         {feeder || ""}
+                                    //         </p>
+                                    //     </div>
+                                    // </div>
                                 )}
                                 {isprepaid ? (
                                     ""

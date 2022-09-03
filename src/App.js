@@ -8,6 +8,7 @@ import Login from "./auth/main";
 import Receipt from "./success/main";
 import Invoice from "./receipt/receipt";
 import PayStack from "./pages/Paystack/paystack";
+import Confirmation from "./pages/Confirmation/main";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         {/* <Route path="/:username/:password" element={<Interlude />} /> */}
         <Route path="/checkout" element={<Receipt />} />
         <Route path="/receipt" element={<Invoice />} />
-        <Route path="/paystack" element={<PayStack />} />
+        <Route path="/confirm" element={<Confirmation />} />
       </Routes>
       
     </>
