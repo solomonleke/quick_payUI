@@ -24,7 +24,12 @@ export default function Content(){
             sessionStorage.setItem('category', state);
             navigate('/details')
             
-        }        
+        }
+        else if(state === "prepaid" && meter_no != "null"){
+            sessionStorage.setItem('category', state);
+            navigate('/details')
+            
+        }               
         else{
             alert('Please select your prefered metering type for payment')
         }
