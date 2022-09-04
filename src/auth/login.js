@@ -5,8 +5,7 @@ import LoginController from "./loginController";
 import { request } from "./interlude";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { showToast } from "../utility/tool";
 
 export default function SigninContent(){
     const [username,setUsername]=useState('');
