@@ -5,7 +5,8 @@ import LoginController from "./loginController";
 import { request } from "./interlude";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { showToast } from "../utility/tool";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SigninContent(){
     const [username,setUsername]=useState('');
@@ -38,20 +39,14 @@ export default function SigninContent(){
         .then(function (response) {
             if(response.data.status===true){
                 sessionStorage.setItem('token', response.data.token);
-                showToast({
-                    message: 'Login successful',
-                    type: 'success'
-                });
+                toast.success('Successfully Logged In')
                 navigate("/")
             }
             setisLoggedIn("Wrong username or password!")
         //   console.log(JSON.stringify(response.data));
         })
         .catch(function (error) {
-            showToast({
-                message: error.response.data.message,
-                type: 'success'
-            });
+            toast.error(error.response.data.message)
             alert(error.response.data.message)
           console.log(error);
         });
