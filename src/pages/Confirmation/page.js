@@ -8,6 +8,7 @@ import React from 'react';
 
 export default function Content(){
     const [state, setState] = useState("");
+    const [bill, setBill] = useState("");
     const navigate = useNavigate()
     const name = sessionStorage.getItem('name');
     const meter = sessionStorage.getItem('category');
@@ -21,8 +22,13 @@ export default function Content(){
             navigate('/')
         }
         else if(state === "postpaid"){
-            sessionStorage.setItem('category', state);
-            navigate('/details')
+            if(bill =="Bill" || bill =="Reconnection Cost" || bill =="Reconnection Charge" || bill =="Administrative Charge" ){
+                sessionStorage.setItem('category', state);
+                sessionStorage.setItem('bill_type', bill);
+                navigate('/details')
+            }else{
+                alert('Select payment')
+            }
             
         }
         else if(state === "prepaid" && meter_no != "null"){
@@ -94,6 +100,23 @@ export default function Content(){
                                         <option>--------</option>
                                         <option value="postpaid">postpaid</option>
                                         <option value="prepaid">prepaid</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            </table>
+                            <h4>Select your payment type</h4>
+                            <table className='table table-condensed mb-3'>
+                            <tr>
+                                <td className=" col-md-6">
+                                    <span className="m-l-10 font-montserrat fs-11 all-caps">Bill Type</span>
+                                </td>
+                                <td colspan="2" className=" col-md-6 text-right">
+                                    <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
+                                        <option>--------</option>
+                                        <option value="Bill">Bill</option>
+                                        <option value="Reconnection Cost">Reconnection Cost</option>
+                                        <option value="Reconnection Charge">Reconnection Charge</option>
+                                        <option value="Administrative Charge">Administrative Charge</option>
                                     </select>
                                 </td>
                             </tr>

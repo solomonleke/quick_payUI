@@ -22,6 +22,7 @@ function App() {
         <Route path="/checkout" element={<Receipt />} />
         <Route path="/receipt" element={<Invoice />} />
         <Route path="/confirm" element={<Confirmation />} />
+        <Route path="/paystack" element={<PayStack />} />
       </Routes>
       
     </>

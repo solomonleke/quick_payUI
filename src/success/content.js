@@ -15,7 +15,7 @@ export default function Success(){
                     <div className="col-md-5 b-r b-dashed " >
                         <div className="padding-30 sm-padding-5 sm-m-t-15" >
                             <h2>{message}</h2>
-                            <p className="small hint-text">Kindly confirm the details below</p>
+                            <p className="small hint-text">Transaction</p>
                             <table className="table table-condensed">
                                 <tr>
                                     <td className=" col-md-9">
@@ -64,13 +64,24 @@ export default function Success(){
 
                             <ul className="pager wizard no-style">
                                 <li  className="next">
-                                    <button className="btn btn-primary btn-cons btn-animated from-left fa fa-forward pull-right"
+                                    <button className="btn btn-success btn-cons btn-animated from-left fa fa-forward pull-right"
                                             type="submit" onClick={()=>{
                                                 
                                                     navigate('/receipt')
                                                 
                                             }} >
-                                        <span>Go to Receipt</span>
+                                        <span>Get Receipt</span>
+                                    </button>
+                                </li>
+
+                                <li  className="next">
+                                    <button className="btn bg-dark btn-cons btn-animated from-left fa fa-forward pull-right text-white"
+                                            type="submit" onClick={()=>{
+                                                
+                                                    navigate('/')
+                                                
+                                            }} >
+                                        <span>Home page</span>
                                     </button>
                                 </li>
                                 

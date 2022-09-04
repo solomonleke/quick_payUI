@@ -3,7 +3,7 @@ import '../../assets/css/style.css';
 import { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import options from './apiPreps';
-// import { Link } from 'react-router-dom';
+import { showToast } from '../../utility/tool';
 
 import React from 'react';
 
@@ -30,6 +30,10 @@ export default function Content(){
             body = options(acc_no,bill,amount,name)
         }
         
+        showToast({
+            message: 'Loading!',
+            type: 'success'
+        });
         const url = "https://quikpayapi.smartpowerbilling.com/payment";
         const other = {
             method: 'POST',
@@ -49,9 +53,35 @@ export default function Content(){
                             // sessionStorage.setItem('amount', data.amount);
                             sessionStorage.setItem('vendor', data.data.vendorName);
                             sessionStorage.setItem('arrears', data.data.arrears);
-                            navigate('/checkout')
+                            if(data.status===true){
+                            showToast({
+                                message: 'Transaction Successful!',
+                                type: 'success'
+                            });
+                            setTimeout(() => {
+                                navigate('/checkout')
+                            }, 1500);
+                        }else{
+                            showToast({
+                                message: 'Transaction Failed!',
+                                type: 'error'
+                            });
+                            setTimeout(() => {
+                                navigate('/details')
+                            }, 1500);
+                        }
+                            
                         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            console.log(error)
+            showToast({
+                message: 'Transaction Failed!',
+                type: 'error'
+            });
+            setTimeout(() => {
+                navigate('/details')
+            }, 1500);
+        });
     
     }
     

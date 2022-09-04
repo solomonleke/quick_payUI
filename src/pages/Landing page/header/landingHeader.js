@@ -5,6 +5,7 @@ import React,{useState} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import { showToast } from "../../../utility/tool";
 
 export default function LandingHeader(){
     const [number,setNumber]=useState('');
@@ -37,7 +38,12 @@ export default function LandingHeader(){
             },
             data : data
           };
-        
+
+          showToast({
+            message: 'Loading!',
+            type: 'success'
+        });
+
           axios(config)
           .then(function (response) {
               if(response.data.status===true){
@@ -58,14 +64,23 @@ export default function LandingHeader(){
                 sessionStorage.setItem('billed', result.billed.toFixed(2));
                 sessionStorage.setItem('credit', result.credit.toFixed(2));
                 sessionStorage.setItem('Total',(result.credit+result.billed).toFixed(2))
-
-                navigate("/confirm")
+                showToast({
+                    message: 'Success!',
+                    type: 'success'
+                });
+                setTimeout(() => {
+                    navigate("/confirm")
+                }, 1500);
               }
               setisCorrect("Invalid Account/Meter number !")
           //   console.log(JSON.stringify(response.data));
           })
           .catch(function (error) {
-            alert(error.response.data.message)
+            showToast({
+                message: error.response.data.message,
+                type: 'error'
+            });
+            // alert(error.response.data.message)
             console.log(error);
           });
 
