@@ -26,6 +26,15 @@ export default function SigninContent(){
           "password": password
         });
 
+        if (!username || !password) {
+            showToast({
+                message: 'Username and Password required.',
+                type: 'error'
+            });
+            
+            return;
+        }
+
         var config = {
           method: 'post',
           url: 'https://quikpayapi.smartpowerbilling.com/login',
@@ -34,19 +43,34 @@ export default function SigninContent(){
           },
           data : data
         };
+        showToast({
+            message: 'Logining in',
+            type: 'success'
+        });
 
         axios(config)
         .then(function (response) {
             if(response.data.status===true){
                 sessionStorage.setItem('token', response.data.token);
-                toast.success('Successfully Logged In')
-                navigate("/")
+                showToast({
+                    message: 'Login successful',
+                    type: 'success'
+                });
+                setTimeout(() => {
+                    navigate("/");
+                }, 1500);
             }
-            setisLoggedIn("Wrong username or password!")
+            else {
+                setisLoggedIn("Wrong username or password!")
+            }
+            
         //   console.log(JSON.stringify(response.data));
         })
         .catch(function (error) {
-            toast.error(error.response.data.message)
+            showToast({
+                message: error.response.data.message,
+                type: 'error'
+            });
             alert(error.response.data.message)
           console.log(error);
         });
