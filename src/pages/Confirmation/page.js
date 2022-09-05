@@ -22,7 +22,7 @@ export default function Content(){
             navigate('/')
         }
         else if(state === "postpaid"){
-            if(bill =="Bill" || bill =="Reconnection Cost" || bill =="Reconnection Charge" || bill =="Administrative Charge" ){
+            if(bill =="bill" || bill =="reconnection cost" || bill =="lor" || bill =="revenue loss" || bill =="administrative"){
                 sessionStorage.setItem('category', state);
                 sessionStorage.setItem('bill_type', bill);
                 navigate('/details')
@@ -113,10 +113,11 @@ export default function Content(){
                                 <td colspan="2" className=" col-md-6 text-right">
                                     <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
                                         <option>--------</option>
-                                        <option value="Bill">Bill</option>
-                                        <option value="Reconnection Cost">Reconnection Cost</option>
-                                        <option value="Reconnection Charge">Reconnection Charge</option>
-                                        <option value="Administrative Charge">Administrative Charge</option>
+                                        <option value="bill">bill</option>
+                                        <option value="reconnection cost">reconnection cost</option>
+                                        <option value="lor">lor</option>
+                                        <option value="revenue loss">revenue loss</option>
+                                        <option value="administrative">administrative</option>
                                     </select>
                                 </td>
                             </tr>
