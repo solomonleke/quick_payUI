@@ -25,6 +25,7 @@ function Invoice(){
     const feeder = sessionStorage.getItem('feeder_id');
     const old_acc = sessionStorage.getItem('old_acc_no');
     const billedamount = sessionStorage.getItem('billed');
+    const trans_ref = sessionStorage.getItem('trans_ref')
 
 
     const today = new Date();
@@ -121,15 +122,15 @@ return (
                         </div>
                         <div className="col-md-4">
                             <p className="invoice bold">Receipt</p>
-                            {/* <p className="invoice_no">
+                            <p className="invoice_no">
 
                                 <span> {
-                                    invoiceId &&
+                                    trans_ref &&
                                     <>
-                                        Invoice No. <span>{invoiceId || "XXXX"}</span>
+                                        Invoice No. <span>{trans_ref || " "}</span>
                                     </>
                                 }</span>
-                            </p> */}
+                            </p>
                             <p className="date">
                                 <span>
                                     <div className="bold">Date</div>
