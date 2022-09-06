@@ -1,23 +1,12 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import React from "react";
-import LoginController from "./loginController";
-import { request } from "./interlude";
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { showToast } from "../utility/tool";
 import View from "./view";
 
 export default function SigninContent(){
-    const [username,setUsername]=useState('');
-    const [password,setPassword]=useState('');
     const [isLoggedIn, setisLoggedIn] = React.useState("");
-    const [data,setdata]=useState([]);
-    // const data =[]
     const navigate = useNavigate()
-    const url = 'http://localhost:3001/login';
-    // const url = 'https://jsonplaceholder.typicode.com/users';
-    const method = "POST"
 
     function Click({
         username, password
@@ -66,7 +55,6 @@ export default function SigninContent(){
                 setisLoggedIn("Wrong username or password!")
             }
             
-        //   console.log(JSON.stringify(response.data));
         })
         .catch(function (error) {
             showToast({
@@ -77,13 +65,7 @@ export default function SigninContent(){
           console.log(error);
         });
         }
-            // sessionStorage.setItem('limit_amount', data.limit_amount);
-            // sessionStorage.setItem('token', data.token);
-            
         
-    
-
-
     return (
         <View Click={({username, password}) => Click({username, password})} isLoggedIn={isLoggedIn} />
     );

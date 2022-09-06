@@ -1,22 +1,23 @@
 import '../../assets/css/bootstrap.min.css';
 import '../../assets/css/style.css';
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import options from './apiPreps';
 import { showToast } from '../../utility/tool';
-
+import { Backdrop } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
 import React from 'react';
 
 export default function Content(){
     const [Wchecked, setWChecked] = useState(false);
-    const [Bchecked, setBChecked] = useState(false);
+    const [isloaded, setIsloaded] = useState(null);
     const navigate = useNavigate()
     const name = sessionStorage.getItem('name');
     const meter = sessionStorage.getItem('category');
     const meter_no = sessionStorage.getItem('meter_no');
     const number = sessionStorage.getItem('account');
     const amount = sessionStorage.getItem('amount');
-
 
     function send(amount,bill,acc_no,name,meter_no){
         // if(acc===null){
@@ -25,6 +26,8 @@ export default function Content(){
         //     navigate('/payment')
         // }
         // console.log(acc)
+        
+        setIsloaded(true)
         let body = options(meter_no,bill,amount,name)
         if(bill == "postpaid"){
             body = options(acc_no,bill,amount,name)
@@ -45,7 +48,9 @@ export default function Content(){
     
         fetch(url,other)
         .then((response) => response.json())
-        .then((data) => {alert(data.message)
+        .then((data) => {
+                            setIsloaded(false)
+                            alert(data.message)
                             console.log(data)
                             sessionStorage.setItem('limit_amount', data.data.vendorBal);
                             sessionStorage.setItem('token_id', data.data.token);
@@ -135,9 +140,21 @@ export default function Content(){
                             {/* <p className="small">By clicking Pay Now You will Agree to the Payment <a target="_blank" href="#">Terms &amp; Conditions</a></p> */}
                             <ul class="pager wizard no-style">
                                     <li class="next finish">
-                                        <button id="payBtn" class="btn  btn-cons btn-animated from-left fa fa-check pull-right" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{send(amount,meter,number,name,meter_no)}}>
+                                        <Button id="payBtn" class="btn  btn-cons btn-animated from-left fa fa-check pull-right" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{send(amount,meter,number,name,meter_no)}}>
                                             <span>Pay</span>
-                                        </button>
+                                        </Button>
+                                        {isloaded?
+                                        <Backdrop
+                                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                        open
+                                        
+                                    >
+                                        <CircularProgress color="inherit" />
+                                    </Backdrop>
+                                        :
+                                        ""
+                                        }
+                                        
                                     </li>
                             </ul>
                         </div>
