@@ -127,7 +127,7 @@ return (
                                 <span> {
                                     trans_ref &&
                                     <>
-                                        Invoice No. <span>{trans_ref || " "}</span>
+                                        Invoice No. <span style={{wordWrap: "break-word"}}>{trans_ref || " "}</span>
                                     </>
                                 }</span>
                             </p>

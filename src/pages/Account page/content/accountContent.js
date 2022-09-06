@@ -98,7 +98,7 @@ export default function AccountContent(){
                 setState(true)
             }
             else{
-                alert('Transaction failed')
+                alert('Paystack transaction failed')
                 navigate('/details')
             }
         } catch (error) {
