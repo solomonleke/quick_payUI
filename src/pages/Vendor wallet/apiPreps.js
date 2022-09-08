@@ -1,6 +1,6 @@
 import generate from "./transac_ref";
 
-export default function options(acc,bill,amount,name){
+export default function options(acc,bill,amount,name,payment){
     const token = sessionStorage.getItem('token');
     const description = sessionStorage.getItem('bill_type');
     const trans = generate(acc)
@@ -8,7 +8,7 @@ export default function options(acc,bill,amount,name){
     const prep = { 
                     "amount":amount, 
                     "transaction_ref":trans, 
-                    "payment_mode":"cash", 
+                    "payment_mode":payment, 
                     "channel":"quikpay", 
                     "bill_type":bill, 
                     "account_number":acc ,

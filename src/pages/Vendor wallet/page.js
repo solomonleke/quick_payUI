@@ -9,9 +9,9 @@ export default function Content(){
     const navigate = useNavigate()
     
 
-    async function send(amount,bill,acc_no,name,meter_no){
+    async function send(amount,bill,acc_no,name,meter_no,payment){
         setIsloaded(true)
-        const res = await pay(amount,bill,acc_no,name,meter_no)
+        const res = await pay(amount,bill,acc_no,name,meter_no,payment)
         console.log(res)
         if(res===true){
             setIsloaded(false)

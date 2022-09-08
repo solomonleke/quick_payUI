@@ -10,6 +10,7 @@ export default function VendorView({loaded,Send}){
     const meter_no = sessionStorage.getItem('meter_no');
     const number = sessionStorage.getItem('account');
     const amount = sessionStorage.getItem('amount');
+    const payment = sessionStorage.getItem('payment');
     return(
         <div className='contain'>
             <div className="order001">
@@ -58,7 +59,7 @@ export default function VendorView({loaded,Send}){
                             {/* <p className="small">By clicking Pay Now You will Agree to the Payment <a target="_blank" href="#">Terms &amp; Conditions</a></p> */}
                             <ul class="pager wizard no-style">
                                     <li class="next finish">
-                                        <button id="payBtn" class="btn  btn-cons btn-animated from-left fa fa-check pull-right" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button"  onClick={(e)=>{e.preventDefault();Send(amount,meter,number,name,meter_no)}}>
+                                        <button id="payBtn" class="btn  btn-cons btn-animated from-left fa fa-check pull-right" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button"  onClick={(e)=>{e.preventDefault();Send(amount,meter,number,name,meter_no,payment)}}>
                                             <span>Pay</span>
                                         </button>
                                         {loaded?
