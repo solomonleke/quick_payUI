@@ -1,10 +1,10 @@
 import options from "./apiPreps";
 import { showToast } from '../../utility/tool';
 
-export default async function pay(amount,bill,acc_no,name,meter_no){
-    let body = options(meter_no,bill,amount,name)
+export default async function pay(amount,bill,acc_no,name,meter_no,payment){
+    let body = options(meter_no,bill,amount,name,payment)
     if(bill == "postpaid"){
-        body = options(acc_no,bill,amount,name)
+        body = options(acc_no,bill,amount,name,payment)
     }
     
     const url = "https://quikpayapi.smartpowerbilling.com/payment";

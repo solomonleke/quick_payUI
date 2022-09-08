@@ -6,10 +6,12 @@ import { useState} from 'react';
 export default function ConfirmationView({Send}){
     const [state, setState] = useState("");
     const [bill, setBill] = useState("");
+    const [payment, setPayment] = useState("");
     const name = sessionStorage.getItem('name');
     const meter = sessionStorage.getItem('category');
     const meter_no = sessionStorage.getItem('meter_no');
     const number = sessionStorage.getItem('account');
+    
     return(
         <div className='contain'>
             <div className="order001">
@@ -89,10 +91,25 @@ export default function ConfirmationView({Send}){
                                 </td>
                             </tr>
                             </table>
+                            <h4>Select your payment mode</h4>
+                            <table className='table table-condensed mb-3'>
+                            <tr>
+                                <td className=" col-md-6">
+                                    <span className="m-l-10 font-montserrat fs-11 all-caps">Payment mode</span>
+                                </td>
+                                <td colspan="2" className=" col-md-6 text-right">
+                                    <select value={payment} onChange={e=>setPayment(e.target.value)} className="w-100">
+                                        <option>--------</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Direct payment">Direct payment</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            </table>
                             {/* <p className="small">By clicking Pay Now You will Agree to the Payment <a target="_blank" href="#">Terms &amp; Conditions</a></p> */}
                             <ul class="pager wizard no-style">
                                     <li class="next finish">
-                                        <button id="payBtn" class="btn  btn-cons from-left fa fa-check pull-center" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{Send(meter_no,state,bill)}}>
+                                        <button id="payBtn" class="btn  btn-cons from-left fa fa-check pull-center" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{Send(meter_no,state,bill,payment)}}>
                                             <span>Confirm</span>
                                         </button>
                                     </li>
