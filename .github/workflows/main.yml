@@ -30,7 +30,7 @@ jobs:
       - name: Deploy docker container webhook
         uses: joelwmale/webhook-action@master
         env:
-          WEBHOOK_URL: http://164.92.155.135:9101/hooks/quick-pay
+          WEBHOOK_URL: http://164.92.155.136:9101/hooks/quick-pay
           data: ""
   redeploy_benin:
     runs-on: ubuntu-latest
