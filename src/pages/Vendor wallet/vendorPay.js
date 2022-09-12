@@ -8,6 +8,7 @@ export default async function pay(amount,bill,acc_no,name,meter_no,payment){
     }
     
     const url = "https://quikpayapi.smartpowerbilling.com/payment";
+    // const url = "http://localhost:3001/payment";
     const other = {
         method: 'POST',
         body: JSON.stringify(body),
@@ -24,6 +25,7 @@ export default async function pay(amount,bill,acc_no,name,meter_no,payment){
         console.log(data)
         sessionStorage.setItem('limit_amount', data.data.vendorBal);
         sessionStorage.setItem('token_id', data.data.token);
+        sessionStorage.setItem('trans_ref', data.trans_ref);
         sessionStorage.setItem('unit', data.data.unit);
         sessionStorage.setItem('vendor', data.data.vendorName);
         sessionStorage.setItem('arrears', data.data.arrears);

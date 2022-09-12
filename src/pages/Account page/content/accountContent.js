@@ -13,6 +13,7 @@ import options from '../../Vendor wallet/apiPreps';
 import { useNavigate } from 'react-router-dom';
 // import payStack from '../../Paystack/paystack';
 // import { usePaystackPayment } from 'react-paystack';
+import { showToast } from '../../../utility/tool';
 
 export default function AccountContent(){
     const [isLoading, setIsLoading] = React.useState(false);
@@ -55,11 +56,18 @@ export default function AccountContent(){
     // you can call this function anything
     const onSuccess = async(reference) => {
         // console.log(reference);
+        let body = options(meter_no,metering_type,amount,name)
+        if(metering_type == "postpaid"){
+            body = options(acc_no,metering_type,amount,name)
+        }
         const url = "https://quikpayapi.smartpowerbilling.com/verify/transaction/"+reference.reference
+        // const url = "http://localhost:3001/verify/transaction/"+reference.reference
+        // console.log(body)
         const other = {
-            method: 'GET',
+            method: 'POST',
+            body:JSON.stringify(body),
             headers: {
-                "Content-Type": "text/plain",
+                "Content-Type": "application/json",
 
             }
         }
@@ -67,44 +75,39 @@ export default function AccountContent(){
             const response = await fetch(url,other)
             const data = await response.json()
             // console.log(data)
-            if(data.data.data.status=="success"){
-                let body = options(meter_no,metering_type,amount,name)
-                if(metering_type == "postpaid"){
-                    body = options(acc_no,metering_type,amount,name)
-                }
-                
-                const url = "https://quikpayapi.smartpowerbilling.com/payment";
-                const other = {
-                    method: 'POST',
-                    body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                }
-            
-                fetch(url,other)
-                .then((response) => response.json())
-                .then((data) => {alert(data.message)
-                                    console.log(data)
-                                    sessionStorage.setItem('limit_amount', data.data.vendorBal);
-                                    sessionStorage.setItem('token_id', data.data.token);
-                                    sessionStorage.setItem('unit', data.data.unit);
-                                    // sessionStorage.setItem('amount', data.amount);
-                                    sessionStorage.setItem('vendor', data.data.vendorName);
-                                    sessionStorage.setItem('arrears', data.data.arrears);
-                                    window.location.href='/checkout'
-                                })
-                .catch((error) => console.log(error));
-                setState(true)
+            // console.log(data.status)
+            if(data.status===true){
+            alert(data.message)
+            // console.log(data.pay)
+            sessionStorage.setItem('limit_amount', data.pay.vendorBal);
+            sessionStorage.setItem('trans_ref', data.trans_ref);
+            sessionStorage.setItem('token_id', data.pay.token);
+            sessionStorage.setItem('unit', data.pay.unit);
+            sessionStorage.setItem('vendor', data.pay.vendorName);
+            sessionStorage.setItem('arrears', data.pay.arrears);
+            showToast({
+                message: data.message,
+                type: 'success'
+            });
+            setTimeout(() => {
+                window.location.href="/checkout"
+              }, 1500);
+            }else{
+                showToast({
+                    message: data.message,
+                    type: 'error'
+                });
             }
-            else{
-                alert('Paystack transaction failed')
-                navigate('/details')
+            } catch (error) {
+                console.log(error)
+                showToast({
+                    message: 'Transaction Failed!',
+                    type: 'error'
+                });
+                setTimeout(() => {
+                    navigate("/details")
+                  }, 1500);
             }
-        } catch (error) {
-            console.log(error)
-        }
-        
         
     };
 

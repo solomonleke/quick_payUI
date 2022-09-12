@@ -3,18 +3,19 @@
 // import { useNavigate } from 'react-router-dom';
 // import options from '../Vendor wallet/apiPreps';
 
-// export default function PayStack(){
-//     const amount = sessionStorage.getItem('amount');
-//     const email = sessionStorage.getItem('email');
+
+// export default function PayStack(email,amount){
+//     // const amount = sessionStorage.getItem('amount');
+//     // const email = sessionStorage.getItem('email');
 
 //     const name = sessionStorage.getItem('name');
 //     const meter = sessionStorage.getItem('category');
 //     const meter_no = sessionStorage.getItem('meter_no');
 //     const number = sessionStorage.getItem('account');
 
-//     const [state,setState] = useState(false);
+//     // const [state,setState] = useState(false);
 
-//     const navigate = useNavigate()
+//     // const navigate = useNavigate()
 
 //     const config = {
 //         reference: (new Date()).getTime().toString(),
@@ -88,18 +89,3 @@
 
 // }
 
-import React from 'react';
-
-  import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
-  
-  export default function PayStack(){
-    const notify = () => toast.loading("Wow so easy!");
-
-    return (
-      <div>
-        <button onClick={notify}>Notify!</button>
-        <ToastContainer />
-      </div>
-    );
-  }
