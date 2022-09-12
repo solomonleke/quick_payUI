@@ -13,7 +13,7 @@ export default function Content(){
             navigate('/')
         }
         else if(state === "postpaid" ){
-            if(bill =="bill" || bill =="reconnection cost" || bill =="lor" || bill =="revenue loss" || bill =="administrative"){
+            if(bill =="bill" || bill =="reconnection cost" || bill =="reconnection fee" || bill =="revenue loss" || bill =="administrative"){
                 if(payment=="Cash" || payment=="Direct payment"){
                     sessionStorage.setItem('category', state);
                     sessionStorage.setItem('bill_type', bill);
@@ -32,6 +32,7 @@ export default function Content(){
             if(bill =="bill" || bill =="reconnection cost" || bill =="lor" || bill =="revenue loss" || bill =="administrative"){
                 sessionStorage.setItem('category', state);
                 sessionStorage.setItem('bill_type', bill);
+                sessionStorage.setItem('payment_type', payment);
                 navigate('/details')
             }else{
                 alert('Select payment')

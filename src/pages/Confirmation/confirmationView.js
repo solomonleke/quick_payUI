@@ -84,7 +84,7 @@ export default function ConfirmationView({Send}){
                                         <option>--------</option>
                                         <option value="bill">bill</option>
                                         <option value="reconnection cost">reconnection cost</option>
-                                        <option value="lor">lor</option>
+                                        <option value="reconnection fee">reconnection fee</option>
                                         <option value="revenue loss">revenue loss</option>
                                         <option value="administrative">administrative</option>
                                     </select>

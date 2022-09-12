@@ -5,7 +5,7 @@ export default function options(acc,bill,amount,name,payment){
     const description = sessionStorage.getItem('bill_type');
     const pay = sessionStorage.getItem('payment_type');
     const trans = generate(acc)
-    sessionStorage.setItem('trans_ref', trans);
+    // sessionStorage.setItem('trans_ref', trans);
     const prep = { 
                     "amount":amount, 
                     "transaction_ref":trans, 
