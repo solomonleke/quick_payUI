@@ -5,9 +5,12 @@ import { Link } from "react-router-dom";
 import { Backdrop } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useState } from "react";
+import user from "../../../assets/img/user.png"
 
 export default function LandingHeaderView({Click,loading,loggedIn}) {
     const [number,setNumber]=useState('');
+    let name = sessionStorage.getItem('vendor');
+    let amount = sessionStorage.getItem('limit_amount');
     return(
         <div className="container-fluid top bg-light m-0 pb-5">
             <header className="container res">
@@ -22,7 +25,16 @@ export default function LandingHeaderView({Click,loading,loggedIn}) {
                         <ul className="navbar-nav py-4">
                             <li className="nav-item "><a href="http://" className="new nav-link">Support</a></li>
                             <li className="nav-item "><a href="/" className="new rel nav-link">Buy Electricity</a></li>
-                            <li className="nav-item ">{loggedIn?(""):(<Link to="/login" className="new rel nav-link">Vendor Login</Link>)}</li>
+                            {loggedIn?(
+                                <li className="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src={user} width="10%"></img> {name}
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><p class="dropdown-item" href="#">Balance: {amount}</p></li>
+                                <li><button class="dropdown-item" onClick={()=>{sessionStorage.clear(); window.location.href="/login"}}>Logout</button></li>
+                                </ul>
+                                </li>):(<li className="nav-item "><Link to="/login" className="new rel nav-link">Vendor Login</Link></li>)}
                         </ul>
                     </div>
                 </nav>

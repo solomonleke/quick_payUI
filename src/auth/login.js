@@ -43,6 +43,8 @@ export default function SigninContent(){
         .then(function (response) {
             if(response.data.status===true){
                 sessionStorage.setItem('token', response.data.token);
+                sessionStorage.setItem('limit_amount', response.data.limit);
+                sessionStorage.setItem('vendor', response.data.user);
                 showToast({
                     message: 'Login successful',
                     type: 'success'

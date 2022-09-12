@@ -8,10 +8,11 @@ export default function LandingContent(){
   const [isloggedIn,setisLoggedIn]=useState(null);
   const navigate = useNavigate();
 
+
   React.useEffect(() => {
       let tok = sessionStorage.getItem('token');
       if (tok) {
-          setisLoggedIn(true);
+        setisLoggedIn(true);
       }
   }, []);
 
@@ -29,6 +30,6 @@ export default function LandingContent(){
   }  
   }
   return(
-      <LandingHeaderView Click={(number)=>Click(number)} loading={isloading} loggedIn={isloggedIn}/>
+      <LandingHeaderView Click={(number)=>Click(number)} loading={isloading} loggedIn={isloggedIn} />
   )
 }
