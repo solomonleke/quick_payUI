@@ -22,6 +22,7 @@ export default function AccountContent(){
     const [isloggedIn,setisloggedIn] = useState(false);
     const [amount,setAmount]=useState('');
     const [email,setEmail]=useState('');
+    const [phone,setPhone]=useState('');
     const token=sessionStorage.getItem('token');
     const acc_no=sessionStorage.getItem('account');
     const name=sessionStorage.getItem('name');
@@ -312,6 +313,12 @@ export default function AccountContent(){
                                                         <input id="email"name="email" value={email} type="email" class="form-control w-50" placeholder="email address" onChange={e=>setEmail(e.target.value)}></input>
                                                     </div>
                                                 </div>
+                                                <div class="form-group-attached">
+                                                    <div class="form-group form-group-default ">
+                                                        <label for="email">Phone No</label>
+                                                        <input id="phone" name="phone" value={phone} type="text" class="form-control w-50 " placeholder="Phone no" onChange={e=>setPhone(e.target.value)}></input>
+                                                    </div>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -329,8 +336,11 @@ export default function AccountContent(){
                                 </ul>
                             </div>
                             <div class="wizard-footer padding-20 bg-master-light">
-                                <p class="small hint-text pull-left no-margin">
+                                {/* <p class="small hint-text pull-left no-margin">
                                     <Link to ="/">Return home</Link>
+                                </p> */}
+                                <p class="pull-left no-margin p-2 rounded" style={{background:"#000",border:"#017cc2"}}>
+                                    <Link to ="/" style={{color:"white"}}>Return home</Link>
                                 </p>
                                 <div class="pull-right">
                                     <img src={logo} alt="" width="50" height="22"></img>

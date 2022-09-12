@@ -1,3 +1,5 @@
+import '../assets/css/bootstrap.min.css';
+import '../assets/css/style.css';
 import { useNavigate } from 'react-router-dom';
 import { usePaystackPayment } from 'react-paystack';
 
@@ -11,85 +13,87 @@ export default function Success(){
     const navigate = useNavigate()
     return(
         <div className="container">
+            <div className='order001'>
                 <div className="row row-same-height" style={{background:"white"}}>
-                    <div className="col-md-5 b-r b-dashed " >
-                        <div className="padding-30 sm-padding-5 sm-m-t-15" >
-                            <h2>{message}</h2>
-                            <p className="small hint-text">Transaction</p>
-                            <table className="table table-condensed">
-                                <tr>
-                                    <td className=" col-md-9">
-                                        <span className="m-l-10 font-montserrat fs-11 all-caps">Account</span>
-                                    </td>
-                                    <td className=" col-md-3 text-right" style={{width: "200px"}}>
-                                        <span className="bold">{account}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className=" col-md-9">
-                                        <span className="m-l-10 font-montserrat fs-11 all-caps">Metering Type</span>
-                                    </td>
-                                    <td className=" col-md-3 text-right">
-                                        <span> {category}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className=" col-md-9">
-                                        <span className="m-l-10 font-montserrat fs-11 all-caps">Token</span>
-                                    </td>
-                                    <td className=" col-md-3 text-right">
-                                        <span>{token}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className=" col-md-9">
-                                        <span className="m-l-10 font-montserrat fs-11 all-caps">Units</span>
-                                    </td>
-                                    <td className=" col-md-3 text-right">
-                                        <span>{unit}</span>
-                                    </td>
-                                </tr>
+                        
+                            <div className="padding-30 sm-padding-5 sm-m-t-15" >
+                                <h2>{message}</h2>
+                                <p className="small hint-text">Transaction</p>
+                                <table className="table table-condensed">
+                                    <tr>
+                                        <td className=" col-md-9">
+                                            <span className="m-l-10 font-montserrat fs-11 all-caps">Account</span>
+                                        </td>
+                                        <td className=" col-md-3 text-right" style={{width: "200px"}}>
+                                            <span className="bold">{account}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className=" col-md-9">
+                                            <span className="m-l-10 font-montserrat fs-11 all-caps">Metering Type</span>
+                                        </td>
+                                        <td className=" col-md-3 text-right">
+                                            <span> {category}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className=" col-md-9">
+                                            <span className="m-l-10 font-montserrat fs-11 all-caps">Token</span>
+                                        </td>
+                                        <td className=" col-md-3 text-right">
+                                            <span>{token}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className=" col-md-9">
+                                            <span className="m-l-10 font-montserrat fs-11 all-caps">Units</span>
+                                        </td>
+                                        <td className=" col-md-3 text-right">
+                                            <span>{unit}</span>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td className=" col-md-9">
-                                        <span className="m-l-10 font-montserrat fs-11 all-caps">Amount</span>
-                                    </td>
-                                    <td className=" col-md-3 text-right">
-                                        <span>{amount}</span>
-                                    </td>
-                                </tr>
-                    
-                            </table>
-                            <div className="padding-20 sm-padding-5 sm-m-b-20 sm-m-t-20 bg-white clearfix">
+                                    <tr>
+                                        <td className=" col-md-9">
+                                            <span className="m-l-10 font-montserrat fs-11 all-caps">Amount</span>
+                                        </td>
+                                        <td className=" col-md-3 text-right">
+                                            <span>{amount}</span>
+                                        </td>
+                                    </tr>
+                        
+                                </table>
+                                <div className="padding-20 sm-padding-5 sm-m-b-20 sm-m-t-20 bg-white clearfix">
 
-                            <ul className="pager wizard no-style">
-                                <li  className="next">
-                                    <button className="btn btn-success btn-cons btn-animated from-left fa fa-forward pull-right"
-                                            type="submit" onClick={()=>{
-                                                
-                                                    navigate('/receipt')
-                                                
-                                            }} >
-                                        <span>Get Receipt</span>
-                                    </button>
-                                </li>
+                                <ul className="pager wizard no-style">
+                                    <li  className="next">
+                                        <button className="btn btn-success btn-cons btn-animated from-left fa fa-forward pull-right"
+                                                type="submit" onClick={()=>{
+                                                    
+                                                        navigate('/receipt')
+                                                    
+                                                }} >
+                                            <span>Get Receipt</span>
+                                        </button>
+                                    </li>
 
-                                <li  className="next">
-                                    <button className="btn bg-dark btn-cons btn-animated from-left fa fa-forward pull-right text-white"
-                                            type="submit" onClick={()=>{
-                                                
-                                                    navigate('/')
-                                                
-                                            }} >
-                                        <span>Home page</span>
-                                    </button>
-                                </li>
-                                
-                            </ul>
-                        </div>
+                                    <li  className="next">
+                                        <button className="btn bg-dark btn-cons btn-animated from-left fa fa-forward pull-right text-white"
+                                                type="submit" onClick={()=>{
+                                                    
+                                                        navigate('/')
+                                                    
+                                                }} >
+                                            <span>Home page</span>
+                                        </button>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>      
+                </div>      
+            </div>
+                
     )
 }
