@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - prod
 
 jobs:
   docker:
@@ -26,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Redeploy webhook call
     needs: [docker]
+    if: github.ref == 'refs/heads/prod'
     steps:
       - name: Deploy docker container webhook
         uses: joelwmale/webhook-action@master
@@ -36,10 +38,23 @@ jobs:
     runs-on: ubuntu-latest
     name: Redeploy webhook call
     needs: [docker]
+    if: github.ref == 'refs/heads/prod'
     steps:
       - name: Deploy docker container webhook
         uses: joelwmale/webhook-action@master
         env:
           #WEBHOOK_URL: ${{ secrets.DEPLOY_WEBHOOK_URL  }}
           WEBHOOK_URL: http://67.205.169.2:9101/hooks/quick-pay
+          data: ""
+  redeploy_test:
+    runs-on: ubuntu-latest
+    name: Redeploy webhook call
+    needs: [docker]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy docker container webhook
+        uses: joelwmale/webhook-action@master
+        env:
+          #WEBHOOK_URL: ${{ secrets.DEPLOY_WEBHOOK_URL  }}
+          WEBHOOK_URL: http://188.166.99.136:9101/hooks/quick-pay
           data: ""
