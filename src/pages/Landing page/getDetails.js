@@ -36,7 +36,11 @@ export default async function getCustomerDetails(number){
                 sessionStorage.setItem('feeder_id', result.data.feeder_id);
                 sessionStorage.setItem('account', result.data.account);
                 sessionStorage.setItem('billed', result.data.billed.toFixed(2));
-                sessionStorage.setItem('credit', result.data.credit.toFixed(2));
+                if (result.data.credit === null){
+                    sessionStorage.setItem('credit', 0);
+                }else{
+                    sessionStorage.setItem('credit', result.data.credit.toFixed(2));
+                }
                 sessionStorage.setItem('Total',(result.data.credit+result.data.billed).toFixed(2));
 
                 showToast({
