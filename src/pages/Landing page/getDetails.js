@@ -26,8 +26,16 @@ export default async function getCustomerDetails(number){
                 sessionStorage.setItem('name', result.data.name);
                 sessionStorage.setItem('category', result.data.category);
                 sessionStorage.setItem('tariff_name', result.data.tariff_name);
-                sessionStorage.setItem('tariff', result.data.tariff.toFixed(2));
-                sessionStorage.setItem('vat', result.data.vat.toFixed(2));
+                if(result.data.tariff===null){
+                    sessionStorage.setItem('tariff',0);
+                }else{
+                    sessionStorage.setItem('tariff', result.data.tariff.toFixed(2));
+                }
+                if(result.data.vat===null){
+                    sessionStorage.setItem('vat',0);
+                }else{
+                    sessionStorage.setItem('vat', result.data.vat.toFixed(2));
+                }
                 sessionStorage.setItem('phone_no', result.data.phone_no);
                 sessionStorage.setItem('address', result.data.address);
                 sessionStorage.setItem('meter_no', result.data.meter_no);
@@ -35,9 +43,18 @@ export default async function getCustomerDetails(number){
                 sessionStorage.setItem('transformer_id', result.data.transformer_id);
                 sessionStorage.setItem('feeder_id', result.data.feeder_id);
                 sessionStorage.setItem('account', result.data.account);
-                sessionStorage.setItem('billed', result.data.billed.toFixed(2));
-                sessionStorage.setItem('credit', result.data.credit.toFixed(2));
+                if (result.data.billed === null){
+                    sessionStorage.setItem('billed', 0);
+                }else{
+                    sessionStorage.setItem('billed', result.data.billed.toFixed(2));
+                }
+                if (result.data.credit === null){
+                    sessionStorage.setItem('credit', 0);
+                }else{
+                    sessionStorage.setItem('credit', result.data.credit.toFixed(2));
+                }
                 sessionStorage.setItem('Total',(result.data.credit+result.data.billed).toFixed(2));
+                // sessionStorage.setItem('Total',(result.data.billed).toFixed(2));
 
                 showToast({
                     message: 'Success!',
