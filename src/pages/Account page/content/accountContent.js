@@ -343,7 +343,7 @@ export default function AccountContent(){
                                     <Link to ="/" style={{color:"white"}}>Return home</Link>
                                 </p>
                                 <div class="pull-right">
-                                    <img src={logo} alt="" width="50" height="22"></img>
+                                    <img src={`./${process.env.REACT_APP_QUIKPAY_LOGO}`} alt="" width="50" height="22"></img>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>

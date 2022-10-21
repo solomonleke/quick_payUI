@@ -113,10 +113,10 @@ return (
                     <br />
                     <div className="row">
                         <div className="col-md-8">
-                            <img src={logo} alt="" style={{ height: "70px", width: "85px" }} className="img-fluid font" />
+                            <img src={`./${process.env.REACT_APP_QUIKPAY_LOGO}`} alt="" style={{ height: "70px", width: "85px" }} className="img-fluid font" />
                             <div className="title_wrap">
 
-                                <p className="title bold">ABA POWER LIMITED</p>
+                                <p className="title bold">{process.env.REACT_APP_QUIKPAY_RECEIPT}</p>
                                 {/* <p className="sub_title"> (APL ELECTRIC)</p> */}
                             </div>
                         </div>

@@ -21,7 +21,7 @@ export default async function getCustomerDetails(number){
         try {
             const response = await axios(config)
             const result = response.data
-            console.log(result)
+            // console.log(result)
             if(result.status===true){
                 sessionStorage.setItem('name', result.data.name);
                 sessionStorage.setItem('category', result.data.category);
@@ -77,7 +77,7 @@ export default async function getCustomerDetails(number){
                 });
             }
             
-            console.log(error)
+            // console.log(error)
         }
         
 }

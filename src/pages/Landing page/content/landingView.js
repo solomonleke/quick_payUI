@@ -32,10 +32,10 @@ export default function LandingView({Click,loading}){
                                             <i className="flaticon-friends"></i>
                                         </div>
                                         <a className="accordion-title active" href="javascript:void(0)">
-                                            <i className="bx bx-plus"></i> Official platform for purchasing power for APLE
+                                            <i className="bx bx-plus"></i> Official platform for purchasing power for {process.env.REACT_APP_QUIKPAY_DESC}
                                         </a>
                                         <p className="accordion-content show">
-                                            We are the official platform for purchasing power in APLE, so be rest assured your account is safe.
+                                            We are the official platform for purchasing power in {process.env.REACT_APP_QUIKPAY_DESC}, so be rest assured your account is safe.
                                         </p>
                                     </li>
 
