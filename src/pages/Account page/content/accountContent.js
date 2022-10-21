@@ -61,7 +61,7 @@ export default function AccountContent(){
         if(metering_type == "postpaid"){
             body = options(acc_no,metering_type,amount,name)
         }
-        const url = "https://quikpayapi.smartpowerbilling.com/verify/transaction/"+reference.reference
+        const url = `${process.env.REACT_APP_QUIKPAY_BASEHOST}/verify/transaction/`+reference.reference
         // const url = "http://localhost:3001/verify/transaction/"+reference.reference
         // console.log(body)
         const other = {

@@ -3,7 +3,6 @@ import '../assets/css/style.css';
 import logo from './logo_black.png';
 
 function Heading(){
-    console.log(process.env)
     return(
         <div className="header text-white" style={{background:"#017cc2"}}>
     

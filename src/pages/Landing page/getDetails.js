@@ -12,7 +12,7 @@ export default async function getCustomerDetails(number){
 
           var config = {
             method: 'post',
-            url: 'https://quikpayapi.smartpowerbilling.com/details',
+            url: `${process.env.REACT_APP_QUIKPAY_BASEHOST}/details`,
             headers: { 
               'Content-Type': 'application/json'
             },
