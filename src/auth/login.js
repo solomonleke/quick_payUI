@@ -28,7 +28,7 @@ export default function SigninContent(){
 
         var config = {
           method: 'post',
-          url: 'https://quikpayapi.smartpowerbilling.com/login',
+          url: `${process.env.REACT_APP_QUIKPAY_BASEHOST}/login`,
           headers: { 
             'Content-Type': 'application/json'
           },
