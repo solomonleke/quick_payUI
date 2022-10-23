@@ -6,7 +6,6 @@ export default function View ({
 }) {
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
-    
     return(
         <div className="authincation h-100">
         <div className="container h-100">

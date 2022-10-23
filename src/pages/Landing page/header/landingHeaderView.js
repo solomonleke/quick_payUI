@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 import { Backdrop } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useState } from "react";
-import user from "../../../assets/img/user.png"
+import user from "../../../assets/img/user.png";
+
 
 export default function LandingHeaderView({Click,loading,loggedIn}) {
+    // const  {REACT_APP_QUIKPAY_BASEHOST} = process.env
     const [number,setNumber]=useState('');
     let name = sessionStorage.getItem('vendor');
     let amount = sessionStorage.getItem('limit_amount');
@@ -16,7 +18,7 @@ export default function LandingHeaderView({Click,loading,loggedIn}) {
             <header className="container res">
                 <nav className="row navbar navbar-expand-md navbar-dark">
                     <div className="col-7">
-                        <img src={logo} alt="aple-logo" width="80px" srcset=""></img>
+                        <img src={`./${process.env.REACT_APP_QUIKPAY_LOGO}`} alt="aple-logo" width="80px" srcset=""></img>
                     </div>
                     <button className="navbar-toggler col-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>

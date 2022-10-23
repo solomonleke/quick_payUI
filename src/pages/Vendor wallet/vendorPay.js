@@ -7,7 +7,7 @@ export default async function pay(amount,bill,acc_no,name,meter_no,payment){
         body = options(acc_no,bill,amount,name,payment)
     }
     
-    const url = "https://quikpayapi.smartpowerbilling.com/payment";
+    const url = `${process.env.REACT_APP_QUIKPAY_BASEHOST}/payment`;
     // const url = "http://localhost:3001/payment";
     const other = {
         method: 'POST',
