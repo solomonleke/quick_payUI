@@ -9,7 +9,7 @@ import jsPdf from 'jspdf'
 function Invoice(){
     const vendorName = sessionStorage.getItem('vendorName');
     const account = sessionStorage.getItem('account');
-    const arrears = sessionStorage.getItem('arrears');
+    let arrears;
     const category = sessionStorage.getItem('category');
     const token = sessionStorage.getItem('token_id');
     const unit = sessionStorage.getItem('unit');
@@ -30,8 +30,10 @@ function Invoice(){
     let show;
     if (bill_type=='bill'){ 
     show = 'Arrears'
+    arrears=sessionStorage.getItem('arrears');
     }else{ 
     show =bill_type
+    arrears=amount
     }
 
     const today = new Date();
