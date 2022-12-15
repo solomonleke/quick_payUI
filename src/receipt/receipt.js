@@ -27,7 +27,12 @@ function Invoice(){
     const billedamount = sessionStorage.getItem('billed');
     const trans_ref = sessionStorage.getItem('trans_ref')
     const bill_type = sessionStorage.getItem('bill_type')
-
+    let show;
+    if (bill_type=='bill'){ 
+    show = 'Arrears'
+    }else{ 
+    show =bill_type
+    }
 
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
@@ -336,7 +341,7 @@ return (
                                             <p>08</p>
                                         </div>
                                         <div className="col-md-5 col_des">
-                                            <p className="bold"> {bill_type} Amount </p>
+                                            <p className="bold"> Billed Amount </p>
                                         </div>
                                         <div className="col col_price">
                                             <p>
@@ -350,7 +355,7 @@ return (
                                         <p>10</p>
                                     </div>
                                     <div className="col-md-5 col_des">
-                                        <p className="bold"> Arrears </p>
+                                        <p className="bold"> {show} </p>
                                     </div>
                                     <div className="col col_price">
                                         <p>
