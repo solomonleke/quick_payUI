@@ -26,6 +26,7 @@ function Invoice(){
     const old_acc = sessionStorage.getItem('old_acc_no');
     const billedamount = sessionStorage.getItem('billed');
     const trans_ref = sessionStorage.getItem('trans_ref')
+    const bill_type = sessionStorage.getItem('bill_type')
 
 
     const today = new Date();
@@ -335,7 +336,7 @@ return (
                                             <p>08</p>
                                         </div>
                                         <div className="col-md-5 col_des">
-                                            <p className="bold"> Billed Amount </p>
+                                            <p className="bold"> {bill_type} Amount </p>
                                         </div>
                                         <div className="col col_price">
                                             <p>
