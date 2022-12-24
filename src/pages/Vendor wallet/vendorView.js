@@ -56,6 +56,7 @@ export default function VendorView({loaded,Send}){
                                         <input id="accNumber" type="hidden" value={bill_type}></input>
                                     </td>
                                 </tr>
+                                
                                 <tr>
                                     <td className=" col-md-9">
                                         <span className="m-l-10 font-montserrat fs-11 all-caps"></span>
