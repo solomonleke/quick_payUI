@@ -11,6 +11,7 @@ export default function VendorView({loaded,Send}){
     const number = sessionStorage.getItem('account');
     const amount = sessionStorage.getItem('amount');
     const payment = sessionStorage.getItem('payment');
+    const bill_type = sessionStorage.getItem('bill_type');
     return(
         <div className='contain'>
             <div className="order001">
@@ -46,6 +47,16 @@ export default function VendorView({loaded,Send}){
                                         <input id="accNumber" type="hidden" value={number}></input>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td className=" col-md-9">
+                                        <span className="m-l-10 font-montserrat fs-11 all-caps">Payment type</span>
+                                    </td>
+                                    <td className=" col-md-3 text-right">
+                                        <span>{bill_type}</span>
+                                        <input id="accNumber" type="hidden" value={bill_type}></input>
+                                    </td>
+                                </tr>
+                                
                                 <tr>
                                     <td className=" col-md-9">
                                         <span className="m-l-10 font-montserrat fs-11 all-caps"></span>
