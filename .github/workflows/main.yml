@@ -38,7 +38,7 @@ jobs:
   redeploy_benin:
     runs-on: ubuntu-latest
     name: Redeploy webhook call
-    # needs: [docker]
+    needs: [docker]
     if: github.ref == 'refs/heads/bedc'
     steps:
       - name: Deploy using ssh
