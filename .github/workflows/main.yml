@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - bedc
       - prod
 
 jobs:
@@ -38,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Redeploy webhook call
     needs: [docker]
-    if: github.ref == 'refs/heads/prod'
+    if: github.ref == 'refs/heads/bedc'
     steps:
       - name: Deploy docker container webhook
         uses: joelwmale/webhook-action@master
