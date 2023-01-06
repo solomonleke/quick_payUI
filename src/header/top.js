@@ -12,7 +12,7 @@ function Heading(){
             <div>
                 <div className="brand inline   ">
         
-                    <img style={{display:"inline-block"}} src={`./${process.env.REACT_APP_QUIKPAY_LOGO}`} alt="APLE" width="100" height="50"></img>
+                    <img style={{display:"inline-block"}} src={`./${process.env.REACT_APP_QUIKPAY_LOGO}`} alt="BEDC" width="100" height="50"></img>
         
                     <h4 class="text-white" style={{display:"inline-block",paddingTop: "0px",color: "#FFF", fontWeight: "600",textShadow: "0 7px 10px rgba(0,0,0,0.07), 0 4px 4px rgba(0,0,0,0.2)", paddingLeft:"10px"}}>
                         {process.env.REACT_APP_QUIKPAY_DESC}- QUICK PAY</h4>
