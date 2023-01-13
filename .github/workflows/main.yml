@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - bedc
       - prod
 
 jobs:
@@ -37,15 +38,25 @@ jobs:
   redeploy_benin:
     runs-on: ubuntu-latest
     name: Redeploy webhook call
-    needs: [docker]
-    if: github.ref == 'refs/heads/prod'
+    # needs: [docker]
+    if: github.ref == 'refs/heads/bedc'
     steps:
-      - name: Deploy docker container webhook
-        uses: joelwmale/webhook-action@master
-        env:
-          #WEBHOOK_URL: ${{ secrets.DEPLOY_WEBHOOK_URL  }}
-          WEBHOOK_URL: http://67.205.169.2:9101/hooks/quick-pay
-          data: ""
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: 159.89.28.140
+          username: ${{ secrets.BEDC_SSH_USERNAME }}
+          password: ${{ secrets.BEDC_SSH_PASSWORD }}
+          port: 22
+          script: |
+            sh /home/webhook/docker-services/frontend/quick-pay/deploy.sh
+    # steps:
+    #   - name: Deploy docker container webhook
+    #     uses: joelwmale/webhook-action@master
+    #     env:
+    #       #WEBHOOK_URL: ${{ secrets.DEPLOY_WEBHOOK_URL  }}
+    #       WEBHOOK_URL: http://67.205.169.2:9101/hooks/quick-pay
+    #       data: ""
   redeploy_test:
     runs-on: ubuntu-latest
     name: Redeploy webhook call
