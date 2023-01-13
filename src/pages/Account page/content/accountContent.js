@@ -42,18 +42,58 @@ export default function AccountContent(){
     const meter = sessionStorage.getItem('category');
     
     const number = sessionStorage.getItem('account');
-
+    const references = (new Date()).getTime().toString()+number;
+    console.log(references)
     const [state,setState] = useState(false);
 
     const navigate = useNavigate()
 
     const config = {
-        reference: (new Date()).getTime().toString(),
+        reference: references,
         email: email,
         amount: amount*100,
-        publicKey: 'pk_test_2181b977ad77556cfce56d12392bdeb9f6c610f0',
+        // publicKey: 'pk_test_2181b977ad77556cfce56d12392bdeb9f6c610f0',
+        publicKey:'pk_live_2340dda9c382ed0455f857c27c4ebec6d42fb121'
     };
-    
+    const qpdb = async()=>{
+        let body = options(meter_no,metering_type,amount,name)
+        if(metering_type == "postpaid"){
+            body = options(acc_no,metering_type,amount,name)
+        }
+        const url = `${process.env.REACT_APP_QUIKPAY_BASEHOST}/createTransaction/`+references
+        // const url = "http://localhost:3001/verify/transaction/"+reference.reference
+        // console.log(body)
+        const other = {
+            method: 'POST',
+            body:JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json",
+
+            }
+        }
+        try {
+            const response = await fetch(url,other)
+            const data = await response.json()
+            if(data.status===true){
+                initializePayment(sendSuccess, onClose)
+            }else{
+                showToast({
+                    message: 'Something went wrong',
+                    type: 'error'
+                });
+                window.location.href="/details"
+            }
+        } catch (error) {
+            console.log(error)
+                showToast({
+                    message: 'Transaction Failed!',
+                    type: 'error'
+                });
+                setTimeout(() => {
+                    window.location.href="/details"
+                  }, 1500);
+        }
+    }
     // you can call this function anything
     const onSuccess = async(reference) => {
         // console.log(reference);
@@ -372,7 +412,7 @@ export default function AccountContent(){
                     </div>
                     <div class="modal-body">
                         <div class="container px-5 mx-3">
-                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>initializePayment(sendSuccess, onClose)}>
+                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>qpdb()}>
                             <div class="col-4">
                                 <img src={bank} alt="" srcset=""></img>
                             </div> 
