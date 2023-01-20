@@ -7,15 +7,15 @@ import React from 'react';
 export default function Content(){
     const navigate = useNavigate()
     
-    function send(meter_no,state,bill,payment){
-        if(meter_no == "null" && state==="prepaid" ){
+    function send(meter_no,meter,bill,payment){
+        if(meter_no == "null" && meter==="prepaid" ){
             alert('Invalid request, customer has no prepaid meter')
             navigate('/')
         }
-        else if(state === "postpaid" ){
+        else if(meter === "postpaid" ){
             if(bill =="bill" || bill =="reconnection cost" || bill =="reconnection fee" || bill =="revenue loss" || bill =="administrative"){
                 if(payment=="Cash" || payment=="Direct payment"){
-                    sessionStorage.setItem('category', state);
+                    sessionStorage.setItem('category', meter);
                     sessionStorage.setItem('bill_type', bill);
                     sessionStorage.setItem('payment_type', payment);
                     navigate('/details')
@@ -28,9 +28,9 @@ export default function Content(){
             }
             
         }
-        else if(state === "prepaid" && meter_no != "null"){
+        else if(meter === "prepaid" && meter_no != "null"){
             if(bill =="bill" || bill =="reconnection cost" || bill =="lor" || bill =="revenue loss" || bill =="administrative"){
-                sessionStorage.setItem('category', state);
+                sessionStorage.setItem('category', meter);
                 sessionStorage.setItem('bill_type', bill);
                 sessionStorage.setItem('payment_type', payment);
                 navigate('/details')
@@ -47,6 +47,6 @@ export default function Content(){
     
 
     return(
-        < ConfirmationView  Send = {(meter_no,state,bill,payment)=>send(meter_no,state,bill,payment)}/>
+        < ConfirmationView  Send = {(meter_no,meter,bill,payment)=>send(meter_no,meter,bill,payment)}/>
     )
 }
