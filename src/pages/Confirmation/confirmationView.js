@@ -4,7 +4,7 @@ import React from 'react';
 import { useState} from 'react';
 
 export default function ConfirmationView({Send}){
-    const [state, setState] = useState("");
+    // const [state, setState] = useState("");
     const [bill, setBill] = useState("");
     const [payment, setPayment] = useState("");
     const name = sessionStorage.getItem('name');
@@ -58,7 +58,7 @@ export default function ConfirmationView({Send}){
                                 </tr>
                                 
                             </table>
-                            <h4>Select your meter type for payment</h4>
+                            {/* <h4>Select your meter type for payment</h4>
                             <table className='table table-condensed mb-3'>
                             <tr>
                                 <td className=" col-md-9">
@@ -72,7 +72,7 @@ export default function ConfirmationView({Send}){
                                     </select>
                                 </td>
                             </tr>
-                            </table>
+                            </table> */}
                             <h4>Select your payment type</h4>
                             <table className='table table-condensed mb-3'>
                             <tr>
@@ -109,7 +109,7 @@ export default function ConfirmationView({Send}){
                             {/* <p className="small">By clicking Pay Now You will Agree to the Payment <a target="_blank" href="#">Terms &amp; Conditions</a></p> */}
                             <ul class="pager wizard no-style">
                                     <li class="next finish">
-                                        <button id="payBtn" class="btn  btn-cons from-left fa fa-check pull-center" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{Send(meter_no,state,bill,payment)}}>
+                                        <button id="payBtn" class="btn  btn-cons from-left fa fa-check pull-center" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{Send(meter_no,meter,bill,payment)}}>
                                             <span>Confirm</span>
                                         </button>
                                     </li>
