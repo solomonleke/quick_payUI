@@ -5,12 +5,20 @@ import { useState} from 'react';
 
 export default function ConfirmationView({Send}){
     // const [state, setState] = useState("");
-    // const [bill, setBill] = useState("");
+    const [bill, setBill] = useState("");
     const [payment, setPayment] = useState("");
     const name = sessionStorage.getItem('name');
     const meter = sessionStorage.getItem('category');
     const meter_no = sessionStorage.getItem('meter_no');
     const number = sessionStorage.getItem('account');
+
+    const [ispostpaid,setIspostpaid] = React.useState(true);
+
+    React.useEffect(() => {
+        if (meter == 'prepaid') {
+            setIspostpaid(false);
+        }
+    }, [meter]);
     
     return(
         <div className='contain'>
@@ -73,24 +81,34 @@ export default function ConfirmationView({Send}){
                                 </td>
                             </tr>
                             </table> */}
-                            {/* <h4>Select your payment type</h4>
+                            <h4>Select your payment type</h4>
                             <table className='table table-condensed mb-3'>
                             <tr>
                                 <td className=" col-md-6">
                                     <span className="m-l-10 font-montserrat fs-11 all-caps">Bill Type</span>
                                 </td>
-                                <td colspan="2" className=" col-md-6 text-right">
-                                    <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
-                                        <option>--------</option>
-                                        <option value="bill">bill</option>
-                                        <option value="reconnection cost">reconnection cost</option>
-                                        <option value="reconnection fee">reconnection fee</option>
-                                        <option value="revenue loss">revenue loss</option>
-                                        <option value="administrative">administrative</option>
-                                    </select>
-                                </td>
+                                {ispostpaid ? (
+                                    <td colspan="2" className=" col-md-6 text-right">
+                                        <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
+                                            <option>--------</option>
+                                            <option value="bill">bill</option>
+                                            <option value="reconnection cost">reconnection cost</option>
+                                            <option value="reconnection fee">reconnection fee</option>
+                                            <option value="revenue loss">revenue loss</option>
+                                            <option value="administrative">administrative</option>
+                                        </select>
+                                    </td>
+                                ):(
+                                    <td colspan="2" className=" col-md-6 text-right">
+                                        <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
+                                            <option>--------</option>
+                                            <option value="bill">bill</option>
+                                        </select>
+                                    </td>
+                                )}
+                                
                             </tr>
-                            </table> */}
+                            </table>
                             <h4>Select your payment mode</h4>
                             <table className='table table-condensed mb-3'>
                             <tr>
@@ -109,7 +127,7 @@ export default function ConfirmationView({Send}){
                             {/* <p className="small">By clicking Pay Now You will Agree to the Payment <a target="_blank" href="#">Terms &amp; Conditions</a></p> */}
                             <ul class="pager wizard no-style">
                                     <li class="next finish">
-                                        <button id="payBtn" class="btn  btn-cons from-left fa fa-check pull-center" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{Send(meter_no,meter,payment)}}>
+                                        <button id="payBtn" class="btn  btn-cons from-left fa fa-check pull-center" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{Send(meter_no,meter,bill,payment)}}>
                                             <span>Confirm</span>
                                         </button>
                                     </li>
