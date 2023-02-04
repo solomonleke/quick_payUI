@@ -13,7 +13,7 @@ export default function Content(){
             navigate('/')
         }
         else if(meter === "postpaid" ){
-            if(bill =="bill" || bill =="reconnection cost" || bill =="reconnection fee" || bill =="revenue loss" || bill =="administrative"){
+            if(bill =="bill" || bill =="reconnection cost" || bill =="reconnection fee" || bill =="lor(revenue loss)" || bill =="administrative charge"){
                 if(payment=="Cash" || payment=="Direct payment"){
                     sessionStorage.setItem('category', meter);
                     sessionStorage.setItem('bill_type', bill);
