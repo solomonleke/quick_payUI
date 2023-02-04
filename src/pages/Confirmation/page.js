@@ -29,15 +29,15 @@ export default function Content(){
             
         }
         else if(meter === "prepaid" && meter_no != "null"){
-            if(bill =="bill"){
+            if(bill =="bill" || bill =="reconnection cost" || bill =="reconnection fee" || bill =="lor(revenue loss)" || bill =="administrative charge"){
                 sessionStorage.setItem('category', meter);
                 sessionStorage.setItem('bill_type', bill);
                 sessionStorage.setItem('payment_type', payment);
                 navigate('/details')
             }
-            else if(bill!="bill"){
-                alert('Prepaid only has option to pay bill')
-            }
+            // else if(bill!="bill"){
+            //     alert('Prepaid only has option to pay bill')
+            // }
             else{
                 alert('Select payment')
             }
