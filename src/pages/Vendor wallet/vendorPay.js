@@ -40,7 +40,7 @@ export default async function pay(amount,bill,acc_no,name,meter_no,payment){
             sessionStorage.setItem('token_id', '0000 0000 0000 0000 0000');
             sessionStorage.setItem('trans_ref', data.data.transactionRef);
             sessionStorage.setItem('unit', 0.0);
-            sessionStorage.setItem('vat', data.data.qcTransaction.vat);
+            sessionStorage.setItem('vat', 0.0);
             showToast({
                 message: data.message,
                 type: 'success'
