@@ -87,25 +87,19 @@ export default function ConfirmationView({Send}){
                                 <td className=" col-md-6">
                                     <span className="m-l-10 font-montserrat fs-11 all-caps">Bill Type</span>
                                 </td>
-                                {ispostpaid ? (
+                                
                                     <td colspan="2" className=" col-md-6 text-right">
                                         <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
                                             <option>--------</option>
                                             <option value="bill">bill</option>
                                             <option value="reconnection cost">reconnection cost</option>
                                             <option value="reconnection fee">reconnection fee</option>
-                                            <option value="revenue loss">revenue loss</option>
-                                            <option value="administrative">administrative</option>
+                                            <option value="lor(revenue loss)">lor(revenue loss)</option>
+                                            <option value="administrative charge">administrative charge</option>
                                         </select>
                                     </td>
-                                ):(
-                                    <td colspan="2" className=" col-md-6 text-right">
-                                        <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
-                                            <option>--------</option>
-                                            <option value="bill">bill</option>
-                                        </select>
-                                    </td>
-                                )}
+                               
+                                
                                 
                             </tr>
                             </table>
