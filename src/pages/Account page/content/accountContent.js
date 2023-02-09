@@ -11,6 +11,8 @@ import { Link } from 'react-router-dom';
 import { usePaystackPayment } from 'react-paystack';
 import options from '../../Vendor wallet/apiPreps';
 import { useNavigate } from 'react-router-dom';
+import { Backdrop } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 // import payStack from '../../Paystack/paystack';
 // import { usePaystackPayment } from 'react-paystack';
 import { showToast } from '../../../utility/tool';
@@ -46,6 +48,7 @@ export default function AccountContent(){
     const [state,setState] = useState(false);
 
     const navigate = useNavigate()
+    
 
     const config = {
         reference: (new Date()).getTime().toString(),
@@ -76,10 +79,12 @@ export default function AccountContent(){
         try {
             const response = await fetch(url,other)
             const data = await response.json()
+            setIsLoading(!isLoading)
             // console.log(data)
             // console.log(data.status)
             if(data.status===true){
             alert(data.message)
+            setIsLoading(false)
             // console.log(data.pay)
             sessionStorage.setItem('limit_amount', data.pay.vendorBal);
             sessionStorage.setItem('trans_ref', data.trans_ref);
@@ -95,6 +100,7 @@ export default function AccountContent(){
                 window.location.href="/checkout"
               }, 1500);
             }else{
+                setIsLoading(false)
                 showToast({
                     message: data.message,
                     type: 'error'
@@ -332,6 +338,7 @@ export default function AccountContent(){
                                     <li class="next finish">
                                         <button id="payBtn" class="btn  btn-cons btn-animated from-left fa fa-check pull-right" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             <span>Pay Now</span>
+                                            
                                         </button>
                                     </li>
                                 </ul>
@@ -373,14 +380,24 @@ export default function AccountContent(){
                     </div>
                     <div class="modal-body">
                         <div class="container px-5 mx-3">
-                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>initializePayment(sendSuccess, onClose)}>
+                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>{
+                            setIsLoading(!isLoading)
+                            initializePayment(sendSuccess, onClose)}}>
                             <div class="col-4">
                                 <img src={bank} alt="" srcset=""></img>
                             </div> 
                             <div class="col-8">
                                 <h6>Pay with card</h6>
-                            </div>  
+                            </div>
+                              
                         </button>
+                        
+                        <Backdrop
+                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={isLoading}>
+                            <CircularProgress color="inherit" />
+                        </Backdrop>
+                            
                         <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>wallet(acc_no,metering_type,amount)}>
                             <div class="col-4">
                                 <img src={Wallet} alt="" srcset=""></img>
