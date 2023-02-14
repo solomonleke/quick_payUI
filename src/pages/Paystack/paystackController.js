@@ -23,7 +23,9 @@ export default function PaystackController(){
     const fees = (amount)=>{
         return parseFloat(calculateFee(parseInt(amount)).toFixed(2))
     }
+    sessionStorage.setItem('fees', fees(amount));
     const totalAmount = parseFloat(amount) + fees(amount);
+    sessionStorage.setItem('TotalAmount', totalAmount);
 
     const values = {email:email,phone_no:phone_no,amount:amount,name:name,metering_type:metering_type,acc_no:acc_no,meter_no:meter_no,fees:fees(amount),totalAmount:totalAmount}
 
