@@ -6,8 +6,10 @@ import { useState} from 'react';
 export default function ConfirmationView({Send}){
     // const [state, setState] = useState("");
     const [bill, setBill] = useState("");
+    const [isloggedIn,setisloggedIn] = useState(false);
     const [payment, setPayment] = useState("");
     const name = sessionStorage.getItem('name');
+    const token=sessionStorage.getItem('token');
     const meter = sessionStorage.getItem('category');
     const meter_no = sessionStorage.getItem('meter_no');
     const number = sessionStorage.getItem('account');
@@ -19,6 +21,12 @@ export default function ConfirmationView({Send}){
             setIspostpaid(false);
         }
     }, [meter]);
+
+    React.useEffect(() => {
+        if (token) {
+            setisloggedIn(true);
+        }
+    }, []);
     
     return(
         <div className='contain'>
@@ -87,17 +95,30 @@ export default function ConfirmationView({Send}){
                                 <td className=" col-md-6">
                                     <span className="m-l-10 font-montserrat fs-11 all-caps">Bill Type</span>
                                 </td>
-                                
-                                    <td colspan="2" className=" col-md-6 text-right">
+                                {ispostpaid?(
+                                <td colspan="2" className=" col-md-6 text-right">
                                         <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
                                             <option>--------</option>
-                                            <option value="bill">bill</option>
-                                            <option value="reconnection cost">reconnection cost</option>
-                                            <option value="reconnection fee">reconnection fee</option>
-                                            <option value="lor(revenue loss)">lor(revenue loss)</option>
-                                            <option value="administrative charge">administrative charge</option>
+                                            <option value="bill">Pay your bill</option>
+                                            <option value="reconnection cost">Pay for reconnection cost</option>
+                                            <option value="reconnection fee">Pay for reconnection fee</option>
+                                            <option value="lor(revenue loss)">Pay for lor(revenue loss)</option>
+                                            <option value="administrative charge">Pay for administrative charge</option>
                                         </select>
-                                    </td>
+                                </td>
+                                    ):(
+                                        <td colspan="2" className=" col-md-6 text-right">
+                                            <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
+                                                <option>--------</option>
+                                                <option value="bill">Buy Energy</option>
+                                                <option value="reconnection cost">Pay for reconnection cost</option>
+                                                <option value="reconnection fee">Pay for reconnection fee</option>
+                                                <option value="lor(revenue loss)">Pay for lor(revenue loss)</option>
+                                                <option value="administrative charge">Pay for administrative charge</option>
+                                            </select>
+                                        </td>
+                                    )}
+                                    
                                
                                 
                                 
