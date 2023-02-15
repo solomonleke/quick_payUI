@@ -36,6 +36,9 @@ function Invoice(){
     show =bill_type
     arrears=amount
     }
+    if(!fees){
+        fees = 0
+    }
 
 
     const today = new Date();
