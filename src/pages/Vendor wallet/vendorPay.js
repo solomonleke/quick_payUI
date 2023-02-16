@@ -19,7 +19,7 @@ export default async function pay(amount,bill,acc_no,name,meter_no,payment){
         }
     }
     try {
-        if(bill=="prepaid" && description!="bill"){
+        if(description!="bill"){
             const url2 = `https://aplecash.smartpowerbilling.com/arrears-vend`;
             const other2 = {
                 method: 'POST',
