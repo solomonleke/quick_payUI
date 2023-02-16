@@ -21,7 +21,7 @@ export default async function pay(amount,bill,acc_no,name,meter_no,payment){
     try {
         if(description!="bill"){
             const url2 = `https://aplecash.smartpowerbilling.com/arrears-vend`;
-            const other2 = {
+            let other2 = {
                 method: 'POST',
                 body: JSON.stringify({
                     "account": meter_no,
@@ -32,6 +32,20 @@ export default async function pay(amount,bill,acc_no,name,meter_no,payment){
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
+        }
+        if(bill == "postpaid"){
+            other2 = {
+                method: 'POST',
+                body: JSON.stringify({
+                    "account": acc_no,
+                    "type": description,
+                    "amount":  parseFloat(amount)
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+        }
         }
         const response = await fetch(url2,other2)
         const data = await response.json()
