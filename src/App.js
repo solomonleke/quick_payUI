@@ -9,6 +9,7 @@ import Receipt from "./success/main";
 import Invoice from "./receipt/receipt";
 import Paystack from "./pages/Paystack/paystack";
 import Confirmation from "./pages/Confirmation/main";
+import Interswitch from "./pages/interswitch/interswitch";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/receipt" element={<Invoice />} />
         <Route path="/confirm" element={<Confirmation />} />
         <Route path="/paystack" element={<Paystack />} />
+        {/* <Route path="/interswitch" element={<Interswitch />} /> */}
       </Routes>
       
     </>

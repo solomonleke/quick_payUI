@@ -95,33 +95,48 @@ export default function ConfirmationView({Send}){
                                 <td className=" col-md-6">
                                     <span className="m-l-10 font-montserrat fs-11 all-caps">Bill Type</span>
                                 </td>
-                                {ispostpaid?(
-                                <td colspan="2" className=" col-md-6 text-right">
-                                        <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
-                                            <option>--------</option>
-                                            <option value="bill">Pay your bill</option>
-                                            <option value="reconnection cost">Pay for reconnection cost</option>
-                                            <option value="reconnection fee">Pay for reconnection fee</option>
-                                            <option value="lor(revenue loss)">Pay for lor(revenue loss)</option>
-                                            <option value="administrative charge">Pay for administrative charge</option>
-                                        </select>
-                                </td>
-                                    ):(
+                                {isloggedIn?(
+                                    ispostpaid?(
                                         <td colspan="2" className=" col-md-6 text-right">
-                                            <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
-                                                <option>--------</option>
-                                                <option value="bill">Buy Energy</option>
-                                                <option value="reconnection cost">Pay for reconnection cost</option>
-                                                <option value="reconnection fee">Pay for reconnection fee</option>
-                                                <option value="lor(revenue loss)">Pay for lor(revenue loss)</option>
-                                                <option value="administrative charge">Pay for administrative charge</option>
-                                            </select>
+                                                <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
+                                                    <option>--------</option>
+                                                    <option value="bill">Pay your bill</option>
+                                                    <option value="reconnection cost">Pay for reconnection cost</option>
+                                                    <option value="reconnection fee">Pay for reconnection fee</option>
+                                                    <option value="lor(revenue loss)">Pay for lor(revenue loss)</option>
+                                                    <option value="administrative charge">Pay for administrative charge</option>
+                                                </select>
                                         </td>
-                                    )}
-                                    
-                               
-                                
-                                
+                                            ):(
+                                                <td colspan="2" className=" col-md-6 text-right">
+                                                    <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
+                                                        <option>--------</option>
+                                                        <option value="bill">Buy Energy</option>
+                                                        <option value="reconnection cost">Pay for reconnection cost</option>
+                                                        <option value="reconnection fee">Pay for reconnection fee</option>
+                                                        <option value="lor(revenue loss)">Pay for lor(revenue loss)</option>
+                                                        <option value="administrative charge">Pay for administrative charge</option>
+                                                    </select>
+                                                </td>
+                                            )
+                                ):(
+                                    ispostpaid?(
+                                        <td colspan="2" className=" col-md-6 text-right">
+                                                <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
+                                                    <option>--------</option>
+                                                    <option value="bill">Pay your bill</option>
+                                                </select>
+                                        </td>
+                                            ):(
+                                                <td colspan="2" className=" col-md-6 text-right">
+                                                    <select value={bill} onChange={e=>setBill(e.target.value)} className="w-100">
+                                                        <option>--------</option>
+                                                        <option value="bill">Buy Energy</option>
+                                                    </select>
+                                                </td>
+                                            )
+                                )
+                                } 
                             </tr>
                             </table>
                             <h4>Select your payment mode</h4>
