@@ -295,7 +295,18 @@ export default function AccountContent(){
                                 <img src={bank} alt="" srcset=""></img>
                             </div> 
                             <div class="col-8">
-                                <h6>Pay with card</h6>
+                                <h6>Pay with Paystack</h6>
+                            </div>
+                              
+                        </button>
+
+                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>{
+                            window.location.href="/Interswitch"}}>
+                            <div class="col-4">
+                                <img src={bank} alt="" srcset=""></img>
+                            </div> 
+                            <div class="col-8">
+                                <h6>Pay with Interswitch</h6>
                             </div>
                               
                         </button>
