@@ -24,7 +24,7 @@ function App() {
         <Route path="/receipt" element={<Invoice />} />
         <Route path="/confirm" element={<Confirmation />} />
         <Route path="/paystack" element={<Paystack />} />
-        {/* <Route path="/interswitch" element={<Interswitch />} /> */}
+        <Route path="/interswitch" element={<Interswitch />} />
       </Routes>
       
     </>
