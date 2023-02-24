@@ -98,7 +98,7 @@ export default function InterswitchController(){
         merchantCode: merchantCode,
         payItemID: 'Default_Payable_MX118854',
         customerEmail: email,
-        redirectURL: 'http://localhost:3000',
+        redirectURL: 'http://188.166.99.136:3031/',
         mode: 'TEST',
         transactionReference: new Date().getTime().toString(),
         amount: String(totalAmount*100),
