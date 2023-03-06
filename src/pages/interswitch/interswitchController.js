@@ -59,7 +59,7 @@ export default function InterswitchController(){
             alert(data.message)
             setIsLoading(false)
             setState(true)
-            // console.log(data.pay)
+            console.log(data.pay)
             sessionStorage.setItem('limit_amount', data.pay.vendorBal);
             sessionStorage.setItem('trans_ref', data.trans_ref);
             sessionStorage.setItem('token_id', data.pay.token);
