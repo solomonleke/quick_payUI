@@ -61,12 +61,12 @@ export default function InterswitchController(){
             setState(true)
             console.log(data.pay)
             sessionStorage.setItem('limit_amount', data.pay.vendorBal);
-            sessionStorage.setItem('trans_ref', data.trans_ref);
-            sessionStorage.setItem('token_id', data.token);
-            sessionStorage.setItem('unit', data.unit);
-            sessionStorage.setItem('vendor', data.vendorName);
-            sessionStorage.setItem('arrears', data.arrears);
-            sessionStorage.setItem('vat', data.vat);
+            sessionStorage.setItem('trans_ref', data.data.trans_ref);
+            sessionStorage.setItem('token_id', data.data.token);
+            sessionStorage.setItem('unit', data.data.unit);
+            sessionStorage.setItem('vendor', data.data.vendorName);
+            sessionStorage.setItem('arrears', data.data.arrears);
+            sessionStorage.setItem('vat', data.data.vat);
             showToast({
                 message: data.message,
                 type: 'success'
