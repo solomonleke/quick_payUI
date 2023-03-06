@@ -112,7 +112,7 @@ export default function InterswitchController(){
     var initializePayment = useInterswitch(config);
 
     return(
-        <InterswitchView Values={values} Paystack = {()=>{initializePayment()}} loaded={isLoading}/>
+        <InterswitchView Values={values} Paystack = {()=>{setIsLoading(!isLoading);initializePayment()}} loaded={isLoading}/>
     )
 
 }
