@@ -33,7 +33,7 @@ export default function PaystackController(){
         reference: (new Date()).getTime().toString(),
         email: email,
         amount: totalAmount*100,
-        publicKey:'pk_live_2340dda9c382ed0455f857c27c4ebec6d42fb121'
+        publicKey:process.env.REACT_APP_QUIKPAY_PAYSTACK
         // publicKey: 'pk_test_2181b977ad77556cfce56d12392bdeb9f6c610f0',
     };
 

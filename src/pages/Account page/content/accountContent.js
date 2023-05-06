@@ -300,7 +300,7 @@ export default function AccountContent(){
                               
                         </button>
 
-                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>{
+                        {/* <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>{
                             window.location.href="/Interswitch"}}>
                             <div class="col-4">
                                 <img src={bank} alt="" srcset=""></img>
@@ -309,7 +309,7 @@ export default function AccountContent(){
                                 <h6>Pay with Interswitch</h6>
                             </div>
                               
-                        </button>
+                        </button> */}
                         
                             
                         <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>wallet(acc_no,metering_type,amount)}>
