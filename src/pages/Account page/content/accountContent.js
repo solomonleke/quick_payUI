@@ -11,6 +11,8 @@ import { Link } from 'react-router-dom';
 import { usePaystackPayment } from 'react-paystack';
 import options from '../../Vendor wallet/apiPreps';
 import { useNavigate } from 'react-router-dom';
+import { Backdrop } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 // import payStack from '../../Paystack/paystack';
 // import { usePaystackPayment } from 'react-paystack';
 import { showToast } from '../../../utility/tool';
@@ -39,93 +41,7 @@ export default function AccountContent(){
     sessionStorage.setItem('email', email);
     // sessionStorage.setItem('paystack',amount*100);
     
-    const meter = sessionStorage.getItem('category');
-    
-    const number = sessionStorage.getItem('account');
 
-    const [state,setState] = useState(false);
-
-    const navigate = useNavigate()
-
-    const config = {
-        reference: (new Date()).getTime().toString(),
-        email: email,
-        amount: amount*100,
-        publicKey: 'pk_test_2181b977ad77556cfce56d12392bdeb9f6c610f0',
-    };
-    
-    // you can call this function anything
-    const onSuccess = async(reference) => {
-        // console.log(reference);
-        let body = options(meter_no,metering_type,amount,name)
-        if(metering_type == "postpaid"){
-            body = options(acc_no,metering_type,amount,name)
-        }
-        const url = `${process.env.REACT_APP_QUIKPAY_BASEHOST}/verify/transaction/`+reference.reference
-        // const url = "http://localhost:3001/verify/transaction/"+reference.reference
-        // console.log(body)
-        const other = {
-            method: 'POST',
-            body:JSON.stringify(body),
-            headers: {
-                "Content-Type": "application/json",
-
-            }
-        }
-        try {
-            const response = await fetch(url,other)
-            const data = await response.json()
-            // console.log(data)
-            // console.log(data.status)
-            if(data.status===true){
-            alert(data.message)
-            // console.log(data.pay)
-            sessionStorage.setItem('limit_amount', data.pay.vendorBal);
-            sessionStorage.setItem('trans_ref', data.trans_ref);
-            sessionStorage.setItem('token_id', data.pay.token);
-            sessionStorage.setItem('unit', data.pay.unit);
-            sessionStorage.setItem('vendor', data.pay.vendorName);
-            sessionStorage.setItem('arrears', data.pay.arrears);
-            showToast({
-                message: data.message,
-                type: 'success'
-            });
-            setTimeout(() => {
-                window.location.href="/checkout"
-              }, 1500);
-            }else{
-                showToast({
-                    message: data.message,
-                    type: 'error'
-                });
-            }
-            } catch (error) {
-                console.log(error)
-                showToast({
-                    message: 'Transaction Failed!',
-                    type: 'error'
-                });
-                setTimeout(() => {
-                    navigate("/details")
-                  }, 1500);
-            }
-        
-    };
-
-    const sendSuccess = (reference) =>{
-        onSuccess(reference)
-    }
-    
-    // you can call this function anything
-    const onClose = () => {
-      // implementation for  whatever you want to do when the Paystack dialog closed.
-      console.log('closed')
-      if(state==true){
-        navigate("/checkout")
-      }
-    }
-    
-    const initializePayment = usePaystackPayment(config);
 
     const wallet = async(acc,metering_type,amount)=>{
         const url = "http://164.92.155.135:8001/pay/from-wallet"
@@ -294,7 +210,7 @@ export default function AccountContent(){
                                                         <div class="col-md-8">
                                                             <div class="form-group form-group-default input-group">
                                                                 <div class="">
-                                                                    <label>Amount</label>
+                                                                    <label style={{color:'red'}}>Amount</label>
                                                                     <input id="amount"  type="text" class="autonumeric form-control" placeholder='0.0' required="" value={amount} aria-required="true" onChange={e=>setAmount(e.target.value)}></input>
                                                                 </div>
                                                                 <div class="input-group-addon">
@@ -309,13 +225,13 @@ export default function AccountContent(){
                                                 <br/>
                                                 <div class="form-group-attached">
                                                     <div class="form-group form-group-default ">
-                                                        <label for="email">Email Address</label>
+                                                        <label for="email" style={{color:'red'}}>Email Address</label>
                                                         <input id="email"name="email" value={email} type="email" class="form-control w-50" placeholder="email address" onChange={e=>setEmail(e.target.value)}></input>
                                                     </div>
                                                 </div>
                                                 <div class="form-group-attached">
                                                     <div class="form-group form-group-default ">
-                                                        <label for="email">Phone No</label>
+                                                        <label for="phone" style={{color:'red'}}>Phone No</label>
                                                         <input id="phone" name="phone" value={phone} type="text" class="form-control w-50 " placeholder="Phone no" onChange={e=>setPhone(e.target.value)}></input>
                                                     </div>
                                                 </div>
@@ -331,6 +247,7 @@ export default function AccountContent(){
                                     <li class="next finish">
                                         <button id="payBtn" class="btn  btn-cons btn-animated from-left fa fa-check pull-right" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             <span>Pay Now</span>
+                                            
                                         </button>
                                     </li>
                                 </ul>
@@ -372,14 +289,29 @@ export default function AccountContent(){
                     </div>
                     <div class="modal-body">
                         <div class="container px-5 mx-3">
-                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>initializePayment(sendSuccess, onClose)}>
+                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>{
+                            window.location.href="/paystack"}}>
                             <div class="col-4">
                                 <img src={bank} alt="" srcset=""></img>
                             </div> 
                             <div class="col-8">
-                                <h6>Pay with card</h6>
-                            </div>  
+                                <h6>Pay with Paystack</h6>
+                            </div>
+                              
                         </button>
+
+                        {/* <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>{
+                            window.location.href="/Interswitch"}}>
+                            <div class="col-4">
+                                <img src={bank} alt="" srcset=""></img>
+                            </div> 
+                            <div class="col-8">
+                                <h6>Pay with Interswitch</h6>
+                            </div>
+                              
+                        </button> */}
+                        
+                            
                         <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>wallet(acc_no,metering_type,amount)}>
                             <div class="col-4">
                                 <img src={Wallet} alt="" srcset=""></img>

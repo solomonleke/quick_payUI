@@ -2,6 +2,8 @@ import options from "./apiPreps";
 import { showToast } from '../../utility/tool';
 
 export default async function pay(amount,bill,acc_no,name,meter_no,payment){
+    const description = sessionStorage.getItem('bill_type');
+    const token = sessionStorage.getItem('token');
     let body = options(meter_no,bill,amount,name,payment)
     if(bill == "postpaid"){
         body = options(acc_no,bill,amount,name,payment)
@@ -17,6 +19,54 @@ export default async function pay(amount,bill,acc_no,name,meter_no,payment){
         }
     }
     try {
+        if(description!="bill"){
+            const url2 = `https://aplecash.smartpowerbilling.com/arrears-vend`;
+            let other2 = {
+                method: 'POST',
+                body: JSON.stringify({
+                    "account": meter_no,
+                    "type": description,
+                    "amount":  parseFloat(amount)
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+        }
+        if(bill == "postpaid"){
+            other2 = {
+                method: 'POST',
+                body: JSON.stringify({
+                    "account": acc_no,
+                    "type": description,
+                    "amount":  parseFloat(amount)
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+        }
+        }
+        const response = await fetch(url2,other2)
+        const data = await response.json()
+        console.log(data)
+        if(data.status===true){
+            sessionStorage.setItem('token_id', '0000 0000 0000 0000 0000');
+            sessionStorage.setItem('trans_ref', data.data.transactionRef);
+            sessionStorage.setItem('unit', 0.0);
+            sessionStorage.setItem('vat', 0.0);
+            showToast({
+                message: data.message,
+                type: 'success'
+            });
+            return true
+        }else{
+            showToast({
+                message: data.message,
+                type: 'error'
+            });
+        }
+    }else{
         const response = await fetch(url,other)
         const data = await response.json()
         console.log(data.status)
@@ -40,11 +90,11 @@ export default async function pay(amount,bill,acc_no,name,meter_no,payment){
                 message: data.message,
                 type: 'error'
             });
-        }
+        }}
     } catch (error) {
         console.log(error)
         showToast({
-            message: 'Transaction Failed!',
+            message: 'Transaction Failed!'+error,
             type: 'error'
         });
     }

@@ -7,8 +7,9 @@ import LandingPage from "./pages/Landing page/landing";
 import Login from "./auth/main";
 import Receipt from "./success/main";
 import Invoice from "./receipt/receipt";
-import PayStack from "./pages/Paystack/paystack";
+import Paystack from "./pages/Paystack/paystack";
 import Confirmation from "./pages/Confirmation/main";
+import Interswitch from "./pages/interswitch/interswitch";
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
         <Route path="/checkout" element={<Receipt />} />
         <Route path="/receipt" element={<Invoice />} />
         <Route path="/confirm" element={<Confirmation />} />
-        <Route path="/paystack" element={<PayStack />} />
+        <Route path="/paystack" element={<Paystack />} />
+        {/* <Route path="/interswitch" element={<Interswitch />} /> */}
       </Routes>
       
     </>

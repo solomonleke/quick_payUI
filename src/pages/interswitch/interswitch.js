@@ -1,12 +1,13 @@
-import PaystackController from "./paystackController";
+import InterswitchController from "./interswitchController";
+
 import AccountHeader from "../Account page/header/accountHeader";
 import Footer from "../../footer/footer";
 
-export default function Paystack(){
+export default function Interswitch(){
     return(
         <>
         <AccountHeader />
-        <PaystackController />
+        <InterswitchController />
         <Footer />
         </>
     )

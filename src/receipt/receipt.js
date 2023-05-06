@@ -13,7 +13,7 @@ function Invoice(){
     const category = sessionStorage.getItem('category');
     const token = sessionStorage.getItem('token_id');
     const unit = sessionStorage.getItem('unit');
-    const amount = sessionStorage.getItem('amount');
+    let amount = sessionStorage.getItem('amount');
     const name = sessionStorage.getItem('name');
     const tariff_name = sessionStorage.getItem('tariff_name');
     const tariff = sessionStorage.getItem('tariff');
@@ -27,6 +27,7 @@ function Invoice(){
     const billedamount = sessionStorage.getItem('billed');
     const trans_ref = sessionStorage.getItem('trans_ref')
     const bill_type = sessionStorage.getItem('bill_type')
+    let fees = sessionStorage.getItem('fees')
     let show;
     if (bill_type=='bill'){ 
     show = 'Arrears'
@@ -35,6 +36,10 @@ function Invoice(){
     show =bill_type
     arrears=amount
     }
+    if(!fees){
+        fees = 0
+    }
+
 
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
@@ -371,11 +376,25 @@ return (
                                             <p>11</p>
                                         </div>
                                         <div className="col-md-5 col_des">
-                                            <p className="bold"> Amount Paid </p>
+                                            <p className="bold"> Transaction Fee </p>
                                         </div>
                                         <div className="col col_price">
                                             <p>
-                                                ₦{(amount || "")}
+                                                ₦{(fees || "0")}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="row mx-0">
+                                        <div className="col-md-1 col_no">
+                                            <p>12</p>
+                                        </div>
+                                        <div className="col-md-5 col_des">
+                                            <p className="bold"> Amount Paid</p>
+                                        </div>
+                                        <div className="col col_price">
+                                            <p>
+                                                ₦{(parseFloat(amount) + parseFloat(fees) || "")}
                                             </p>
                                         </div>
                                     </div>

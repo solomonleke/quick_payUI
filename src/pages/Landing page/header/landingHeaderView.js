@@ -26,7 +26,7 @@ export default function LandingHeaderView({Click,loading,loggedIn}) {
                     <div className="col-4 collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav py-4">
                             <li className="nav-item "><a href="http://" className="new nav-link">Support</a></li>
-                            <li className="nav-item "><a href="/" className="new rel nav-link">Buy Electricity</a></li>
+                            <li className="nav-item "><a href="/" className="new rel nav-link">Buy Electricity/Pay your Bill</a></li>
                             {loggedIn?(
                                 <li className="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -51,7 +51,7 @@ export default function LandingHeaderView({Click,loading,loggedIn}) {
                                 <h6 style={{color:"white"}}>Enter your account or meter number</h6>
                                 <input type="text" className="form-control pb-3 w-50" onChange={e=>setNumber(e.target.value)}></input>
                             </div>
-                            <button type="submit" className="btn w-50" style={{background:"#017cc2",color:"white",border:"#017cc2"}} >Buy Energy</button>
+                            <button type="submit" className="btn w-50" style={{background:"#017cc2",color:"white",border:"#017cc2"}} >Buy Energy/Pay your Bill</button>
                             {loading?
                                         <Backdrop
                                         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
