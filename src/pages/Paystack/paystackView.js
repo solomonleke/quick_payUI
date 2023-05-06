@@ -14,7 +14,7 @@ export default function PaystackView({Values, Paystack, loaded}){
                     <div className="col-md b-r b-dashed " >
                         <div className="padding-30 sm-padding-5 sm-m-t-15" >
                             <h2>We Secured Your Line</h2>
-                            <p>You are about to make the following payment to APLE, as payment for Energy usage</p>
+                            <p>You are about to make the following payment to {process.env.REACT_APP_QUIKPAY_DESC}, as payment for Energy usage</p>
                             <p className="small hint-text">Kindly confirm the details below</p>
                             <table className="table table-condensed">
                                 <tr>
