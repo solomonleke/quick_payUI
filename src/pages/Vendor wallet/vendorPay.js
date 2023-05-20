@@ -80,6 +80,7 @@ export default async function pay(amount,bill,acc_no,name,meter_no,payment){
         sessionStorage.setItem('vendor', data.data.vendorName);
         sessionStorage.setItem('arrears', data.data.arrears);
         sessionStorage.setItem('vat', data.data.vat);
+        sessionStorage.setItem('buckets',JSON.stringify(data.data.buckets))
         showToast({
             message: data.message,
             type: 'success'
