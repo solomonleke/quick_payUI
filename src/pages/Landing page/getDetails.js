@@ -43,6 +43,8 @@ export default async function getCustomerDetails(number){
                 sessionStorage.setItem('transformer_id', result.data.transformer_id);
                 sessionStorage.setItem('feeder_id', result.data.feeder_id);
                 sessionStorage.setItem('account', result.data.account);
+                sessionStorage.setItem('minimumVend', result.data.minimumVend);
+                sessionStorage.setItem('totalDebt', result.data.totalDebt);
                 if (result.data.billed === null){
                     sessionStorage.setItem('billed', 0);
                 }else{

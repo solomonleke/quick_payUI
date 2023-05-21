@@ -27,6 +27,7 @@ function Invoice(){
     const billedamount = sessionStorage.getItem('billed');
     const trans_ref = sessionStorage.getItem('trans_ref')
     const bill_type = sessionStorage.getItem('bill_type')
+    const buckets = JSON.parse(sessionStorage.getItem('buckets'))
     let fees = sessionStorage.getItem('fees')
     let show;
     if (bill_type=='bill'){ 
@@ -48,6 +49,7 @@ function Invoice(){
     const date = dd+"/"+mm+"/"+yyyy
 
     const [isprepaid,setIsprepaid] = React.useState(true);
+    const [hasbuckets,sethasbuckets] = React.useState(true);
 
     React.useEffect(() => {
         if (category == 'postpaid') {
@@ -55,7 +57,29 @@ function Invoice(){
         }
     }, [category]);
 
+    React.useEffect(() => {
+        if (buckets.length < 1 ) {
+            sethasbuckets(false);
+        }
+    }, [buckets]);
 
+    const list = []
+    buckets.forEach((bucket) => {
+        list.push(<div className="row mx-0">
+                        <div className="col-md-1 col_no">
+                            <p>00</p>
+                        </div>
+                        <div className="col-md-5 col_des">
+                            <p className="bold">{bucket.bucket}({bucket.type})</p>
+                        </div>
+                        <div className="col col_price">
+                            <p>{bucket.amount}</p>
+                        </div>
+
+                    </div>)
+        console.log(bucket)
+      })
+      console.log(list)
     const title = `invoice.pdf`;
 
     const handlePrint = () => {
@@ -325,6 +349,7 @@ return (
                                             </p>
                                         </div>
                                     </div>
+                                    
                                 ):( ""
                                     // <div className="row mx-0">
                                     //     <div className="col-md-1 col_no">
@@ -340,6 +365,7 @@ return (
                                     //     </div>
                                     // </div>
                                 )}
+                                {hasbuckets ? (<div>{list}</div>):("")}
                                 {isprepaid ? (
                                     ""
                                     ):(

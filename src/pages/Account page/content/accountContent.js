@@ -36,6 +36,8 @@ export default function AccountContent(){
     const address = sessionStorage.getItem('address');
     const phone_no = sessionStorage.getItem('phone_no');
     const meter_no = sessionStorage.getItem('meter_no');
+    const minimumVend = sessionStorage.getItem('minimumVend');
+    const totalDebt = sessionStorage.getItem('totalDebt');
 
     sessionStorage.setItem('amount', amount);
     sessionStorage.setItem('email', email);
@@ -130,7 +132,41 @@ export default function AccountContent(){
                                     <div class="padding-30 sm-padding-5 sm-m-t-15">
                                         <h3>Current bill </h3>
                                         <table class="table table-condensed">
+                                            {isprepaid?(
                                             <tbody>
+                                                <tr>
+                                                    <td class=" col-md-9">
+                                                        <span class="m-l-10 font-montserrat fs-11 all-caps">Minimum Vend</span>
+                                                    </td>
+                                                    <td class=" col-md-3 text-right">
+                                                        <span>₦ {minimumVend}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class=" col-md-9">
+                                                        <span class="m-l-10 font-montserrat fs-11 all-caps">VAT</span>
+                                                    </td>
+                                                    <td class=" col-md-3 text-right">
+                                                        <span>₦ {vat}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class=" col-md-9">
+                                                        <span class="m-l-10 font-montserrat fs-11 all-caps">Total Balance</span>
+                                                    </td>
+                                                    <td class=" col-md-3 text-right">
+                                                        <span>₦ {totalDebt}</span>
+                                                    </td>
+                                                </tr>
+                                                {/* <tr>
+                                                    <td colspan="2" class=" col-md-3 text-right">
+                                                        <h4 class="text-primary no-margin font-montserrat">
+                                                            ₦{Total}</h4>
+                                                    </td>
+                                                </tr> */}
+                                            </tbody>
+                                            ):(
+                                                <tbody>
                                                 <tr>
                                                     <td class=" col-md-9">
                                                         <span class="m-l-10 font-montserrat fs-11 all-caps">Billed amount</span>
@@ -162,6 +198,7 @@ export default function AccountContent(){
                                                     </td>
                                                 </tr>
                                             </tbody>
+                                            )}
                                         </table>
                                     </div>
                                 </div>
