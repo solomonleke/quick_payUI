@@ -7,7 +7,7 @@ export default function AccountPage(){
         <>
             <AccountHeader />
             <AccountContent />
-           < Footer /> 
+            <Footer /> 
         </>
     )
 }

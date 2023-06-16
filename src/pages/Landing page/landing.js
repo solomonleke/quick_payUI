@@ -7,7 +7,7 @@ export default function LandingPage(){
         <>
             <LandingHeader />
             <LandingContent />
-           < Footer /> 
+            <Footer /> 
         </>
     )
 }
