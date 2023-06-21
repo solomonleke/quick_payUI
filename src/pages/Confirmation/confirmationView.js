@@ -1,8 +1,11 @@
+import { Box, Stack } from '@chakra-ui/react';
 import Header from '../../Components/Header';
 import '../../assets/css/bootstrap.min.css';
 import '../../assets/css/style.css';
 import React from 'react';
 import { useState } from 'react';
+import ListRow from '../../Components/ListRow';
+import Button from '../../Components/Button';
 
 export default function ConfirmationView({ Send }) {
     // const [state, setState] = useState("");
@@ -34,49 +37,34 @@ export default function ConfirmationView({ Send }) {
             <div className="container">
                 <div className="singleCardX">
                     <Header mt="12px" title={"Kindly confirm the details below"} />
-            
-                    <table className="table table-condensed mt-4">
-                        <tr className="tr">
-                            <td className="col-lg-9 tableTitle ">
-                                <span className="all-caps">Current metering Type</span>
-                            </td>
-                            <td className=" col-lg-3 TableSubText text-right">
-                                <span>{meter}</span>
-                            </td>
-                        </tr>
-                        <tr className="tr">
-                            <td className=" col-lg-9 tableTitle">
-                                <span className="all-caps">Customer Name</span>
-                            </td>
-                            <td className=" col-lg-3 TableSubText text-right">
-                                <span> {name}</span>
-                            </td>
-                        </tr>
-                        <tr className="tr">
-                            <td className=" col-lg-9 tableTitle">
-                                <span className="all-caps">Account Number</span>
-                            </td>
-                            <td className=" col-lg-3 TableSubText text-right">
-                                <span>{number}</span>
-                                <input id="accNumber" type="hidden" value={number}></input>
-                            </td>
-                        </tr>
-                        <tr className="tr">
-                            <td className=" col-lg-9 tableTitle">
-                                <span className="all-caps">Meter Number</span>
-                            </td>
-                            <td colspan="2" className=" col-lg-3 TableSubText text-right">
-                                <span>
-                                    {meter_no}</span>
-                            </td>
-                        </tr>
 
-                    </table>
+                    <Stack my="20px" spacing={"10px"}>
+                        <ListRow 
+                            title={"Current metering Type"}
+                            value={meter}
+                        />
+                        <ListRow 
+                            title={"Customer Name"}
+                            value={name}
+                        />
+                        <ListRow 
+                            title={"Account Number"}
+                            value={number}
+                        />
+                        <ListRow 
+                            title={"Meter Number"}
+                            value={meter_no}
+                        />
+                       
+                    </Stack>
+                   
                     <Header title={"Select your payment type"} size='1.5em' mt='10px'/>
                     <table className='table table-condensed mb-3'>
                         <tr>
-                            <td className=" col-md-6 tableTitle">
-                                <span className="all-caps">Bill Type</span>
+                            <td className=" col-md-6 ">
+                            <Box textTransform={"capitalize"} fontWeight={"600"} fontSize={"14px"} color={"#242424"}>Bill Type: </Box>
+
+                              
                             </td>
                             {isloggedIn ? (
                                 ispostpaid ? (
@@ -124,11 +112,13 @@ export default function ConfirmationView({ Send }) {
                     </table>
                 
                     <Header title={"Select your payment mode"} size='1.5em' mt='10px'/>
-
+                 
                     <table className='table table-condensed mb-3'>
                         <tr>
-                            <td className=" col-md-6 tableTitle">
-                                <span className="all-caps">Payment mode</span>
+                            <td className=" col-md-6 ">
+                            <Box textTransform={"capitalize"} fontWeight={"600"} fontSize={"14px"} color={"#242424"}>Payment mode : </Box>
+
+                                {/* <span className="all-caps">Payment mode</span> */}
                             </td>
                             <td colspan="2" className=" col-md-6 text-right">
                                 <select value={payment} onChange={e => setPayment(e.target.value)} className="selectDrop">
@@ -139,12 +129,15 @@ export default function ConfirmationView({ Send }) {
                             </td>
                         </tr>
                     </table>
+
+                    <Button onClick={() => { Send(meter_no, meter, bill, payment) }}>Confirm</Button>
+
                     {/* <p className="small">By clicking Pay Now You will Agree to the Payment <a target="_blank" href="#">Terms &amp; Conditions</a></p> */}
                     <ul class="pager wizard no-style">
                         <li class="next finish">
-                            <button id="payBtn" class="loginBtnP"  type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { Send(meter_no, meter, bill, payment) }}>
+                            {/* <button id="payBtn" class="loginBtnP"  type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { Send(meter_no, meter, bill, payment) }}>
                                 <span>Confirm</span>
-                            </button>
+                            </button> */}
                         </li>
                     </ul>
                 </div>

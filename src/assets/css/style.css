@@ -287,6 +287,16 @@ a{
     background: #017CC2;
     
   }
+  @media screen and (max-width:400px){
+    .headers{
+      text-transform: capitalize;
+      color: #242424; 
+      font-weight: 700;
+      font-size: 1em !important;
+      letter-spacing: 1px;
+      line-height: 10px
+    }
+  }
 
 @media screen and (max-width:700px){
     .res{
@@ -315,9 +325,9 @@ a{
       text-transform: capitalize;
       color: #242424; 
       font-weight: 700;
-      font-size: 1.5em !important;
+      font-size: 1.2em !important;
       letter-spacing: 1px;
-      line-height: 40px
+      line-height: 20px !important
     }
     
     
@@ -356,7 +366,7 @@ a{
 .headers::before{
   content: " ";
   border: 2px solid #F9C301;
-  height: 5px;
+  height: 55px;
   margin-right: 5px 
 
 }
@@ -369,6 +379,15 @@ a{
 }
 .singleCardX{
   background: #fff;
+  box-shadow: 2px 5px 10px 2px #BDBDBD;
+  cursor: pointer;
+  padding: 15px 15px;
+  border-radius: 8px;
+  transition: 0.3s ease-in !important
+
+}
+.LoginCardX{
+  background:  rgba(255, 255, 255, 0.9);
   box-shadow: 2px 5px 10px 2px #BDBDBD;
   cursor: pointer;
   padding: 15px 15px;

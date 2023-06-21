@@ -1,6 +1,12 @@
 import { useState } from "react";
 import Header from "../Components/Header";
 import img from "../assets/img/13151.jpg";
+import { Box, Flex, Stack, Text } from "@chakra-ui/react";
+import Input from "../Components/Input";
+import { AiTwotoneMail } from "react-icons/ai";
+import { MdPassword } from "react-icons/md";
+import Button from "../Components/Button";
+import { useNavigate } from "react-router-dom";
 
 
 export default function View({
@@ -9,45 +15,48 @@ export default function View({
 }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [Loading, setLoading] = useState(false);
+
+    const nav = useNavigate()
     console.log(process.env)
     return (
-        <div className="container">
+        <Box bgImage={'/signUpImg.jpg'} bgPos={"center"} bgSize={"cover"}>
 
-            <Header title="Sign in to your account " mt="32px" />
+            <div className="container">
+                <Flex justifyContent={"center"} >
+                    <Box w={["100%", "100%", "50%", "50%", "50%"]} my="32px">
+                        <div className=" LoginCardX mt-4">
+                            <Header title="Sign in to your vendor account " />
+                            <Text mt="20px">Welcome back. Please input your Credentials</Text>
 
-            <div className="row">
-                <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div className="LoginContent singleCard">
-                        <form action="" onSubmit={(e) => { e.preventDefault(); Click({ username, password }) }}>
-                            <div className="form-group">
-                                <label className="mb-1"><strong>Username</strong></label>
-                                <input type="Username" className="loginInput" placeholder="e.g username" onChange={e => setUsername(e.target.value)}></input>
-                            </div>
-                            <div className="form-group">
-                                <label className="mb-1"><strong>Password</strong></label>
-                                <input type="Password" placeholder="e.g *********" className="loginInput" onChange={e => setPassword(e.target.value)}></input>
-                            </div>
-                            <div className="form-row d-flex justify-content-between mt-4 mb-2">
+                            <form action="" onSubmit={(e) => { e.preventDefault(); setLoading(true); Click({ username, password }) }}>
+                                <Stack spacing={"22px"} mt="32px">
+                                    <Input isRequired={true} label='Username' leftIcon={<AiTwotoneMail />} id="username" value={username} val={username !== "" ? true : false} type='text' onChange={e => setUsername(e.target.value)} />
 
-                                <div className="form-group">
-                                    <a href="">Forgot Password?</a>
-                                </div>
-                            </div>
-                            <div className="text-center">
-                                <button className="loginBtnP" type="submit"   >Sign me In</button>
-                            </div>
+                                    <Box>
+                                        <Input isRequired={true} label='Password' leftIcon={<MdPassword />} id='password' value={password} val={password !== "" ? true : false} type='password' onChange={e => setPassword(e.target.value)} />
+                                        <Text color="blue.blue400" display={"flex"} mt="5px" justifyContent={"flex-end"} >Forget password?</Text>
+                                    </Box>
 
-                            <span>{isLoggedIn}</span>
+                                    <Button isSubmit={true}   isLoading={Loading}>Sign in</Button>
 
-                        </form>
-                    </div>
-                </div>
+                                </Stack>
+                              
 
-                <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <img src={img} width="100%" alt="choose" />
-                </div>
+                                <span>{isLoggedIn}</span>
+
+                            </form>
+
+                            <Text fontWeight={"500"} color="blue.blue400" textAlign={"center"} mt="32px" >Don't have an account ? <Box as="span" onClick={() => nav("/vendor-signUp")} color="yellow.yellow500">Sign up</Box></Text>
+
+                        </div>
+                    </Box>
+
+                </Flex>
+
+
             </div>
-        </div>
+        </Box>
 
 
     )

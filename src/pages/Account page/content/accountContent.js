@@ -18,6 +18,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { showToast } from '../../../utility/tool';
 import Header from '../../../Components/Header';
 import Heading from '../../../header/top';
+import { Stack } from '@chakra-ui/react';
+import ListRow from '../../../Components/ListRow';
+import Input from '../../../Components/Input';
+import { FaUserAlt } from 'react-icons/fa';
+import { AiOutlineNumber, AiTwotoneMail } from 'react-icons/ai';
+import { BsFillTelephoneFill } from 'react-icons/bs';
+import Button from '../../../Components/Button';
 
 export default function AccountContent() {
     const [isLoading, setIsLoading] = React.useState(false);
@@ -92,216 +99,148 @@ export default function AccountContent() {
                     <Header title={"account details"} mt="32px" />
 
                     <div class="row mb-4">
-                        <div class="d-flex col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="singleCardX mt-4">
                                 <Header title="Customer info" size='1.2em' />
+                                <Stack my="20px" spacing={"32px"}>
+                                    <ListRow
+                                        title={"name"}
+                                        value={name}
+                                    />
+                                    <ListRow
+                                        title={"address"}
+                                        value={address}
+                                    />
+                                    <ListRow
+                                        title={"phone number"}
+                                        value={phone_no}
+                                    />
+                                </Stack>
 
-                                <table class="table table-condensed">
-                                    <tbody><tr>
-                                        <td class=" col-md-9">
-                                            <span class="m-l-10 font-montserrat fs-11 all-caps">Name</span>
-                                        </td>
-                                        <td class=" col-md-3 text-right">
-                                            <span>{name}</span>
-                                        </td>
-                                    </tr>
-                                        <tr>
-                                            <td class=" col-md-9">
-                                                <span class="m-l-10 font-montserrat fs-11 all-caps">Address</span>
-                                            </td>
-                                            <td class=" col-md-3 text-right">
-                                                <span>{address}</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class=" col-md-9">
-                                                <span class="m-l-10 font-montserrat fs-11 all-caps">Phone Number</span>
-                                            </td>
-                                            <td class=" col-md-3 text-right">
-                                                <span>{phone_no}</span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
 
-                        <div class="d-flex col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="singleCardX mt-4">
 
                                 <Header title="Current bill" size='1.2em' />
-                                <table class="table table-condensed">
+                                <Stack my="20px" spacing={"32px"}>
                                     {isprepaid ? (
-                                        <tbody>
-                                            <tr>
-                                                <td class=" col-md-9">
-                                                    <span class="m-l-10 font-montserrat fs-11 all-caps">Minimum Vend</span>
-                                                </td>
-                                                <td class=" col-md-3 text-right">
-                                                    <span>₦ {minimumVend}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class=" col-md-9">
-                                                    <span class="m-l-10 font-montserrat fs-11 all-caps">VAT</span>
-                                                </td>
-                                                <td class=" col-md-3 text-right">
-                                                    <span>₦ {vat}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class=" col-md-9">
-                                                    <span class="m-l-10 font-montserrat fs-11 all-caps">Total Balance</span>
-                                                </td>
-                                                <td class=" col-md-3 text-right">
-                                                    <span>₦ {totalDebt}</span>
-                                                </td>
-                                            </tr>
-                                            {/* <tr>
-                                                    <td colspan="2" class=" col-md-3 text-right">
-                                                        <h4 class="text-primary no-margin font-montserrat">
-                                                            ₦{Total}</h4>
-                                                    </td>
-                                                </tr> */}
-                                        </tbody>
+                                        <>
+                                            <ListRow
+                                                title={"Minimum Vend"}
+                                                value={`₦ ${minimumVend}`}
+                                            />
+                                            <ListRow
+                                                title={"VAT"}
+                                                value={`₦ ${vat}`}
+                                            />
+                                            <ListRow
+                                                title={"Total Balance"}
+                                                value={`₦ ${totalDebt}`}
+                                            />
+
+
+                                        </>
                                     ) : (
-                                        <tbody>
-                                            <tr>
-                                                <td class=" col-md-9">
-                                                    <span class="m-l-10 font-montserrat fs-11 all-caps">Billed amount</span>
-                                                </td>
-                                                <td class=" col-md-3 text-right">
-                                                    <span>₦ {billedamount}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class=" col-md-9">
-                                                    <span class="m-l-10 font-montserrat fs-11 all-caps">VAT</span>
-                                                </td>
-                                                <td class=" col-md-3 text-right">
-                                                    <span>₦ {vat}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class=" col-md-9">
-                                                    <span class="m-l-10 font-montserrat fs-11 all-caps">Arrears</span>
-                                                </td>
-                                                <td class=" col-md-3 text-right">
-                                                    <span>₦ {credit}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" class=" col-md-3 text-right">
-                                                    <h4 class="text-primary no-margin font-montserrat">
-                                                        ₦{Total}</h4>
-                                                </td>
-                                            </tr>
-                                        </tbody>
+                                        <>
+                                            <ListRow
+                                                title={"Billed amount"}
+                                                value={`₦ ${billedamount}`}
+                                            />
+                                            <ListRow
+                                                title={"VAT"}
+                                                value={`₦ ${vat}`}
+                                            />
+                                            <ListRow
+                                                title={"Arrears"}
+                                                value={`₦ ${credit}`}
+                                            />
+
+                                            <ListRow
+                                                title={"Total"}
+                                                value={`₦ ${Total}`}
+                                            />
+
+
+                                        </>
                                     )}
-                                </table>
+                                </Stack>
                             </div>
                         </div>
 
 
-                        <div class="d-flex col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="singleCardX mt-4">
 
                                 <Header title="account info" size='1.2em' />
-                                <table class="table table-condensed">
-                                    <tbody><tr>
-                                        <td class=" col-md-9">
-                                            <span class="m-l-10 font-montserrat fs-11 all-caps">Account Number</span>
-                                        </td>
-                                        <td class=" col-md-3 text-right">
-                                            <span>{acc_no}</span>
-                                        </td>
-                                    </tr>
-                                        <tr>
-                                            <td class=" col-md-9">
-                                                <span class="m-l-10 font-montserrat fs-11 all-caps">Meter Number</span>
-                                            </td>
-                                            <td class=" col-md-3 text-right">
-                                                <span>{meter_no}</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class=" col-md-9">
-                                                <span class="m-l-10 font-montserrat fs-11 all-caps">Account type</span>
-                                            </td>
-                                            <td class=" col-md-3 text-right">
-                                                <span>{metering_type}</span>
-                                            </td>
-                                        </tr>
-                                    </tbody></table>
+
+                                <Stack my="20px" spacing={"32px"}>
+                                    <ListRow
+                                        title={"Account number"}
+                                        value={` ${acc_no}`}
+                                    />
+                                    <ListRow
+                                        title={"Meter Number"}
+                                        value={` ${meter_no}`}
+                                    />
+                                    <ListRow
+                                        title={"Account type"}
+                                        value={` ${metering_type}`}
+                                    />
+                                </Stack>
+
+
                             </div>
                         </div>
 
                         <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="singleCardX mt-4">
                                 <Header title="Payment" size='1.2em' />
-                                <form id="paydetail" role="form" autocomplete="off" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" novalidate="novalidate">
+                                <form id="paydetail"  role="form" autocomplete="off" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" novalidate="novalidate">
+                                    <Stack my="20px" spacing={"20px"}>
+                                        <Input isRequired={true} label='Amount(NGN)' leftIcon={<AiOutlineNumber />} id="amount" value={amount} val={amount !== "" ? true : false} type='number' onChange={e => setAmount(e.target.value)} />
+                                        <Input isRequired={true} label='Email' leftIcon={<AiTwotoneMail />} id="email" value={email} val={email !== "" ? true : false} type='email' onChange={e => setEmail(e.target.value)} />
+                                        <Input isRequired={true} label='Phone No' leftIcon={<BsFillTelephoneFill />} id="phone" value={phone} val={phone !== "" ? true : false} type='number' onChange={e => setPhone(e.target.value)} />
+                                       { amount !== "" && email !=="" && phone !== "" ? (
+                                        <button id="payBtn" class="loginBtnP" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Pay Now</button>
 
-                                    <div class="form-group-attached">
-                                        <div class="row clearfix">
-                                            <div class="col-md-12">
-                                                <div class="form-group form-group-default ">
-                                                    <div class="">
-                                                        <label style={{ color: '#017CC2' }}>Amount(NGN)</label>
-                                                        <input id="amount" type="text" class="loginInput" placeholder='0.0' required="" value={amount} aria-required="true" onChange={e => setAmount(e.target.value)}></input>
-                                                    </div>
-                                                    {/* <div class="input-group-addon">
-                                                        NGN
-                                                    </div> */}
-                                                </div>
-                                            </div>
+                                       ):(
 
-                                        </div>
+                                        <button id="payBtn"  class="loginBtnP" type="button" onClick={()=>alert("Please make sure no field is empty")}>please fill all fields</button>
+                                       )
 
-                                    </div>
-                                
-                                    <div class="form-group-attached">
-                                        <div class="form-group form-group-default ">
-                                            <label for="email" style={{ color: '#017CC2' }}>Email Address</label>
-                                            <input id="email" name="email" value={email} type="email" class=" loginInput" placeholder="email address" onChange={e => setEmail(e.target.value)}></input>
-                                        </div>
-                                    </div>
-                                    <div class="form-group-attached">
-                                        <div class="form-group form-group-default ">
-                                            <label for="phone" style={{ color: '#017CC2' }}>Phone No</label>
-                                            <input id="phone" name="phone" value={phone} type="text" class=" loginInput " placeholder="Phone no" onChange={e => setPhone(e.target.value)}></input>
-                                        </div>
-                                    </div>
+
+                                            }
+                                    </Stack>
+
                                 </form>
 
-                                <button id="payBtn" class="loginBtnP" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    <span>Pay Now</span>
-
-                                </button>
-
+                                
                             </div>
                         </div>
 
                     </div>
 
                 </div>
-                <Heading/>
+                <Heading />
             </div>
             {/* modal */}
-            <div class="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true" >
+            <div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true" >
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             <div class="container">
                                 <div class="row">
-                                    <Header title="Checkout" size='1.7em'/>
+                                    <Header title="Checkout" size='1.7em' />
 
                                 </div>
                             </div>
                             <hr />
                             <div class="container">
                                 <div class="row">
-                                    <Header title="Select payment method" size='1.3em'/>
+                                    <Header title="Select payment method" size='1.3em' />
                                 </div>
                             </div>
                             <hr />

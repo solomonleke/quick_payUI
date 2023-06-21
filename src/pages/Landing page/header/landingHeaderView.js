@@ -7,6 +7,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useState } from "react";
 import user from "../../../assets/img/user.png";
 import OuterHeader from "../../../Layout/OuterHeader";
+import Button from "../../../Components/Button";
+import Preloader from "../../../Components/Preloader";
 
 
 export default function LandingHeaderView({ Click, loading, loggedIn }) {
@@ -27,18 +29,14 @@ export default function LandingHeaderView({ Click, loading, loggedIn }) {
                                 <h6 className="subText">Enter your account / meter number</h6>
                                 <input type="text" className="input" placeholder="e.g 1235*********" onChange={e => setNumber(e.target.value)}></input>
                             </div>
-                            <button type="submit" className="headerBtn">Buy Energy/Pay your Bill</button>
-                            {/* {loading &&
+                            <Button py="28px" fw="500" mt={"16px"} isSubmit={true} w={["100%","100%","70%","70%","70%"]}>Buy Energy/Pay your Bill</Button>
+                           
+                            {/* <button type="submit" className="headerBtn">Buy Energy/Pay your Bill</button> */}
+                            {loading &&
 
-                                <Backdrop 
-                                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                                    open
-
-                                >
-                                    <CircularProgress color="inherit" />
-                                </Backdrop>
                                 
-                            } */}
+                              <Preloader/>
+                            }
                         </form>
                         <div className="pt-2">
                             <p className="helpText">Need help? <a href="" className="anchorText">Kindly contact us</a></p>

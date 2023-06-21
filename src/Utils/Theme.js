@@ -22,12 +22,12 @@ const themeChakra = extendTheme({
       red200: '#F3937A',
       red100: '#F5BDB7',
     },
-    orange: {
-      orange500: '#F5862E',
-      orange400: '#F79749',
-      orange300: '#FBBA7F',
-      orange200: '#FCC38D',
-      orange100: '#FEE8C9',
+    yellow: {
+      yellow500: '#F9C301',
+      yellow400: '#F79749',
+      yellow300: '#FBBA7F',
+      yellow200: '#FCC38D',
+      yellow100: '#FEE8C9',
     },
     gray: {
       gray600: '#AAAAAA',
@@ -45,6 +45,7 @@ const themeChakra = extendTheme({
   },
   initialColorMode: 'light',
   useSystemColorMode: false,
+ 
 });
 
 export default themeChakra;
