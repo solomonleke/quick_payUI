@@ -59,7 +59,7 @@ export default function CustomerSignUp() {
 
                                 <Stack spacing={"22px"} mt="32px">
 
-                                    <Input label='First name' leftIcon={<FaUserAlt />} id="firstName" value={Payload.firstName} val={Payload.firstName !== "" ? true : false} type='text' onChange={handlePayload} />
+                                        <Input label='First name' leftIcon={<FaUserAlt />} id="firstName" value={Payload.firstName} val={Payload.firstName !== "" ? true : false} type='text' onChange={handlePayload} />
                                     <Input label='Last name' leftIcon={<FaUserAlt />} id="lastName" value={Payload.lastName} val={Payload.lastName !== "" ? true : false} type='text' onChange={handlePayload} />
                                     <Input label='Phone number' leftIcon={<BsTelephoneFill />} id="phoneNo" value={Payload.phoneNo} val={Payload.phoneNo !== "" ? true : false} type='text' onChange={handlePayload} />
                                     <Input label='Address' leftIcon={<FaAddressBook />} id="address" value={Payload.address} val={Payload.address !== "" ? true : false} type='text' onChange={handlePayload} />

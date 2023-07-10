@@ -37,6 +37,7 @@ import { useNavigate } from 'react-router-dom';
           color: 'blue.blue600',
         }}
         role=""
+        fontWeight={"400"}
         textTransform={'capitalize'}
         fontSize={'14px'}
         borderStartRadius="28px"

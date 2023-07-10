@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Heading from '../header/top'
 import Footer from '../footer/footer'
 import { Box, Flex, Img, Stack, Text } from '@chakra-ui/react'
@@ -9,6 +9,10 @@ import { AiOutlineUser, AiTwotoneMail } from 'react-icons/ai'
 import { MdPassword } from 'react-icons/md'
 import Button from '../Components/Button'
 import { useNavigate } from 'react-router-dom'
+import { FaUserAlt } from 'react-icons/fa'
+import { PortalSignInApi, UserDetails } from '../Utils/ApiCalls'
+import { showToast } from '../utility/tool'
+import { isAuthenticated } from '../Authentication'
 
 
 export default function CustomerLogin() {
@@ -26,15 +30,84 @@ export default function CustomerLogin() {
     setPayload({ ...Payload, [e.target.id]: e.target.value })
   }
 
-  const SignInCus = () => {
-    setLoading(true)
+  const SignInCus = async () => {
+    
+    try {
+      setLoading(true)
+      let result = await PortalSignInApi(Payload);
+      console.log("result", result);
+      if (result.status  === 200) {
+         
+          localStorage.setItem("CustomerToken", JSON.stringify(result.data.token))
+        
+        setTimeout(() => {
+          getOnlineUserData()
+         
+        }, 2000);
+        
+      } else {
+          console.log("errorMessage", result.response.data[0].Error)
+          setLoading(false)  
 
-    setTimeout(() => {
+      }
+
+
+  } catch (e) {
+
       setLoading(false)
-
-      nav("/portal/dashboard")
-    }, 3000);
+      showToast({
+        message: e.message,
+        type: 'error'
+    });
+      console.error('Errorssss:', e.response.data.message);
   }
+  }
+
+  const getOnlineUserData = async ()=>{
+
+    try {
+     
+      let result = await UserDetails();
+      if (result.status  === 200) {
+        setLoading(false)
+        localStorage.setItem("user", JSON.stringify(result.data))
+        showToast({
+          message: 'Login successful. Welcome back',
+          type: 'success'
+      });
+      setTimeout(() => {
+        nav("/portal/dashboard")
+        window.location.reload(true);
+      }, 3000);
+      
+
+        
+      } else {
+        
+      }
+      
+      
+    } catch (e) {
+      
+      showToast({
+        message: e.message,
+        type: 'error'
+      });
+      console.log('UserDetailsError:', e.message);
+    }
+    
+  }
+
+  useEffect(() => {
+    return () => {
+      if(isAuthenticated()){
+        nav("/portal/dashboard")
+      }
+    };
+  }, []);
+
+
+
   return (
     <>
       <Heading />
@@ -51,7 +124,7 @@ export default function CustomerLogin() {
                 <form onSubmit={SignInCus}>
                   <Stack spacing={"22px"} mt="32px">
 
-                    <Input isRequired={true} label='Email address / username' leftIcon={<AiTwotoneMail />} id="email" value={Payload.email} val={Payload.email !== "" ? true : false} type='email' onChange={handlePayload} />
+                    <Input isRequired={true} label='Username' leftIcon={<FaUserAlt/>} id="username" value={Payload.username} val={Payload.username !== "" ? true : false} type='text' onChange={handlePayload} />
 
                     <Box>
                       <Input isRequired={true} label='Password' leftIcon={<MdPassword />} id='password' value={Payload.password} val={Payload.password !== "" ? true : false} type='password' onChange={handlePayload} />

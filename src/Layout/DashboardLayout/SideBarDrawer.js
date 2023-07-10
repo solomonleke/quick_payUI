@@ -6,11 +6,15 @@ import { NavList } from './NavList';
 import NavItem from './NavLink';
 import { BiLogOut } from 'react-icons/bi';
 import SideBarNavItem from './SideBarNavLink';
+import { showToast } from '../../utility/tool';
 
 export default function SideBarDrawer({isOpen, onClose}) {
     const location = useLocation();
 
-  const List = NavList(location);
+    const OnlineUSerDetails = JSON.parse(localStorage.getItem("user"))||{}
+
+
+  const List = NavList(location,OnlineUSerDetails);
 
   const nav = useNavigate() 
 
@@ -19,6 +23,11 @@ export default function SideBarDrawer({isOpen, onClose}) {
 
   const logout = () =>{
     localStorage.clear();
+    nav("/cus-login")
+    showToast({
+      message: 'Logging out !!!',
+      type: 'success'
+  });
   }
   return (
     <Drawer
@@ -34,7 +43,7 @@ export default function SideBarDrawer({isOpen, onClose}) {
 
       <DrawerBody>
       <Stack spacing={"18px"} mt="32px">
-        {List.map((item, i) => (
+        {List.filter(item => item.display === true).map((item, i) => (
             <SideBarNavItem
             key={i}
             submenu={item.children}
@@ -68,23 +77,24 @@ export default function SideBarDrawer({isOpen, onClose}) {
 
         <HStack
           onClick={logout}
-          bgColor={"transparent"}
+          bgColor={"blue.blue100"}
           padding={"8px"}
           fontFamily="body"
           fontSize={"16px"}
           fontWeight={"600"}
-          color={"gray.gray500"}
+          color={"#fff"}
           _hover={{
-            bgColor: "gray.gray100",
+            bgColor: "gray.gray200",
             borderLeftRadius: "8px",
-            color: "black",
+            color: "blue.blue100",
           }}
+          borderRadius="16px"
           cursor="pointer"
         >
-          <Box fontSize={"20px"} pos="relative" top="-1px">
+          <Box fontSize={"24px"} pos="relative" top="-1px">
             <BiLogOut />
           </Box>
-          <Text textTransform={"capitalize"} pos={"relative"} top={"5px"}>Sign Out</Text>
+          <Text textTransform={"capitalize"} pos={"relative"} top={"5px"}>Logout</Text>
         </HStack>
       </Stack>
       </DrawerBody>

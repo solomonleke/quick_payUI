@@ -5,12 +5,15 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { NavList } from "./NavList";
 import { BiCaretDown,BiCaretUp } from "react-icons/bi";
 import NavItem from "./NavLink";
+import { showToast } from "../../utility/tool";
 
 
 export default function SideBar() {
   const location = useLocation();
+  const OnlineUSerDetails = JSON.parse(localStorage.getItem("user"))||{}
 
-  const List = NavList(location);
+
+  const List = NavList(location,OnlineUSerDetails);
 
   const nav = useNavigate() 
 
@@ -20,6 +23,11 @@ export default function SideBar() {
 
   const logout = () =>{
     localStorage.clear();
+    nav("/cus-login")
+    showToast({
+      message: 'Logging out !!!',
+      type: 'success'
+  });
   }
 
  
@@ -32,7 +40,7 @@ export default function SideBar() {
     </Flex>
 
       <Stack spacing={"18px"} mt="32px">
-        {List.map((item, i) => (
+        {List.filter(item => item.display === true).map((item, i) => (
             <NavItem
             key={i}
             submenu={item.children}
@@ -69,20 +77,21 @@ export default function SideBar() {
           bgColor={"transparent"}
           padding={"8px"}
           fontFamily="body"
-          fontSize={"16px"}
-          fontWeight={"600"}
+          fontSize={"14px"}
+          
           color={"gray.gray500"}
           _hover={{
             bgColor: "gray.gray100",
-            borderLeftRadius: "8px",
-            color: "black",
+            
+            color: "blue.blue600",
           }}
+          borderStartRadius="28px"
           cursor="pointer"
         >
-          <Box fontSize={"20px"} pos="relative" top="-1px">
+          <Box fontSize={"24px"} pos="relative" top="-1px">
             <BiLogOut />
           </Box>
-          <Text textTransform={"capitalize"} pos={"relative"} top={"5px"}>Sign Out</Text>
+          <Text fontWeight={"400"} textTransform={"capitalize"}  pos={"relative"} top={"5px"}>Logout</Text>
         </HStack>
       </Stack>
 

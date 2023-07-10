@@ -1,13 +1,13 @@
-import { MdDashboard, MdNotifications, MdOutlineAnalytics } from "react-icons/md";
+import { MdDashboard, MdNotifications, MdOutlineAnalytics, MdToken } from "react-icons/md";
 import { RiSettings2Fill } from "react-icons/ri";
 import { IoIosCreate } from "react-icons/io";
 import { TbPlugConnected } from "react-icons/tb";
 import { FaMoneyBillAlt, FaWallet } from "react-icons/fa";
 import { BiCaretDown,BiCaretUp } from "react-icons/bi";
-import { isActive } from "../../Authentication";
+import { isActive, isPostpaidUser, isPrepaidUser } from "../../Authentication";
 import { useState } from "react";
 import { BsLightbulbFill } from "react-icons/bs";
-export const NavList = (location) => {
+export const NavList = (location,OnlineUSerDetails) => {
 
   // const [Open, setOpen] = useState(false);
 
@@ -67,15 +67,9 @@ export const NavList = (location) => {
       link: "#",
       onClick: "",
       active: isActive(location, "/portal/postpaid"),
-      display: true,
+      display: isPostpaidUser(OnlineUSerDetails),
       children: [
-        {
-          name: "profile",
-          icon: <MdOutlineAnalytics />,
-          link: "/portal/postpaid/profile",
-          active: isActive(location, "/portal/postpaid/profile"),
-          display: true,
-        },
+     
         {
           name: "consumption",
           icon: <MdOutlineAnalytics />,
@@ -100,11 +94,35 @@ export const NavList = (location) => {
         {
           name: "download/View Bill",
           icon: <MdOutlineAnalytics />,
-          link: "/portal/postpaid/download-view-bill",
-          active: isActive(location, "/portal/postpaid/download-view-bill"),
+          link: "/portal/postpaid/download-bill",
+          active: isActive(location, "/portal/postpaid/download-bill"),
           display: true,
         },
         
+
+      ]
+
+      
+    },
+    {
+      name: "Prepaid",
+      icon: <BsLightbulbFill />,
+      downIcon:  <BiCaretDown/>,
+      upIcon:  <BiCaretUp/>,
+      link: "#",
+      onClick: "",
+      active: isActive(location, "/portal/prepaid"),
+      display: isPrepaidUser(OnlineUSerDetails),
+      children: [
+     
+        {
+          name: "Prepaid Transaction",
+          icon: <MdOutlineAnalytics />,
+          link: "/portal/prepaid/prepaid-transaction",
+          active: isActive(location, "/portal/prepaid/prepaid-transaction"),
+          display: true,
+        },
+       
 
       ]
 
@@ -117,7 +135,14 @@ export const NavList = (location) => {
       icon: <FaMoneyBillAlt />,
       link: "/portal/pay-bills",
       active: isActive(location, "/portal/pay-bills"),
-      display: true,
+      display: isPostpaidUser(OnlineUSerDetails),
+    },
+    {
+      name: "buy token",
+      icon: <MdToken />,
+      link: "/portal/buy-token",
+      active: isActive(location, "/portal/buy-token"),
+      display: isPrepaidUser(OnlineUSerDetails),
     },
     {
       name: "fund wallet",
