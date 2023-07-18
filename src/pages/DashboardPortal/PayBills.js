@@ -8,14 +8,16 @@ import Input from '../../Components/Input'
 import { FaUserAlt } from 'react-icons/fa'
 import { TbCurrencyNaira } from 'react-icons/tb'
 import Button from '../../Components/Button'
-import { PayBillsDetailsApi } from '../../Utils/ApiCalls'
+import { FundWalletAPI, PayBillsDetailsApi, PayWalletAPI } from '../../Utils/ApiCalls'
 import { showToast } from '../../utility/tool'
 import Preloader from '../../Components/Preloader'
+import { usePaystackPayment } from 'react-paystack'
 
 export default function PayBills() {
 
   const [amount, setAmount] = useState("")
   const [isLoading, setisLoading] = useState(true)
+  const [Loading, setLoading] = useState(false)
   const [PayBillsDetails, setPayBillsDetails] = useState({})
 
 
@@ -46,6 +48,112 @@ export default function PayBills() {
   }
     
   }
+
+  const onlineUser = JSON.parse(localStorage.getItem("user"))
+    const onlineUserToken = JSON.parse(localStorage.getItem("CustomerToken"))
+   
+
+    const config = {
+      reference: (new Date()).getTime().toString(),
+      email: `${onlineUser?.email||"name@gmail.com"}`,
+      amount: amount * 100, 
+      publicKey: 'pk_test_90f04cc9153e8effe41ec6a028c75e4999bea6bd',
+  };
+
+  const sendTransRef = async (payload)=>{
+    try {
+  
+      let result = await FundWalletAPI(payload);
+      console.log("FundWalletAPI", result);
+
+      
+      if (result.status === 200) {
+   
+        showToast({
+          message: "Bills Paid Successfully",
+          type: 'success'
+      });
+      PayBills()
+
+      setAmount("")
+         
+      }
+
+
+  } catch (e) {
+
+      showToast({
+          message: e.message,
+          type: 'error'
+      });
+    
+      console.error('consumptionError:', e.message);
+  }
+
+  }
+  const PaywithWallet = async ()=>{
+    try {
+      setLoading(true)
+      let result = await PayWalletAPI({
+        token: onlineUserToken,
+        amount: amount
+      });
+      console.log("PaywithWallet", result);
+      
+      if (result.status === 200) {
+   
+        showToast({
+          message: "Bills Paid Successfully",
+          type: 'success'
+      });
+      setLoading(false)
+      PayBills()
+
+      setAmount("")
+         
+      }
+
+
+  } catch (e) {
+
+      showToast({
+          message: e.message,
+          type: 'error'
+      });
+    
+      console.error('consumptionError:', e.message);
+  }
+
+  }
+
+  const onSuccess = (reference) => {
+   
+    let PayloadData =  {
+      token: onlineUserToken,
+      trans_ref: reference.reference,
+      payment_for: "payment"
+    }
+
+    sendTransRef(PayloadData)
+
+    // Implementation for whatever you want to do with reference and after success call.
+    console.log("onSuccess",reference);
+
+  };
+
+  // you can call this function anything
+  const onClose = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log('closed')
+  }
+
+  const initializePayment = usePaystackPayment(config)
+
+    const PayOnlinePaystack = ()=>{
+      
+      initializePayment(onSuccess, onClose)
+      // alert("1")
+    }
 
 
 
@@ -94,9 +202,10 @@ export default function PayBills() {
         </Box>
         <Box w={["100%", "100%", "48%", "48%", "48%"]} mt="12px" >
           <div className='LoginCardX'>
+         
             <Stack spacing={"26px"}>
               <Input label='Amount' leftIcon={<TbCurrencyNaira />} id="amount" value={amount} val={amount !== "" ? true : false} type='number' onChange={(e) => setAmount(e.target.value)} />
-              <Button>Pay online</Button>
+              <Button  onClick={PayOnlinePaystack}>Pay online</Button>
               <Flex justifyContent={"center"} mt="15px">
                     <Box w={"135px"} border="1px solid #808080"></Box>
 
@@ -106,8 +215,9 @@ export default function PayBills() {
                 <Box textAlign={"center"} fontWeight={"400"} fontSize={"18px"} bg={"#fff"} w="45px" color="#242424" >or</Box>
               </Flex>
 
-              <Button mt="10px">Pay From wallet</Button>
+              <Button mt="10px" isLoading={Loading} onClick={PaywithWallet}>Pay From wallet</Button>
             </Stack>
+          
           </div>
         </Box>
       </Flex>

@@ -18,7 +18,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { showToast } from '../../../utility/tool';
 import Header from '../../../Components/Header';
 import Heading from '../../../header/top';
-import { Stack } from '@chakra-ui/react';
+import { Box, Flex, Menu, MenuButton, MenuItem, MenuList, Select, Stack, Text } from '@chakra-ui/react';
 import ListRow from '../../../Components/ListRow';
 import Input from '../../../Components/Input';
 import { FaUserAlt } from 'react-icons/fa';
@@ -47,10 +47,17 @@ export default function AccountContent() {
     const meter_no = sessionStorage.getItem('meter_no');
     const minimumVend = sessionStorage.getItem('minimumVend');
     const totalDebt = sessionStorage.getItem('totalDebt');
+    let VendorName = sessionStorage.getItem('vendor');
+    let VendorAmount = sessionStorage.getItem('limit_amount');
 
     sessionStorage.setItem('amount', amount);
     sessionStorage.setItem('email', email);
     // sessionStorage.setItem('paystack',amount*100);
+
+
+    const [bill, setBill] = useState("");
+    const [payment, setPayment] = useState("");
+    const [ispostpaid, setIspostpaid] = React.useState(true);
 
 
 
@@ -80,6 +87,15 @@ export default function AccountContent() {
 
     }
 
+
+    React.useEffect(() => {
+        if (metering_type == 'prepaid') {
+            setIspostpaid(false);
+        }
+    }, [metering_type]);
+
+
+
     React.useEffect(() => {
         if (metering_type == 'postpaid') {
             setIsprepaid(false);
@@ -92,11 +108,52 @@ export default function AccountContent() {
         }
     }, []);
 
+    const [ShowPayment, setShowPayment] = useState(false);
+
+    const Proceed = () => {
+        if (bill !== "" && payment !== "") {
+            sessionStorage.setItem('category', metering_type);
+            sessionStorage.setItem('bill_type', bill);
+            sessionStorage.setItem('payment_type', payment);
+            setShowPayment(true)
+        } else {
+            alert("please make sure all fields are filled")
+
+        }
+
+
+    }
+
+
+
     return (
         <>
             <div class="">
+
                 <div id="rootwizard" class="container">
-                    <Header title={"account details"} mt="32px" />
+                    <Flex justifyContent={"space-between"} flexDir={["column-reverse", "row"]}>
+
+                        <Header title={"account details"} mt="32px" />
+                        {
+                            isloggedIn && (
+                                <Menu>
+                                    {({ isOpen }) => (
+                                        <>
+                                            <MenuButton isActive={isOpen} pos={"relative"} top={"10px"} px={"15px"} rounded="12px" py="0px important" bg="yellow.yellow500" color={"#fff"}>
+                                                {isOpen ? 'Hide Current Vending Balance' : 'Show Current Vending Balance'}
+                                            </MenuButton>
+                                            <MenuList>
+                                                <MenuItem>Current Vending Limit:  <Text ml={"10px"} color="#242424" fontWeight={"600"} pos={"relative"} top="5px">₦500,000</Text> </MenuItem>
+                                                <MenuItem>Current Outstanding: <Text ml={"10px"} color="#242424" fontWeight={"600"} pos={"relative"} top="5px">₦{totalDebt !== "null" ? totalDebt : "0.00"}</Text></MenuItem>
+                                                <MenuItem>Available to Vend: <Text ml={"10px"} color="#242424" fontWeight={"600"} pos={"relative"} top="5px">₦{VendorAmount}</Text></MenuItem>
+                                            </MenuList>
+                                        </>
+                                    )}
+                                </Menu>
+                            )
+                        }
+
+                    </Flex>
 
                     <div class="row mb-4">
                         <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -129,15 +186,15 @@ export default function AccountContent() {
                                         <>
                                             <ListRow
                                                 title={"Minimum Vend"}
-                                                value={`₦ ${minimumVend}`}
+                                                value={`₦ ${minimumVend !== "null" ? minimumVend : "0.00"}`}
                                             />
                                             <ListRow
                                                 title={"VAT"}
-                                                value={`₦ ${vat}`}
+                                                value={`₦ ${vat || "0.00"}`}
                                             />
                                             <ListRow
                                                 title={"Total Balance"}
-                                                value={`₦ ${totalDebt}`}
+                                                value={`₦ ${totalDebt !== "null" ? totalDebt : "0.00"}`}
                                             />
 
 
@@ -197,26 +254,90 @@ export default function AccountContent() {
                         <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="singleCardX mt-4">
                                 <Header title="Payment" size='1.2em' />
-                                <form id="paydetail"  role="form" autocomplete="off" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" novalidate="novalidate">
-                                    <Stack my="20px" spacing={"20px"}>
-                                        <Input isRequired={true} label='Amount(NGN)' leftIcon={<AiOutlineNumber />} id="amount" value={amount} val={amount !== "" ? true : false} type='number' onChange={e => setAmount(e.target.value)} />
-                                        <Input isRequired={true} label='Email' leftIcon={<AiTwotoneMail />} id="email" value={email} val={email !== "" ? true : false} type='email' onChange={e => setEmail(e.target.value)} />
-                                        <Input isRequired={true} label='Phone No' leftIcon={<BsFillTelephoneFill />} id="phone" value={phone} val={phone !== "" ? true : false} type='number' onChange={e => setPhone(e.target.value)} />
-                                       { amount !== "" && email !=="" && phone !== "" ? (
-                                        <button id="payBtn" class="loginBtnP" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Pay Now</button>
+                                {
+                                    ShowPayment === false ? (
+                                        <Box>
+                                            <Stack spacing="20px">
+                                                {
+                                                    isloggedIn ? (
 
-                                       ):(
+                                                        ispostpaid ? (
+                                                            <Select id='bill' _focus={{ borderColor: "#017CC2" }} color="#000" _hover={{ color: "black" }} placeholder='Select Bill Type' borderColor={bill !== "" ? "#017CC2" : "#242424"} fontSize={bill ? "16px" : "12px"} fontWeight={"400"} value={bill} size='lg' onChange={e => setBill(e.target.value)} >
+                                                                <option value="bill">Pay your bill</option>
+                                                                <option value="reconnection cost">Pay for reconnection cost</option>
+                                                                <option value="reconnection fee">Pay for reconnection fee</option>
+                                                                <option value="lor(revenue loss)">Pay for lor(revenue loss)</option>
+                                                                <option value="administrative charge">Pay for administrative charge</option>
+                                                            </Select>
+                                                        ) : (
 
-                                        <button id="payBtn"  class="loginBtnP" type="button" onClick={()=>alert("Please make sure no field is empty")}>please fill all fields</button>
-                                       )
+                                                            <Select id='bill' _focus={{ borderColor: "#017CC2" }} _hover={{ color: "black" }} color="#000" placeholder='Select Bill Type' borderColor={bill !== "" ? "#017CC2" : "#242424"} fontSize={bill ? "16px" : "12px"} fontWeight={"400"} value={bill} size='lg' onChange={e => setBill(e.target.value)} >
+                                                                <option value="bill">Buy Energy</option>
+                                                                <option value="reconnection cost">Pay for reconnection cost</option>
+                                                                <option value="reconnection fee">Pay for reconnection fee</option>
+                                                                <option value="lor(revenue loss)">Pay for lor(revenue loss)</option>
+                                                                <option value="administrative charge">Pay for administrative charge</option>
+
+                                                            </Select>
+                                                        )
+                                                    ) : (
+
+                                                        ispostpaid ? (
+                                                            <Select id='bill' _focus={{ borderColor: "#017CC2" }} placeholder='Select Bill Type' color="#000" borderColor={bill !== "" ? "#017CC2" : "#242424"} fontSize={bill ? "16px" : "12px"} fontWeight={"400"} value={bill} size='lg' onChange={e => setBill(e.target.value)} >
+                                                                <option value="bill">Pay your bill</option>
+                                                            </Select>
+                                                        ) : (
+                                                            <Select id='bill' _focus={{ borderColor: "#017CC2" }} placeholder='Select Bill Type' borderColor={bill !== "" ? "#017CC2" : "#242424"} fontSize={bill ? "16px" : "12px"} fontWeight={"400"} value={bill} size='lg' onChange={e => setBill(e.target.value)} >
+                                                                <option value="bill">Buy Energy</option>
+                                                            </Select>
+                                                        )
+
+                                                    )
+                                                }
+
+                                                <Select id='payment' _focus={{ borderColor: "017CC2" }} placeholder='Select Payment Type' borderColor={payment !== "" ? "#017CC2" : "#242424"} fontSize={payment ? "16px" : "12px"} fontWeight={"400"} value={payment} size='lg' onChange={e => setPayment(e.target.value)} >
+                                                    <option value="Cash">Cash</option>
+                                                    <option value="Direct payment">Direct payment</option>
+                                                </Select>
+                                            </Stack>
+
+                                            <Button mt="20px" disabled onClick={Proceed}>Proceed</Button>
+                                        </Box>
+                                    ) : (
+                                        <Box>
+                                            <form id="paydetail" role="form" autocomplete="off" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" novalidate="novalidate">
+                                                <Stack my="20px" spacing={"20px"}>
+                                                    <Input isRequired={true} label='Amount(NGN)' leftIcon={<AiOutlineNumber />} id="amount" value={amount} val={amount !== "" ? true : false} type='number' onChange={e => setAmount(e.target.value)} />
+                                                    <Input isRequired={true} label='Email' leftIcon={<AiTwotoneMail />} id="email" value={email} val={email !== "" ? true : false} type='email' onChange={e => setEmail(e.target.value)} />
+                                                    <Input isRequired={true} label='Phone No' leftIcon={<BsFillTelephoneFill />} id="phone" value={phone} val={phone !== "" ? true : false} type='number' onChange={e => setPhone(e.target.value)} />
+                                                    {amount !== "" && email !== "" && phone !== "" ? (
+                                                        <button id="payBtn" class="loginBtnP" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Pay Now</button>
+
+                                                    ) : (
+
+                                                        <button id="payBtn" class="loginBtnP" type="button" onClick={() => alert("Please make sure no field is empty")}>please fill all fields</button>
+                                                    )
 
 
-                                            }
-                                    </Stack>
+                                                    }
+                                                </Stack>
 
-                                </form>
+                                            </form>
 
-                                
+                                        </Box>
+                                    )
+                                }
+
+
+
+
+
+
+
+
+
+
+
                             </div>
                         </div>
 

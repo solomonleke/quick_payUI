@@ -10,15 +10,22 @@ import { FaPen, FaUserAlt } from 'react-icons/fa'
 import { AiTwotoneMail } from 'react-icons/ai'
 import Button from '../../Components/Button'
 import { MdPassword } from 'react-icons/md'
+import ProgressBar from '../../Components/ProgressBar'
+import { ChangePasswordAPI } from '../../Utils/ApiCalls'
+import { showToast } from '../../utility/tool'
 
 export default function Settings() {
 
     const [Image, setImage] = useState(null)
+    const [Loading, setLoading] = useState(false)
+    const [Match, setMatch] = useState(false)
     const [TwoFactorAuth, setTwoFactorAuth] = useState("")
 
-    console.log("TwoFactorAuth",TwoFactorAuth)
+    console.log("TwoFactorAuth", TwoFactorAuth)
 
     const OnlineUSerDetails = JSON.parse(localStorage.getItem("user"))
+    const onlineUserToken = JSON.parse(localStorage.getItem("CustomerToken"))
+
 
     console.log("online user", OnlineUSerDetails)
 
@@ -43,8 +50,8 @@ export default function Settings() {
     });
 
     const [PasswordPayload, setPasswordPayload] = useState({
-        currentPassword: "password",
-        newPassword: "",
+        password: "",
+        new_password: "",
         confirmNewPassword: "",
 
     });
@@ -53,8 +60,65 @@ export default function Settings() {
         setPayload({ ...Payload, [e.target.id]: e.target.value })
     }
     const handlePayloadPassword = (e) => {
-        setPasswordPayload({ ...Payload, [e.target.id]: e.target.value })
+        setPasswordPayload({ ...PasswordPayload, [e.target.id]: e.target.value })
     }
+
+    const UpdatePassword = async (e) => {
+        e.preventDefault()
+        try {
+            setLoading(true)
+            let result = await ChangePasswordAPI({
+                token: onlineUserToken,
+                password: PasswordPayload.password,
+                new_password: PasswordPayload.new_password
+            });
+            console.log("UpdatePassword", result);
+
+            if (result.status === 200) {
+
+                showToast({
+                    message: "Password Updated Successfully",
+                    type: 'success'
+                });
+                setLoading(false)
+
+
+                setPasswordPayload({
+                    password: "",
+                    new_password: "",
+                    confirmNewPassword: "",
+
+                })
+
+            }
+
+
+        } catch (e) {
+
+            showToast({
+                message: e.message,
+                type: 'error'
+            });
+            setLoading(false)
+
+
+
+            console.error('password update:', e.message);
+        }
+
+    }
+
+
+    const checkRetypePassword = () => {
+        if (PasswordPayload.new_password === PasswordPayload.confirmNewPassword)
+            setMatch(false)
+        else {
+
+            setMatch(true)
+        }
+
+    }
+
 
     useEffect(() => {
         setPayload({
@@ -64,7 +128,9 @@ export default function Settings() {
             phone: OnlineUSerDetails?.phone_no
         })
 
-    }, []);
+        checkRetypePassword()
+
+    }, [PasswordPayload.confirmNewPassword]);
     return (
         <MainLayout>
             <Seo title='Settings' description='APLE Settings' />
@@ -135,15 +201,25 @@ export default function Settings() {
 
 
                         <Text color="#242424" mt="22px" textTransform={"capitalize"} fontSize={"16px"} fontWeight={"600"}>Change password</Text>
+                        <form onSubmit={UpdatePassword}>
+                            <Stack spacing={"26px"} mt="32px">
 
-                        <Stack spacing={"26px"} mt="32px">
+                                <Input isRequired={true} label='Current Password' leftIcon={<MdPassword />} id="password" value={PasswordPayload.password} val={PasswordPayload.password !== "" ? true : false} type='password' onChange={handlePayloadPassword} />
+                                <div>
+                                    <Input isRequired={true} label='New Password' leftIcon={<MdPassword />} id="new_password" value={PasswordPayload.new_password} val={PasswordPayload.new_password !== "" ? true : false} type='password' onChange={handlePayloadPassword} />
+                                    <ProgressBar password={PasswordPayload.new_password} />
 
-                            <Input label='Current Password' leftIcon={<MdPassword />} id="currentPassword" value={PasswordPayload.currentPassword} val={PasswordPayload.currentPassword !== "" ? true : false} type='password' />
-                            <Input label='New Password' leftIcon={<MdPassword />} id="newPassword" value={PasswordPayload.newPassword} val={PasswordPayload.newPassword !== "" ? true : false} type='password' onChange={handlePayloadPassword} />
-                            <Input label='Confirm New Password' leftIcon={<MdPassword />} id="confirmNewPassword" value={PasswordPayload.confirmNewPassword} val={PasswordPayload.confirmNewPassword !== "" ? true : false} type='password' onChange={handlePayloadPassword} />
-                            <Button>Change Password</Button>
-                        </Stack>
+                                </div>
+                                <Input borderColor={Match ? "#E02828" : "#017CC2"} isRequired={true} label='Confirm New Password' leftIcon={<MdPassword />} id="confirmNewPassword" value={PasswordPayload.confirmNewPassword} val={PasswordPayload.confirmNewPassword !== "" ? true : false} type='password' onChange={handlePayloadPassword} />
+                                <Text color="red" fontSize={"12px"} pos="relative" textAlign={"center"} top="-10px">{Match && "*Password does not match*"}</Text>
 
+                               {
+                                 Match === false && (
+                                    <Button isSubmit={true} isLoading={Loading} >Change Password</Button>
+                                 )
+                               }
+                            </Stack>
+                        </form>
 
                         <Header title={"Two factor authentication"} size='1.3em' mt='32px' />
                         <Text color="#757474" mt="5px" fontSize={"13px"} fontWeight={"400"}>Activate two factor authenticator</Text>
@@ -154,7 +230,7 @@ export default function Settings() {
                                 <FormLabel htmlFor='twoFactor' mb='0'>
                                     Enable two factor authenticator?
                                 </FormLabel>
-                                <Switch id='twoFactor' value={TwoFactorAuth} onChange={(e)=>setTwoFactorAuth(e.target.value)} />
+                                <Switch id='twoFactor' value={TwoFactorAuth} onChange={(e) => setTwoFactorAuth(e.target.value)} />
                             </FormControl>
 
                             <Button>Activate</Button>

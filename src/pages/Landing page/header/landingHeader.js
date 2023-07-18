@@ -23,7 +23,7 @@ export default function LandingContent(){
   if(res===true){
     setIsloading(false)
     setTimeout(() => {
-      navigate("/confirm")
+      navigate("/details")
     }, 1500);
   }else{
     setIsloading(false)

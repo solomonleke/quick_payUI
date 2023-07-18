@@ -12,6 +12,7 @@ import { FaHashtag, FaHeadphones, FaMoneyCheck } from "react-icons/fa";
 import { AiFillBank } from "react-icons/ai";
 import { BsFillClockFill } from "react-icons/bs";
 import { GiPadlock } from "react-icons/gi";
+import Preloader from "../../../Components/Preloader";
 
 export default function LandingView({ Click, loading }) {
     const [number, setNumber] = useState('');
@@ -171,16 +172,11 @@ export default function LandingView({ Click, loading }) {
                                     <input type="text" className="footerInput" placeholder="Enter your account number or meter number" onChange={e => setNumber(e.target.value)}></input>
                                 </div>
                                 <button className="footerBtn" type="submit" >Search</button>
-                                {loading ?
-                                    <Backdrop
-                                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                                        open
-
-                                    >
-                                        <CircularProgress color="inherit" />
-                                    </Backdrop>
-                                    :
-                                    ""
+                                {loading && (
+                                    
+                                    <Preloader/>
+                                )
+                                    
                                 }
                             </form>
                         </div>
