@@ -12,6 +12,7 @@ import { FundWalletAPI, PayBillsDetailsApi, PayWalletAPI } from '../../Utils/Api
 import { showToast } from '../../utility/tool'
 import Preloader from '../../Components/Preloader'
 import { usePaystackPayment } from 'react-paystack'
+import { useNavigate } from 'react-router-dom'
 
 export default function PayBills() {
 
@@ -60,6 +61,8 @@ export default function PayBills() {
       publicKey: 'pk_test_90f04cc9153e8effe41ec6a028c75e4999bea6bd',
   };
 
+  const nav = useNavigate()
+
   const sendTransRef = async (payload)=>{
     try {
   
@@ -73,6 +76,9 @@ export default function PayBills() {
           message: "Bills Paid Successfully",
           type: 'success'
       });
+
+      nav("/portal/dashboard")
+
       PayBills()
 
       setAmount("")
@@ -106,6 +112,7 @@ export default function PayBills() {
           message: "Bills Paid Successfully",
           type: 'success'
       });
+      nav("/portal/dashboard")
       setLoading(false)
       PayBills()
 

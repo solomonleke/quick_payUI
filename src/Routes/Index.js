@@ -29,6 +29,7 @@ import PrepaidTransaction from '../pages/DashboardPortal/PrepaidPages/PrepaidTra
 import PostpaidRoutes from './PostpaidRoutes'
 import PrepaidRoutes from './PrepaidRoutes'
 import BuyToken from '../pages/DashboardPortal/PrepaidPages/BuyToken'
+import OtpPop from '../Components/OtpPop'
 
 export default function IndexRoutes() {
     return (
@@ -46,6 +47,7 @@ export default function IndexRoutes() {
                 <Route path="/cus-login" element={<CustomerLogin />} />
                 <Route path="/cus-signUp" element={<CustomerSignUp />} />
                 <Route path="/vendor-signUp" element={<VendorSignUp />} />
+            
 
                 {/* Dashboard */}
                 <Route element={<ProtectedRoutes />}>

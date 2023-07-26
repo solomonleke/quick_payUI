@@ -135,7 +135,7 @@ export default function AccountContent() {
 
                         <Header title={"account details"} mt="32px" />
                         {
-                            isloggedIn && (
+                            isloggedIn  && (
                                 <Menu>
                                     {({ isOpen }) => (
                                         <>
@@ -144,7 +144,7 @@ export default function AccountContent() {
                                             </MenuButton>
                                             <MenuList>
                                                 <MenuItem>Current Vending Limit:  <Text ml={"10px"} color="#242424" fontWeight={"600"} pos={"relative"} top="5px">₦500,000</Text> </MenuItem>
-                                                <MenuItem>Current Outstanding: <Text ml={"10px"} color="#242424" fontWeight={"600"} pos={"relative"} top="5px">₦{totalDebt !== "null" ? totalDebt : "0.00"}</Text></MenuItem>
+                                                <MenuItem>Amount Collected: <Text ml={"10px"} color="#242424" fontWeight={"600"} pos={"relative"} top="5px">₦{totalDebt !== "null" ? totalDebt : "0.00"}</Text></MenuItem>
                                                 <MenuItem>Available to Vend: <Text ml={"10px"} color="#242424" fontWeight={"600"} pos={"relative"} top="5px">₦{VendorAmount}</Text></MenuItem>
                                             </MenuList>
                                         </>

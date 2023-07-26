@@ -10,6 +10,7 @@ import { MdAlternateEmail } from 'react-icons/md'
 import { usePaystackPayment } from 'react-paystack'
 import { FundWalletAPI } from '../../Utils/ApiCalls'
 import { showToast } from '../../utility/tool'
+import { useNavigate } from 'react-router-dom'
 
 export default function FundWallet() {
     const [Payload,setPayload] =useState({
@@ -32,6 +33,7 @@ export default function FundWallet() {
       publicKey: 'pk_test_90f04cc9153e8effe41ec6a028c75e4999bea6bd',
   };
 
+  const nav = useNavigate()
   const sendTransRef = async (payload)=>{
     try {
   
@@ -45,6 +47,8 @@ export default function FundWallet() {
           message: "Wallet Funded successfully",
           type: 'success'
       });
+
+      nav("/portal/dashboard")
 
       setPayload({
         amount: "",

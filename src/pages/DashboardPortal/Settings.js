@@ -11,23 +11,25 @@ import { AiTwotoneMail } from 'react-icons/ai'
 import Button from '../../Components/Button'
 import { MdPassword } from 'react-icons/md'
 import ProgressBar from '../../Components/ProgressBar'
-import { ChangePasswordAPI } from '../../Utils/ApiCalls'
+import { ChangePasswordAPI, TwoFactorToggleApi } from '../../Utils/ApiCalls'
 import { showToast } from '../../utility/tool'
 
 export default function Settings() {
 
     const [Image, setImage] = useState(null)
     const [Loading, setLoading] = useState(false)
+    const [LoadingOTP, setLoadingOTP] = useState(false)
     const [Match, setMatch] = useState(false)
-    const [TwoFactorAuth, setTwoFactorAuth] = useState("")
+    const [TwoFactorAuth, setTwoFactorAuth] = useState(false)
 
-    console.log("TwoFactorAuth", TwoFactorAuth)
 
     const OnlineUSerDetails = JSON.parse(localStorage.getItem("user"))
     const onlineUserToken = JSON.parse(localStorage.getItem("CustomerToken"))
+    const OtpStatus = JSON.parse(localStorage.getItem("OtpStatus"))
 
 
     console.log("online user", OnlineUSerDetails)
+    console.log("OtpStatus", OtpStatus)
 
     const handleImg = (e) => {
 
@@ -119,6 +121,55 @@ export default function Settings() {
 
     }
 
+    const handleTwoFactor =(e)=> {
+
+        setTwoFactorAuth(e.target.checked)
+
+    }
+    console.log("TwoFactorAuth", TwoFactorAuth)
+
+    const Activate = async ()=>{
+
+        try {
+            setLoadingOTP(true)
+            let result = await TwoFactorToggleApi({
+                token: onlineUserToken,
+                otpkey: `${TwoFactorAuth}`
+            });
+            console.log("TwoFactorToggleApi", result);
+
+            if (result.status === 200) {
+
+                showToast({
+                    message: "OTP Updated Successfully",
+                    type: 'success'
+                });
+
+                // localStorage.setItem("OtpStatus", JSON.stringify(result.data[0].token_response))
+
+                setLoadingOTP(false)
+
+
+
+            }
+
+
+        } catch (e) {
+
+            showToast({
+                message: e.message,
+                type: 'error'
+            });
+            setLoadingOTP(false)
+
+
+
+
+          
+        }
+
+    }
+
 
     useEffect(() => {
         setPayload({
@@ -127,6 +178,8 @@ export default function Settings() {
             image: Image,
             phone: OnlineUSerDetails?.phone_no
         })
+
+        setTwoFactorAuth(OtpStatus)
 
         checkRetypePassword()
 
@@ -230,10 +283,13 @@ export default function Settings() {
                                 <FormLabel htmlFor='twoFactor' mb='0'>
                                     Enable two factor authenticator?
                                 </FormLabel>
-                                <Switch id='twoFactor' value={TwoFactorAuth} onChange={(e) => setTwoFactorAuth(e.target.value)} />
+                                <Switch id='twoFactor' isChecked={TwoFactorAuth} checked={TwoFactorAuth} onChange={handleTwoFactor} />
                             </FormControl>
 
-                            <Button>Activate</Button>
+                                {
+                                    TwoFactorAuth ?  <Button onClick={Activate} isLoading={LoadingOTP}>Activate</Button>: <Button isLoading={LoadingOTP} onClick={Activate}>Deactivate</Button>
+                                }
+                           
                         </Stack>
 
 

@@ -168,6 +168,7 @@ export const PaymentAPI = () => {
     });
 
 }
+
 export const FundWalletAPI = (Payload) => {
 
       console.log("Payload", Payload)
@@ -199,6 +200,72 @@ export const FundWalletAPI = (Payload) => {
     });
 
 }
+
+
+export const VerifyOtpAPI = (Payload) => {
+
+      console.log("Payload", Payload)
+   
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `${baseURL}/api/otp/`,
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': `Bearer ${OnlineUserToken}`
+        },
+        data : JSON.stringify(Payload)
+      };
+      
+   return axios.request(config)
+      .then((res) => {
+        console.log("VerifyOtp", res)
+        return res
+      })
+      .catch(function (error) {
+        if (error.response.data[0].Error) {
+            throw new Error(error.response.data[0].Error)
+        } else if (error.request) {
+            throw new Error(error.message)
+        } else {
+            throw new Error(error.message)
+        }
+    });
+
+}
+export const ResendOtpAPI = (Payload) => {
+
+      console.log("Payload", Payload)
+   
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `${baseURL}/api/otp/resend/`,
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': `Bearer ${OnlineUserToken}`
+        },
+        data : JSON.stringify(Payload)
+      };
+      
+   return axios.request(config)
+      .then((res) => {
+        console.log("VerifyOtp", res)
+        return res
+      })
+      .catch(function (error) {
+        if (error.response.data[0].Error) {
+            throw new Error(error.response.data[0].Error)
+        } else if (error.request) {
+            throw new Error(error.message)
+        } else {
+            throw new Error(error.message)
+        }
+    });
+
+}
+
+
 export const PayWalletAPI = (Payload) => {
 
       console.log("Payload", Payload)
@@ -238,6 +305,37 @@ export const ChangePasswordAPI = (Payload) => {
         method: 'post',
         maxBodyLength: Infinity,
         url: `${baseURL}/api/auth/reset/`,
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': `Bearer ${OnlineUserToken}`
+        },
+        data : JSON.stringify(Payload)
+      };
+      
+   return axios.request(config)
+      .then((res) => {
+        console.log("paymentRes", res)
+        return res
+      })
+      .catch(function (error) {
+        if (error.response.data[0].Error) {
+            throw new Error(error.response.data[0].Error)
+        } else if (error.request) {
+            throw new Error(error.message)
+        } else {
+            throw new Error(error.message)
+        }
+    });
+
+}
+export const TwoFactorToggleApi = (Payload) => {
+
+      console.log("Payload", Payload)
+   
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `${baseURL}/api/otp/trigger/`,
         headers: { 
           'Content-Type': 'application/json', 
           'Authorization': `Bearer ${OnlineUserToken}`
