@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+  #quickpayCustomerPortalFrontend
+  quickpayCustomerPortalFrontend:
+    container_name: quickpayCustomerPortalFrontend
+    restart: always
+    build: ./QuickpayCustomerPortal
+    ports:
+      - 5005:5005
+   
+      
