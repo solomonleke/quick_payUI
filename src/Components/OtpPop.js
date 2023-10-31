@@ -119,10 +119,11 @@ export default function OtpPop({ isOpen, onOpen, onClose }) {
                     type: 'success'
                 });
                 setTimeout(() => {
-
+                    console.log("check 1")
                     nav("/portal/dashboard")
                     window.location.reload(true);
-                }, 3000);
+                    console.log("check 2")
+                }, 2000);
 
 
 

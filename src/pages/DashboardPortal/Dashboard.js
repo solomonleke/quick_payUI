@@ -34,32 +34,36 @@ export default function Dashboard() {
       if (result.status === 200) {
 
         console.log("resultDass", result.data);
-        const newData =   result.data.consume?.map((item,i)=>{
+
+
+        // const newData =   result.data.consume?.map((item,i)=>{
          
 
-          let newDate = moment(item.date).format('ll')
+        //   let newDate = moment(item?.date).format('ll')
          
-          item.date = newDate
+        //   item.date = newDate
           
-          return item
+        //   return item
           
-        })
-        const newDataAmount =   result.data.pay?.map((item,i)=>{
+        // })
+        // const newDataAmount =   result.data.pay?.map((item,i)=>{
          
 
-          let newDate = moment(item.paydate).format('ll')
+        //   let newDate = moment(item?.paydate).format('ll')
          
-          item.paydate = newDate
+        //   item.paydate = newDate
           
-          return item
+        //   return item
           
-        })
-        setAmountData(newDataAmount)
+        // })
+
+        // setAmountData(newDataAmount)
         setDashboardData(result.data)
-        setConsumeData(newData)
+        // setConsumeData(newData)
         setisLoading(false)
-
+        
       } else {
+        setisLoading(false)
 
         console.log("errorMessage", result.response.data[0].Error)
       }
@@ -87,8 +91,9 @@ export default function Dashboard() {
        
         setOnlineUSerDetails(result.data)
         setisLoading(false)
-
+        
       } else {
+        setisLoading(false)
 
       }
 
@@ -120,10 +125,10 @@ export default function Dashboard() {
               
               let newArr =  item.amount.split("₦")[1] 
 
-              let newDate = moment(item.created).format('ll')
+              // let newDate = moment(item.created).format('ll')
               
               item.amount = newArr
-              item.created = newDate
+              // item.created = newDate
               
               return item
               
@@ -219,7 +224,7 @@ const nav = useNavigate()
     <Flex justifyContent={"space-between"}  mt="32px" flexWrap={"wrap"}>
              <Box width={["100%","100%","100%","100%","49%"]} onClick={()=>nav("/portal/postpaid/consumption")}>
              <ResponsiveContainer width={"100%"} height={250} >
-                <BarChart data={ConsumeData} >
+                <BarChart data={DashboardData.consume} >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="date" />
                   <YAxis />
@@ -231,7 +236,7 @@ const nav = useNavigate()
              </Box>
              <Box width={["100%","100%","100%","100%","49%"]} onClick={()=>nav("/portal/postpaid/payment")}>
              <ResponsiveContainer width={"100%"} height={250}>
-                <BarChart data={AmountData}>
+                <BarChart data={DashboardData.pay}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="paydate" />
                   <YAxis />

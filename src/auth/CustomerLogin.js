@@ -49,9 +49,10 @@ export default function CustomerLogin() {
 
         setLoading(false)
         setTimeout(() => {
-
+          console.log("check 1")
           nav("/portal/dashboard")
           window.location.reload(true);
+          console.log("check 2")
         }, 2000);
 
 
@@ -145,7 +146,7 @@ export default function CustomerLogin() {
               <div className=" LoginCardX mt-4" >
                 <Header title={"sign in to your customer Portal"} />
 
-                <Text mt="20px">Welcome back. Please input your Credentials cj</Text>
+                <Text mt="20px">Welcome back. Please input your Credentials </Text>
                 <form onSubmit={SignInCus}>
                   <Stack spacing={"22px"} mt="32px">
 
