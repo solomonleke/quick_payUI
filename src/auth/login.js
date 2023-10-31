@@ -28,7 +28,7 @@ export default function SigninContent(){
 
         var config = {
           method: 'post',
-          url: `${process.env.REACT_APP_QUIKPAY_BASEHOST}/login`,
+          url: `${process.env.REACT_APP_QUIKPAY_BASEHOST}/auth/login`,
           headers: { 
             'Content-Type': 'application/json'
           },
@@ -41,6 +41,7 @@ export default function SigninContent(){
 
         axios(config)
         .then(function (response) {
+            console.log("response", response)
             if(response.data.status===true){
                 sessionStorage.setItem('token', response.data.token);
                 sessionStorage.setItem('limit_amount', response.data.limit);

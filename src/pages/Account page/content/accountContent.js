@@ -16,60 +16,85 @@ import CircularProgress from '@mui/material/CircularProgress';
 // import payStack from '../../Paystack/paystack';
 // import { usePaystackPayment } from 'react-paystack';
 import { showToast } from '../../../utility/tool';
+import Header from '../../../Components/Header';
+import Heading from '../../../header/top';
+import { Box, Flex, Menu, MenuButton, MenuItem, MenuList, Select, Stack, Text } from '@chakra-ui/react';
+import ListRow from '../../../Components/ListRow';
+import Input from '../../../Components/Input';
+import { FaUserAlt } from 'react-icons/fa';
+import { AiOutlineNumber, AiTwotoneMail } from 'react-icons/ai';
+import { BsFillTelephoneFill } from 'react-icons/bs';
+import Button from '../../../Components/Button';
 
-export default function AccountContent(){
+export default function AccountContent() {
     const [isLoading, setIsLoading] = React.useState(false);
     const [data, setData] = React.useState([]);
-    const [isprepaid,setIsprepaid] = useState(true);
-    const [isloggedIn,setisloggedIn] = useState(false);
-    const [amount,setAmount]=useState('');
-    const [email,setEmail]=useState('');
-    const [phone,setPhone]=useState('');
-    const token=sessionStorage.getItem('token');
-    const acc_no=sessionStorage.getItem('account');
-    const name=sessionStorage.getItem('name');
-    const billedamount=sessionStorage.getItem('billed');
-    const vat=sessionStorage.getItem('vat');
-    const credit=sessionStorage.getItem('credit');
-    const metering_type=sessionStorage.getItem('category');
-    const Total=sessionStorage.getItem('Total');
+    const [isprepaid, setIsprepaid] = useState(true);
+    const [isloggedIn, setisloggedIn] = useState(false);
+    const [amount, setAmount] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const token = sessionStorage.getItem('token');
+    const acc_no = sessionStorage.getItem('account');
+    const name = sessionStorage.getItem('name');
+    const billedamount = sessionStorage.getItem('billed');
+    const vat = sessionStorage.getItem('vat');
+    const credit = sessionStorage.getItem('credit');
+    const metering_type = sessionStorage.getItem('category');
+    const Total = sessionStorage.getItem('Total');
     const address = sessionStorage.getItem('address');
     const phone_no = sessionStorage.getItem('phone_no');
     const meter_no = sessionStorage.getItem('meter_no');
     const minimumVend = sessionStorage.getItem('minimumVend');
     const totalDebt = sessionStorage.getItem('totalDebt');
+    let VendorName = sessionStorage.getItem('vendor');
+    let VendorAmount = sessionStorage.getItem('limit_amount');
 
     sessionStorage.setItem('amount', amount);
     sessionStorage.setItem('email', email);
     // sessionStorage.setItem('paystack',amount*100);
-    
 
 
-    const wallet = async(acc,metering_type,amount)=>{
+    const [bill, setBill] = useState("");
+    const [payment, setPayment] = useState("");
+    const [ispostpaid, setIspostpaid] = React.useState(true);
+
+
+
+    const wallet = async (acc, metering_type, amount) => {
         const url = "http://164.92.155.135:8001/pay/from-wallet"
         const other = {
             method: 'POST',
-            body:JSON.stringify({
-                "caller":"acc_no",
-                "requester":acc,
+            body: JSON.stringify({
+                "caller": "acc_no",
+                "requester": acc,
                 "amount": amount,
-                "type":metering_type
+                "type": metering_type
             }),
             headers: {
                 "Content-Type": "text/plain",
-                "Authorization":"Bearer "+token
+                "Authorization": "Bearer " + token
             }
         }
         try {
-            const response = await fetch(url,other)
+            const response = await fetch(url, other)
             const data = await response.json()
             alert(data.message)
             console.log(data)
         } catch (error) {
             console.log(error)
         }
-        
+
     }
+
+
+    React.useEffect(() => {
+        if (metering_type == 'prepaid') {
+            setIspostpaid(false);
+        }
+    }, [metering_type]);
+
+
 
     React.useEffect(() => {
         if (metering_type == 'postpaid') {
@@ -83,297 +108,304 @@ export default function AccountContent(){
         }
     }, []);
 
-    return(
+    const [ShowPayment, setShowPayment] = useState(false);
+
+    const Proceed = () => {
+        if (bill !== "" && payment !== "") {
+            sessionStorage.setItem('category', metering_type);
+            sessionStorage.setItem('bill_type', bill);
+            sessionStorage.setItem('payment_type', payment);
+            setShowPayment(true)
+        } else {
+            alert("please make sure all fields are filled")
+
+        }
+
+
+    }
+
+
+
+    return (
         <>
-            <div class=" container-fluid   container-fixed-lg">
-                <div id="rootwizard" class="m-t-0 p-t-0 section">
-                    <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm" role="tablist" data-init-reponsive-tabs="dropdownfx">
-                        <li class="nav-item" ng-click="selectedTab =1">
-                            <a data-toggle="tab" href=" " role="tab" class="active"><i class="fa fa-user tab-icon"></i> <span>Account Detail</span></a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane slide-left  p-l-20 p-r-20 sm-no-padding active" id="tab1">
-                            <div class="row row-same-height">
-                                <div class="col-md-6 b-r b-dashed b-grey ">
-                                    <div class="padding-30 sm-padding-5 sm-m-t-15">
-                                        <h3>Customer info </h3>
-                                        <table class="table table-condensed">
-                                            <tbody><tr>
-                                                <td class=" col-md-9">
-                                                    <span class="m-l-10 font-montserrat fs-11 all-caps">Name</span>
-                                                </td>
-                                                <td class=" col-md-3 text-right">
-                                                    <span>{name}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class=" col-md-9">
-                                                    <span class="m-l-10 font-montserrat fs-11 all-caps">Address</span>
-                                                </td>
-                                                <td class=" col-md-3 text-right">
-                                                    <span>{address}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class=" col-md-9">
-                                                    <span class="m-l-10 font-montserrat fs-11 all-caps">Phone Number</span>
-                                                </td>
-                                                <td class=" col-md-3 text-right">
-                                                    <span>{phone_no}</span>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+            <div class="">
 
-                                <div class="col-md-6 b-r b-dashed b-grey ">
-                                    <div class="padding-30 sm-padding-5 sm-m-t-15">
-                                        <h3>Current bill </h3>
-                                        <table class="table table-condensed">
-                                            {isprepaid?(
-                                            <tbody>
-                                                <tr>
-                                                    <td class=" col-md-9">
-                                                        <span class="m-l-10 font-montserrat fs-11 all-caps">Minimum Vend</span>
-                                                    </td>
-                                                    <td class=" col-md-3 text-right">
-                                                        <span>₦ {minimumVend}</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class=" col-md-9">
-                                                        <span class="m-l-10 font-montserrat fs-11 all-caps">VAT</span>
-                                                    </td>
-                                                    <td class=" col-md-3 text-right">
-                                                        <span>₦ {vat}</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class=" col-md-9">
-                                                        <span class="m-l-10 font-montserrat fs-11 all-caps">Total Balance</span>
-                                                    </td>
-                                                    <td class=" col-md-3 text-right">
-                                                        <span>₦ {totalDebt}</span>
-                                                    </td>
-                                                </tr>
-                                                {/* <tr>
-                                                    <td colspan="2" class=" col-md-3 text-right">
-                                                        <h4 class="text-primary no-margin font-montserrat">
-                                                            ₦{Total}</h4>
-                                                    </td>
-                                                </tr> */}
-                                            </tbody>
-                                            ):(
-                                                <tbody>
-                                                <tr>
-                                                    <td class=" col-md-9">
-                                                        <span class="m-l-10 font-montserrat fs-11 all-caps">Billed amount</span>
-                                                    </td>
-                                                    <td class=" col-md-3 text-right">
-                                                        <span>₦ {billedamount}</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class=" col-md-9">
-                                                        <span class="m-l-10 font-montserrat fs-11 all-caps">VAT</span>
-                                                    </td>
-                                                    <td class=" col-md-3 text-right">
-                                                        <span>₦ {vat}</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class=" col-md-9">
-                                                        <span class="m-l-10 font-montserrat fs-11 all-caps">Arrears</span>
-                                                    </td>
-                                                    <td class=" col-md-3 text-right">
-                                                        <span>₦ {credit}</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="2" class=" col-md-3 text-right">
-                                                        <h4 class="text-primary no-margin font-montserrat">
-                                                            ₦{Total}</h4>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            )}
-                                        </table>
-                                    </div>
-                                </div>
+                <div id="rootwizard" class="container">
+                    <Flex justifyContent={"space-between"} flexDir={["column-reverse", "row"]}>
 
-                                <div class="row row-same-height">
-                                    <div class="col-md-6 b-r b-dashed b-grey ">
-                                        <div class="padding-30 sm-padding-5 sm-m-t-15">
-                                            <h3>Account info </h3>
-                                            <table class="table table-condensed">
-                                                <tbody><tr>
-                                                    <td class=" col-md-9">
-                                                        <span class="m-l-10 font-montserrat fs-11 all-caps">Account Number</span>
-                                                    </td>
-                                                    <td class=" col-md-3 text-right">
-                                                        <span>{acc_no}</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class=" col-md-9">
-                                                        <span class="m-l-10 font-montserrat fs-11 all-caps">Meter Number</span>
-                                                    </td>
-                                                    <td class=" col-md-3 text-right">
-                                                        <span>{meter_no}</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class=" col-md-9">
-                                                        <span class="m-l-10 font-montserrat fs-11 all-caps">Account type</span>
-                                                    </td>
-                                                    <td class=" col-md-3 text-right">
-                                                        <span>{metering_type}</span>
-                                                    </td>
-                                                </tr>
-                                            </tbody></table>
-                                        </div>
-                                    </div>
+                        <Header title={"account details"} mt="32px" />
+                        {
+                            isloggedIn  && (
+                                <Menu>
+                                    {({ isOpen }) => (
+                                        <>
+                                            <MenuButton isActive={isOpen} pos={"relative"} top={"10px"} px={"15px"} rounded="12px" py="0px important" bg="yellow.yellow500" color={"#fff"}>
+                                                {isOpen ? 'Hide Current Vending Balance' : 'Show Current Vending Balance'}
+                                            </MenuButton>
+                                            <MenuList>
+                                                <MenuItem>Current Vending Limit:  <Text ml={"10px"} color="#242424" fontWeight={"600"} pos={"relative"} top="5px">₦500,000</Text> </MenuItem>
+                                                <MenuItem>Amount Collected: <Text ml={"10px"} color="#242424" fontWeight={"600"} pos={"relative"} top="5px">₦{totalDebt !== "null" ? totalDebt : "0.00"}</Text></MenuItem>
+                                                <MenuItem>Available to Vend: <Text ml={"10px"} color="#242424" fontWeight={"600"} pos={"relative"} top="5px">₦{VendorAmount}</Text></MenuItem>
+                                            </MenuList>
+                                        </>
+                                    )}
+                                </Menu>
+                            )
+                        }
 
-                                    <div class="col-md-6">
-                            <div class="padding-30 sm-padding-5">
-                                <br/>
-                                <br/>
-                                        <form id="paydetail" role="form" autocomplete="off" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" novalidate="novalidate">
-                                                <p>Payments</p>
-                                                <div class="form-group-attached">
-                                                    <div class="row clearfix">
-                                                        <div class="col-md-8">
-                                                            <div class="form-group form-group-default input-group">
-                                                                <div class="">
-                                                                    <label style={{color:'red'}}>Amount</label>
-                                                                    <input id="amount"  type="text" class="autonumeric form-control" placeholder='0.0' required="" value={amount} aria-required="true" onChange={e=>setAmount(e.target.value)}></input>
-                                                                </div>
-                                                                <div class="input-group-addon">
-                                                                    NGN
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                    </Flex>
 
-                                                    </div>
+                    <div class="row mb-4">
+                        <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="singleCardX mt-4">
+                                <Header title="Customer info" size='1.2em' />
+                                <Stack my="20px" spacing={"32px"}>
+                                    <ListRow
+                                        title={"name"}
+                                        value={name}
+                                    />
+                                    <ListRow
+                                        title={"address"}
+                                        value={address}
+                                    />
+                                    <ListRow
+                                        title={"phone number"}
+                                        value={phone_no}
+                                    />
+                                </Stack>
 
-                                                </div>
-                                                <br/>
-                                                <div class="form-group-attached">
-                                                    <div class="form-group form-group-default ">
-                                                        <label for="email" style={{color:'red'}}>Email Address</label>
-                                                        <input id="email"name="email" value={email} type="email" class="form-control w-50" placeholder="email address" onChange={e=>setEmail(e.target.value)}></input>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group-attached">
-                                                    <div class="form-group form-group-default ">
-                                                        <label for="phone" style={{color:'red'}}>Phone No</label>
-                                                        <input id="phone" name="phone" value={phone} type="text" class="form-control w-50 " placeholder="Phone no" onChange={e=>setPhone(e.target.value)}></input>
-                                                    </div>
-                                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="singleCardX mt-4">
+
+                                <Header title="Current bill" size='1.2em' />
+                                <Stack my="20px" spacing={"32px"}>
+                                    {isprepaid ? (
+                                        <>
+                                            <ListRow
+                                                title={"Minimum Vend"}
+                                                value={`₦ ${minimumVend !== "null" ? minimumVend : "0.00"}`}
+                                            />
+                                            <ListRow
+                                                title={"VAT"}
+                                                value={`₦ ${vat || "0.00"}`}
+                                            />
+                                            <ListRow
+                                                title={"Total Balance"}
+                                                value={`₦ ${totalDebt !== "null" ? totalDebt : "0.00"}`}
+                                            />
+
+
+                                        </>
+                                    ) : (
+                                        <>
+                                            <ListRow
+                                                title={"Billed amount"}
+                                                value={`₦ ${billedamount}`}
+                                            />
+                                            <ListRow
+                                                title={"VAT"}
+                                                value={`₦ ${vat}`}
+                                            />
+                                            <ListRow
+                                                title={"Arrears"}
+                                                value={`₦ ${credit}`}
+                                            />
+
+                                            <ListRow
+                                                title={"Total"}
+                                                value={`₦ ${Total}`}
+                                            />
+
+
+                                        </>
+                                    )}
+                                </Stack>
+                            </div>
+                        </div>
+
+
+                        <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="singleCardX mt-4">
+
+                                <Header title="account info" size='1.2em' />
+
+                                <Stack my="20px" spacing={"32px"}>
+                                    <ListRow
+                                        title={"Account number"}
+                                        value={` ${acc_no}`}
+                                    />
+                                    <ListRow
+                                        title={"Meter Number"}
+                                        value={` ${meter_no}`}
+                                    />
+                                    <ListRow
+                                        title={"Account type"}
+                                        value={` ${metering_type}`}
+                                    />
+                                </Stack>
+
+
+                            </div>
+                        </div>
+
+                        <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="singleCardX mt-4">
+                                <Header title="Payment" size='1.2em' />
+                                {
+                                    ShowPayment === false ? (
+                                        <Box>
+                                            <Stack spacing="20px">
+                                                {
+                                                    isloggedIn ? (
+
+                                                        ispostpaid ? (
+                                                            <Select id='bill' _focus={{ borderColor: "#017CC2" }} color="#000" _hover={{ color: "black" }} placeholder='Select Bill Type' borderColor={bill !== "" ? "#017CC2" : "#242424"} fontSize={bill ? "16px" : "12px"} fontWeight={"400"} value={bill} size='lg' onChange={e => setBill(e.target.value)} >
+                                                                <option value="bill">Pay your bill</option>
+                                                                <option value="reconnection cost">Pay for reconnection cost</option>
+                                                                <option value="reconnection fee">Pay for reconnection fee</option>
+                                                                <option value="lor(revenue loss)">Pay for lor(revenue loss)</option>
+                                                                <option value="administrative charge">Pay for administrative charge</option>
+                                                            </Select>
+                                                        ) : (
+
+                                                            <Select id='bill' _focus={{ borderColor: "#017CC2" }} _hover={{ color: "black" }} color="#000" placeholder='Select Bill Type' borderColor={bill !== "" ? "#017CC2" : "#242424"} fontSize={bill ? "16px" : "12px"} fontWeight={"400"} value={bill} size='lg' onChange={e => setBill(e.target.value)} >
+                                                                <option value="bill">Buy Energy</option>
+                                                                <option value="reconnection cost">Pay for reconnection cost</option>
+                                                                <option value="reconnection fee">Pay for reconnection fee</option>
+                                                                <option value="lor(revenue loss)">Pay for lor(revenue loss)</option>
+                                                                <option value="administrative charge">Pay for administrative charge</option>
+
+                                                            </Select>
+                                                        )
+                                                    ) : (
+
+                                                        ispostpaid ? (
+                                                            <Select id='bill' _focus={{ borderColor: "#017CC2" }} placeholder='Select Bill Type' color="#000" borderColor={bill !== "" ? "#017CC2" : "#242424"} fontSize={bill ? "16px" : "12px"} fontWeight={"400"} value={bill} size='lg' onChange={e => setBill(e.target.value)} >
+                                                                <option value="bill">Pay your bill</option>
+                                                            </Select>
+                                                        ) : (
+                                                            <Select id='bill' _focus={{ borderColor: "#017CC2" }} placeholder='Select Bill Type' borderColor={bill !== "" ? "#017CC2" : "#242424"} fontSize={bill ? "16px" : "12px"} fontWeight={"400"} value={bill} size='lg' onChange={e => setBill(e.target.value)} >
+                                                                <option value="bill">Buy Energy</option>
+                                                            </Select>
+                                                        )
+
+                                                    )
+                                                }
+
+                                                <Select id='payment' _focus={{ borderColor: "017CC2" }} placeholder='Select Payment Type' borderColor={payment !== "" ? "#017CC2" : "#242424"} fontSize={payment ? "16px" : "12px"} fontWeight={"400"} value={payment} size='lg' onChange={e => setPayment(e.target.value)} >
+                                                    <option value="Cash">Cash</option>
+                                                    <option value="Direct payment">Direct payment</option>
+                                                </Select>
+                                            </Stack>
+
+                                            <Button mt="20px" disabled onClick={Proceed}>Proceed</Button>
+                                        </Box>
+                                    ) : (
+                                        <Box>
+                                            <form id="paydetail" role="form" autocomplete="off" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required" novalidate="novalidate">
+                                                <Stack my="20px" spacing={"20px"}>
+                                                    <Input isRequired={true} label='Amount(NGN)' leftIcon={<AiOutlineNumber />} id="amount" value={amount} val={amount !== "" ? true : false} type='number' onChange={e => setAmount(e.target.value)} />
+                                                    <Input isRequired={true} label='Email' leftIcon={<AiTwotoneMail />} id="email" value={email} val={email !== "" ? true : false} type='email' onChange={e => setEmail(e.target.value)} />
+                                                    <Input isRequired={true} label='Phone No' leftIcon={<BsFillTelephoneFill />} id="phone" value={phone} val={phone !== "" ? true : false} type='number' onChange={e => setPhone(e.target.value)} />
+                                                    {amount !== "" && email !== "" && phone !== "" ? (
+                                                        <button id="payBtn" class="loginBtnP" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Pay Now</button>
+
+                                                    ) : (
+
+                                                        <button id="payBtn" class="loginBtnP" type="button" onClick={() => alert("Please make sure no field is empty")}>please fill all fields</button>
+                                                    )
+
+
+                                                    }
+                                                </Stack>
+
                                             </form>
-                                        </div>
+
+                                        </Box>
+                                    )
+                                }
+
+
+
+
+
+
+
+
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <Heading />
+            </div>
+            {/* modal */}
+            <div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="container">
+                                <div class="row">
+                                    <Header title="Checkout" size='1.7em' />
+
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="container">
+                                <div class="row">
+                                    <Header title="Select payment method" size='1.3em' />
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                        <div class="modal-body">
+                            <div class="container ">
+                                <button class="row mb-4 border p-3 shadow-lg bg-light w-100" onClick={() => {
+                                    window.location.href = "/paystack"
+                                }}>
+                                    <div class="col-4">
+                                        <img src={bank} alt="" srcset=""></img>
                                     </div>
-                                </div>
-                            </div>
+                                    <div class="col-8">
+                                        <h6>Pay with Paystack</h6>
+                                    </div>
 
-                            <div class="padding-20 sm-padding-5 sm-m-b-20 sm-m-t-20 bg-white clearfix">
+                                </button>
 
-                                <ul class="pager wizard no-style">
-                                    <li class="next finish">
-                                        <button id="payBtn" class="btn  btn-cons btn-animated from-left fa fa-check pull-right" style={{background:"#017cc2",color:"white",border:"#017cc2"}} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            <span>Pay Now</span>
-                                            
+
+                                <button class="row mb-4 border p-3 shadow-lg bg-light w-100" onClick={() => wallet(acc_no, metering_type, amount)}>
+                                    <div class="col-4">
+                                        <img src={Wallet} alt="" srcset=""></img>
+                                    </div>
+                                    <div class="col-8"><h6>Pay with wallet</h6></div>
+                                </button>
+
+                                {
+                                    isloggedIn ? (
+                                        <button class="row mb-4 border p-3 shadow-lg bg-light w-100" onClick={() => { window.location.href = "/vendor" }} >
+                                            <div class="col-4">
+                                                <img src={vendor} alt="" srcset=""></img>
+                                            </div>
+                                            <div class="col-8"><h6>Pay with vendor balance</h6></div>
                                         </button>
-                                    </li>
-                                </ul>
+                                    ) : ("")
+                                }
+
                             </div>
-                            <div class="wizard-footer padding-20 bg-master-light">
-                                {/* <p class="small hint-text pull-left no-margin">
-                                    <Link to ="/">Return home</Link>
-                                </p> */}
-                                <p class="pull-left no-margin p-2 rounded" style={{background:"#000",border:"#017cc2"}}>
-                                    <Link to ="/" style={{color:"white"}}>Return home</Link>
-                                </p>
-                                <div class="pull-right">
-                                    <img src={`./${process.env.REACT_APP_QUIKPAY_LOGO}`} alt="" width="50" height="22"></img>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <div class="container">
-                            <div class="row">
-                                <h5 class="modal-title align-items-center justify-content-center text-center" id="exampleModalLabel">Checkout</h5>
-                            </div>
-                        </div>
-                        <hr/>
-                        <div class="container">
-                            <div class="row">
-                                <h5 class="modal-title align-items-center justify-content-center text-center" id="exampleModalLabel">Select payment method</h5>
-                            </div>
-                        </div>
-                        <hr/>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container px-5 mx-3">
-                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>{
-                            window.location.href="/paystack"}}>
-                            <div class="col-4">
-                                <img src={bank} alt="" srcset=""></img>
-                            </div> 
-                            <div class="col-8">
-                                <h6>Pay with Paystack</h6>
-                            </div>
-                              
-                        </button>
-
-                        {/* <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>{
-                            window.location.href="/Interswitch"}}>
-                            <div class="col-4">
-                                <img src={bank} alt="" srcset=""></img>
-                            </div> 
-                            <div class="col-8">
-                                <h6>Pay with Interswitch</h6>
-                            </div>
-                              
-                        </button> */}
-                        
-                            
-                        <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>wallet(acc_no,metering_type,amount)}>
-                            <div class="col-4">
-                                <img src={Wallet} alt="" srcset=""></img>
-                            </div>
-                            <div class="col-8"><h6>Pay with wallet</h6></div>
-                        </button>
-
-                        {
-                            isloggedIn?(
-                                <button class="row mb-4 border p-3 shadow-sm bg-light w-100" onClick={()=>{window.location.href="/vendor"}} >
-                                    <div class="col-4">
-                                        <img src={vendor} alt="" srcset=""></img>
-                                    </div>
-                                    <div class="col-8"><h6>Pay with vendor balance</h6></div>
-                                </button>
-                            ):("")
-                        }
-                        
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                    </div>
-                </div>
-                </div>
         </>
     )
 }
